@@ -1,0 +1,40 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption: string;
+  title?: string;
+  bgColor?: 'white' | 'default';
+}
+
+const { src, alt, caption, title, bgColor = 'default' } = Astro.props;
+
+const backgrounds = {
+  white: 'bg-white border-slate-200',
+  default: 'bg-[#0f1f3a]/50 border-white/10',
+};
+
+const innerBackgrounds = {
+  white: 'bg-slate-50',
+  default: 'bg-[#0a1628]/50',
+};
+---
+
+<figure class={`${backgrounds[bgColor]} rounded-2xl p-6 my-8 border`}>
+  {title && (
+    <h3 class={`text-base font-semibold mb-4 ${bgColor === 'white' ? 'text-slate-900' : 'text-white'}`}>
+      {title}
+    </h3>
+  )}
+  <div class={`${innerBackgrounds[bgColor]} rounded-xl p-8 mb-4`}>
+    <img 
+      src={src} 
+      alt={alt}
+      class="w-full h-auto"
+      loading="lazy"
+    />
+  </div>
+  <figcaption class={`text-sm text-center ${bgColor === 'white' ? 'text-slate-600' : 'text-slate-400'}`}>
+    {caption}
+  </figcaption>
+</figure>

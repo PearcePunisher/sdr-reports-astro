@@ -1,0 +1,50 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#1e293b"/>
+  
+  <!-- Grid -->
+  <line x1="100" y1="50" x2="100" y2="350" stroke="#475569" stroke-width="1"/>
+  <line x1="100" y1="350" x2="750" y2="350" stroke="#475569" stroke-width="1"/>
+  
+  <!-- Line chart -->
+  <polyline points="150,180 250,160 350,170 450,190 550,200 650,195" fill="none" stroke="#0ea5e9" stroke-width="3"/>
+  <polyline points="150,220 250,210 350,215 450,235 550,245 650,242" fill="none" stroke="#f59e0b" stroke-width="3"/>
+  
+  <!-- Data points -->
+  <circle cx="150" cy="180" r="4" fill="#0ea5e9"/>
+  <circle cx="250" cy="160" r="4" fill="#0ea5e9"/>
+  <circle cx="350" cy="170" r="4" fill="#0ea5e9"/>
+  <circle cx="450" cy="190" r="4" fill="#0ea5e9"/>
+  <circle cx="550" cy="200" r="4" fill="#0ea5e9"/>
+  <circle cx="650" cy="195" r="4" fill="#0ea5e9"/>
+  
+  <circle cx="150" cy="220" r="4" fill="#f59e0b"/>
+  <circle cx="250" cy="210" r="4" fill="#f59e0b"/>
+  <circle cx="350" cy="215" r="4" fill="#f59e0b"/>
+  <circle cx="450" cy="235" r="4" fill="#f59e0b"/>
+  <circle cx="550" cy="245" r="4" fill="#f59e0b"/>
+  <circle cx="650" cy="242" r="4" fill="#f59e0b"/>
+  
+  <!-- X-axis labels -->
+  <text x="150" y="370" fill="#94a3b8" font-size="12" text-anchor="middle">2023</text>
+  <text x="250" y="370" fill="#94a3b8" font-size="12" text-anchor="middle">Q1 24</text>
+  <text x="350" y="370" fill="#94a3b8" font-size="12" text-anchor="middle">Q2 24</text>
+  <text x="450" y="370" fill="#94a3b8" font-size="12" text-anchor="middle">Q3 24</text>
+  <text x="550" y="370" fill="#94a3b8" font-size="12" text-anchor="middle">Q4 24</text>
+  <text x="650" y="370" fill="#94a3b8" font-size="12" text-anchor="middle">2H 25</text>
+  
+  <!-- Y-axis labels -->
+  <text x="85" y="355" fill="#94a3b8" font-size="12" text-anchor="end">7.0x</text>
+  <text x="85" y="275" fill="#94a3b8" font-size="12" text-anchor="end">9.0x</text>
+  <text x="85" y="195" fill="#94a3b8" font-size="12" text-anchor="end">11.0x</text>
+  <text x="85" y="115" fill="#94a3b8" font-size="12" text-anchor="end">13.0x</text>
+  
+  <!-- Title -->
+  <text x="400" y="30" fill="#e2e8f0" font-size="16" font-weight="bold" text-anchor="middle">Median EV/EBITDA Multiples</text>
+  
+  <!-- Legend -->
+  <line x1="250" y1="380" x2="280" y2="380" stroke="#0ea5e9" stroke-width="3"/>
+  <text x="285" y="385" fill="#e2e8f0" font-size="12">Healthcare Services</text>
+  
+  <line x1="450" y1="380" x2="480" y2="380" stroke="#f59e0b" stroke-width="3"/>
+  <text x="485" y="385" fill="#e2e8f0" font-size="12">Broader Market</text>
+</svg>

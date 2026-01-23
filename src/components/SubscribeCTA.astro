@@ -1,0 +1,71 @@
+---
+// Soft gate signup CTA - no actual gating
+---
+
+<div class="bg-gradient-to-br from-brand-900/30 to-[#0f1f3a]/50 border border-brand/30 rounded-2xl p-8 my-12">
+  <div class="max-w-2xl mx-auto text-center">
+    <h2 class="text-2xl font-bold text-white mb-3">
+      Get More Industry Insights
+    </h2>
+    <p class="text-slate-300 mb-6">
+      Subscribe to receive exclusive reports, analysis, and updates delivered directly to your inbox.
+    </p>
+    
+    <form 
+      class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto"
+      action="/api/subscribe"
+      method="POST"
+      id="subscribe-form"
+    >
+      <input 
+        type="email" 
+        name="email"
+        placeholder="Enter your email"
+        required
+        class="flex-1 px-4 py-3 bg-[#0a1628] border border-white/10 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
+      />
+      <button 
+        type="submit"
+        class="px-6 py-3 bg-brand hover:bg-brand-600 text-white font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
+      >
+        Subscribe
+      </button>
+    </form>
+    
+    <p class="text-xs text-slate-500 mt-4">
+      We respect your privacy. Unsubscribe at any time.
+    </p>
+  </div>
+</div>
+
+<script>
+  document.getElementById('subscribe-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.get('email'),
+        }),
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        alert('Thank you for subscribing! (Demo mode - no actual subscription created)');
+        form.reset();
+      } else {
+        alert('Subscription failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
+      alert('An error occurred. Please try again.');
+    }
+  });
+</script>

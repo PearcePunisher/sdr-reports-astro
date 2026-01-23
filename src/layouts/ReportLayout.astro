@@ -1,0 +1,91 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  publishDate: string;
+  canonical?: string;
+}
+
+const { title, description, publishDate, canonical } = Astro.props;
+const pageUrl = canonical || Astro.url.pathname;
+const siteUrl = Astro.site || 'https://example.com';
+const fullUrl = new URL(pageUrl, siteUrl).toString();
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+  
+  <!-- SEO -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={fullUrl} />
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={fullUrl} />
+  <meta property="article:published_time" content={publishDate} />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Report",
+    "headline": title,
+    "description": description,
+    "datePublished": publishDate,
+    "url": fullUrl,
+    "publisher": {
+      "@type": "Organization",
+      "name": "SDR"
+    }
+  })} />
+</head>
+<body class="bg-[#0a1628] text-slate-100 antialiased">
+  <!-- Skip Link -->
+  <a 
+    href="#main-content" 
+    class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-brand focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-400"
+  >
+    Skip to main content
+  </a>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 border-b border-white/10 bg-[#0a1628]/80 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex items-center justify-between">
+        <a href="/" class="text-xl font-bold text-white hover:text-brand transition-colors">
+          <img src="/img/logos/logo.svg" alt="SDR Logo" class="h-8" />
+        </a>
+        <nav class="flex gap-6">
+          <a href="/" class="text-sm text-slate-300 hover:text-brand transition-colors">Home</a>
+          <a href="/contact" class="text-sm text-slate-300 hover:text-brand transition-colors">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center text-sm text-slate-400">
+        <p>&copy; {new Date().getFullYear()} SDR. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

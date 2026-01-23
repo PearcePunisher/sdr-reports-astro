@@ -1,0 +1,33 @@
+---
+interface TocItem {
+  id: string;
+  title: string;
+}
+
+interface Props {
+  items: TocItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<!-- Sidebar Sticky TOC -->
+<aside class="sticky top-24 self-start">
+  <nav class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6">
+    <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">
+      Table of Contents
+    </h2>
+    <ul class="space-y-2">
+      {items.map((item) => (
+        <li>
+          <a 
+            href={`#${item.id}`}
+            class="text-sm text-slate-300 hover:text-brand transition-colors block py-1"
+          >
+            {item.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</aside>

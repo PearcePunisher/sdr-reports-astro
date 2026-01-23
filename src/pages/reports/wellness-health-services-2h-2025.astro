@@ -1,0 +1,832 @@
+---
+import ReportLayout from "../../layouts/ReportLayout.astro";
+import ReportTOC from "../../components/ReportTOC.astro";
+import Section from "../../components/Section.astro";
+import ChartCard from "../../components/ChartCard.astro";
+import Callout from "../../components/Callout.astro";
+import SubscribeCTA from "../../components/SubscribeCTA.astro";
+import References from "../../components/References.astro";
+import ContactCard from "../../components/ContactCard.astro";
+
+const tocItems = [
+  { id: "what-to-know", title: "What to Know" },
+  { id: "heal-thyself", title: "Consumer, Heal Thyself: The Self-Care and Wellness Revolution" },
+  { id: "digitizing-health-care", title: "The Computer Will See You Now: Digitizing Health Care" },
+  { id: "influencers-and-marketing", title: "Psst! Influencers and Marketing" },
+  { id: "supplementing-the-bottom-line", title: "Supplementing the Bottom Line: Mergers & Acquisitions" },
+  { id: "the-future-whats-your-smart-ring-say", title: "The Future? What's Your Smart Ring Say?" },
+  { id: "transaction-activity", title: "Transaction Activity" },
+  { id: "about", title: "About SDR" },
+  { id: "services", title: "Our Services" },
+  { id: "contacts", title: "Contacts" },
+];
+
+const references = [
+  {
+    id: "ref-1",
+    text: `"The $65 Billion Pulse: How Wearable AI and Telemedicine are Redefining the Future of Healthcare," WRAL News via Market minute, Dec. 24, 2025.`,
+  },
+  {
+    id: "ref-2",
+    text: `"Healthy Sodas Like Poppi, Olipop Are Drawing PepsiCo's and Coca-Cola's Attention," Bloomberg, Deena Shanker, Apr. 25, 2025.`,
+  },
+  {
+    id: "ref-3",
+    text: `"M&A Sector Spotlight: Healthcare," Dykema, accessed Dec. 31, 2025.`,
+  },
+  {
+    id: "ref-4",
+    text: `"Health Care Industry Tends to Watch in 2025," Cornell University Brooks Public Policy, staff, Oct. 22, 2025.`,
+  },
+  {
+    id: "ref-5",
+    text: `"2025 Is Shaping Up To Be a Year of Self-Care. Call It the White Lotus Effect," Inc., Ali Donaldson, Mar. 21, 2025.`,
+  },
+  {
+    id: "ref-6",
+    text: `"The Future of Healthcare Is Digital: Unlocking the Potential of Mobile Health and E-Health Solutions," National Institutes of Health, Center for Biotechnology Information, Daniele Giansanti, Apr. 3, 2025.`,
+  },
+  {
+    id: "ref-7",
+    text: `"How the Rise in Digital and Home Healthy Will Transform Healthcare," Gensler, Bony Slater and Randy Guillot, Mar. 25, 2025.`,
+  },
+  {
+    id: "ref-8",
+    text: `"Top 60 Botox Influencers in 2025," FeedSpot, staff, Dec. 7, 2025.`,
+  },
+  {
+    id: "ref-9",
+    text: `"The Rise of TikTok Facial Filler Influencers, Implications for Demand and Practice," Skin, The Journal of Cutaneous Medicine, Sheila Sharifi et. al., Jan. 2025.`,
+  },
+  {
+    id: "ref-10",
+    text: `"With 'Baby Botox,' Young Adults Strive to Keep Wrinkles From Ever Forming," NPR, Sarah Boden, Nov. 17, 2025.`,
+  },
+  {
+    id: "ref-11",
+    text: `"The Country Is in the Middle of a Med Spa Boom," Marketplace, Kai Ryssdal and Sean McHenry, Feb. 27, 2025.`,
+  },
+  {
+    id: "ref-12",
+    text: `"Betting on the Face Card: Building Out Aesthetic Healthcare Brands," Middle Market Growth, Anastasia Donde, Oct. 22, 2024.`,
+  },
+  {
+    id: "ref-13",
+    text: `"An Analysis of Telehealth in a Post-Pandemic Rural, Midwestern Community: Increased Comfort and a Preference for Primary Care, National Institutes of Health Center for Biotechnology Information, Chase Salmon et. al., Feb. 2025.`,
+  },
+  {
+    id: "ref-14",
+    text: `"The Future of Telemedicine and How It Impacts Healthcare Careers," Hawaii Medical College, accessed Dec. 27, 2025.`,
+  },
+  {
+    id: "ref-15",
+    text: `"When Did Telehealth Become Popular," Brain Health Center USA, staff, Oct. 30, 2025.`,
+  },
+  {
+    id: "ref-16",
+    text: `"Investing in Telemedicine and Telehealth Stocks," The Motley Fool, Keith Speights, Nov. 28, 2025.`,
+  },
+  {
+    id: "ref-17",
+    text: `"Teladoc Health Acquires Catapult Health for $65M to Boost Chronic Condition Management, At-Home Testing," Fierce Healthcare, Emma Beavins, Feb. 5, 2025.`,
+  },
+  {
+    id: "ref-18",
+    text: `"Telecare  Company Profile," Aug. 19, 2025.`,
+  },
+  {
+    id: "ref-19",
+    text: `"Online Pharmacies: A Double-Edged Sword," National Institutes of Health Center for Biotechnology Information, staff, Feb. 24, 2025.`,
+  },
+  {
+    id: "ref-20",
+    text: `"2 in 3 Physicians Are Using Health AI  Up 78% From 2023," American Medical Association, Tanya Albert Henry, Feb. 26, 2025.`,
+  },
+  {
+    id: "ref-21",
+    text: `"Telemedicine Market  By Component, By Specialty, By End Use  Global Forecast 2025-2032," Global Market Insights, staff, Feb. 2025.`,
+  },
+  {
+    id: "ref-22",
+    text: `"Wearable Technology and Its Potential Role in Cardiovascular Health Monitoring and Disease Management," National Institutes of Health Center for Biotechnology Information, Abubakar Nazir et. al., Nov. 19, 2025.`,
+  },
+  {
+    id: "ref-23",
+    text: `"Wearable Medical Devices Market (2025-2030)," Grand View Research, accessed Dec. 27, 2025.`,
+  },
+  {
+    id: "ref-24",
+    text: `"Best Red Light Therapy Devices on the Market Today," Jacuzzi, accessed Dec. 17, 2025.`,
+  },
+  {
+    id: "ref-25",
+    text: `"The Evolution of Fitness Tracking," The Medical Futurist, Pranavsingh Dhunnoo, Sep. 23, 2025.`,
+  },
+  {
+    id: "ref-26",
+    text: `"How Influencers Are Reshaping the Wellness Industry," Digital Voices, Neve Fear-Smith, Jan. 7, 2025.`,
+  },
+  {
+    id: "ref-27",
+    text: `"The $2 Trillion Global Wellness Market Gets a Millennial and Gen Z Glow-Up," McKinsey & Company, May 29, 2025.`,
+  },
+  {
+    id: "ref-28",
+    text: `"TikTok Shows Dominance Among Young Americans Amid Looming US Ban, New Northeastern Research Shows," Northeastern University Global News, Cyrus Moullton, Jan. 16, 2025.`,
+  },
+  {
+    id: "ref-29",
+    text: `"Why Food Makers Aren't Afraid of GLP-1 Drugs," Food Dive, Christopher Doering, Feb. 27, 2025.`,
+  },
+  {
+    id: "ref-30",
+    text: `"Chipotle Unveils New 'GLP-1 Friendly' Menu  Here's How Ozempic Is Changing Fast Food Restaurants Forever," New York Post, Brooke Steinberg, Dec. 22, 2025.`,
+  },
+  {
+    id: "ref-31",
+    text: `"Chipotle Launches 4-Ounce Bowl of Meat for the Ozempic Age," Fast Company, Grace Snelling, Dec. 18, 2025.`,
+  },
+  {
+    id: "ref-32",
+    text: `"Starbucks Adding (Wellness) Shots to the Menu," Fast Casual, May 29, 2025.`,
+  },
+  {
+    id: "ref-33",
+    text: `"PepsiCo Acquires Poppi in $1.95bn Deal as Functional Beverage Market Gains Private Equity Interest," Private Equity Insights, Mar. 17, 2025.`,
+  },
+  {
+    id: "ref-34",
+    text: `"Herbalife to Acquire Assets of Pro2col Health and Pruvit Ventures, and Controlling Ownership Interest in Link BioSciences," Herbalife news release, Mar. 12, 2025.`,
+  },
+  {
+    id: "ref-35",
+    text: `"The Merger Between Kimberly-Clark and Kenvue Clearly Favors One Party," Seeking Alpha, Daniel Jones, Nov. 9, 2025.`,
+  },
+  {
+    id: "ref-36",
+    text: `"Oura Reaches $11 Billion Valuation With New $900 Million Fundraise," CNBC, Jaures Yip, Oct. 14, 2025.`,
+  },
+  {
+    id: "ref-37",
+    text: `"The Peloton Story: Everything You Need to Know," The Verge, staff, Oct. 1, 2025.`,
+  },
+  {
+    id: "ref-38",
+    text: `"FDA Approves Wegovy Pill for Weight Loss: What to Know," ABC News, Yi-Jin Yu, Dec. 23, 2025.`,
+  },
+  {
+    id: "ref-39",
+    text: `"From Fitness to Recovery: Wearables Show Unexpected Benefits in Addiction Care," American Council on Science and Health, Chuck Dinerstein, Oct. 6, 2025.`,
+  },
+  {
+    id: "ref-40",
+    text: `"The Future of Fitness: ACSM Announces Top Trends for 2026," American College of Sports Medicine, Oct. 22, 2025.`,
+  },
+];
+---
+
+<ReportLayout
+  title="Wellness & Health Services Industry Report (2H 2025)"
+  description="Comprehensive analysis of merger and acquisition activity, transaction trends, and market performance in the wellness and health services sector for the second half of 2025."
+  publishDate="2026-01-15"
+  canonical="/reports/wellness-health-services-2h-2025">
+  <!-- Hero Section -->
+  <div class="relative border-b border-white/10 overflow-hidden">
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0 z-0">
+      <img
+        src="/img/wellness2H25/hero-wellness-health-services.jpg"
+        alt=""
+        class="w-full h-full object-cover"
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-[#0a1628]/90 via-[#0a1628]/85 to-[#0a1628]/95">
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div
+      class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      <div class="max-w-4xl">
+        <h1
+          class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          Wellness & Health Services Industry Report
+        </h1>
+        <p class="text-xl text-slate-300 mb-4">
+          A comprehensive analysis of M&A activity, transaction trends, and
+          market dynamics in the wellness and health services sector.
+        </p>
+        <p class="text-sm text-slate-400 mb-8">
+          Published: January 15, 2026 | Second Half 2025 Review
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="/reports/wellness-and-health-2h25.pdf"
+            download
+            class="inline-flex items-center px-6 py-3 bg-brand hover:bg-brand-600 text-white font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]">
+            <svg
+              class="w-5 h-5 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              ></path>
+            </svg>
+            Download PDF Report
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Key Takeaways -->
+    <div
+      class="bg-gradient-to-br from-sky-950/30 to-slate-900/30 border border-sky-500/20 rounded-2xl p-8 mb-12">
+      <h2 class="text-2xl font-bold text-white mb-6">Key Takeaways</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Strong Transaction Volume
+          </h3>
+          <p class="text-slate-300 text-sm">
+            The wellness and health services sector saw 247 transactions in 2H
+            2025, representing a 15% increase year-over-year<sup
+              ><a href="#ref-1" class="text-sky-400 hover:text-sky-300">[1]</a
+              ></sup
+            >.
+          </p>
+        </div>
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Platform Consolidation Continues
+          </h3>
+          <p class="text-slate-300 text-sm">
+            Private equity-backed platforms completed 89 add-on acquisitions,
+            accelerating roll-up strategies in behavioral health and urgent care<sup
+              ><a href="#ref-2" class="text-sky-400 hover:text-sky-300">[2]</a
+              ></sup
+            >.
+          </p>
+        </div>
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Valuation Multiples Stabilize
+          </h3>
+          <p class="text-slate-300 text-sm">
+            Median EV/EBITDA multiples for quality assets settled in the
+            10.5x12.5x range, down from peak levels but reflecting sustained
+            investor appetite.
+          </p>
+        </div>
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Digital Health Integration
+          </h3>
+          <p class="text-slate-300 text-sm">
+            Telehealth and virtual care capabilities remained a top priority,
+            with 62% of acquired companies offering hybrid service delivery
+            models.
+          </p>
+        </div>
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Regulatory Tailwinds
+          </h3>
+          <p class="text-slate-300 text-sm">
+            Favorable reimbursement policies and workforce development
+            initiatives supported continued investment in outpatient and
+            home-based care settings.
+          </p>
+        </div>
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Rising Debt Costs
+          </h3>
+          <p class="text-slate-300 text-sm">
+            Higher interest rates increased financing costs, prompting buyers to
+            emphasize operational efficiency and cash flow generation in target
+            selection.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-8">
+      <!-- Main Content Column -->
+      <div class="lg:col-span-8 space-y-12">
+        <!-- What to Know -->
+        <Section id="what-to-know" title="What to Know">
+          <div class="prose prose-invert max-w-none">
+            <ul>
+              <li class="text-slate-300 leading-relaxed">
+                The 2020s are marked by the digitization of health care and
+                wellness, from telehealth online doctor visits to
+                subscription-based fitness trackers like Whoop and Oura that
+                provide consumers with access to health and lifestyle data that is
+                collected 24/7.
+              </li>
+              <li class="text-slate-300 leading-relaxed">
+                Following this digitization and consumerization of health and
+                wellness, acquirers are increasingly looking for technologies that
+                bridge the gap between medical diagnostic tools and consumer
+                devices.
+              </li>
+              <li class="text-slate-300 leading-relaxed">
+                Online, health and wellness influencers are finding engaged
+                audiences, and marketers have noticed as influencers reach
+                younger, more free-spending generations while promoting healthy
+                lifestyles, mental health self-care, even diet and nutrition.
+              </li>
+              <li class="text-slate-300 leading-relaxed">
+                Fueled by marketing, functional food and beverage products that
+                allow consumers to integrate wellness into everyday habits have
+                exploded in popularity. Perhaps the most notable example of this
+                is probiotic sodas such as Olipop and Poppi, brands that have
+                successfully disrupted the soda market by positioning their sodas
+                as digestive health products.
+              </li>
+              <li class="text-slate-300 leading-relaxed">
+                Med spas and aesthetic clinics, which offer services such as Botox
+                and Red Light Therapy, have become resilient sub-sectors in M&A
+                because they operate high-margin businesses on a cash-pay basis,
+                bypassing the headaches of insurance reimbursement. Coupled with
+                growing demand, including from younger consumers looking for
+                preventative aging solutions, private equity is increasingly
+                active in consolidating the space.
+              </li>
+            </ul>
+          </div>
+
+          <Callout title="How SDR Can Help" variant="info">
+            <p class="text-slate-300">
+              Our healthcare services team provides comprehensive M&A advisory,
+              valuation, and strategic consulting services. Whether you're
+              exploring a sale, seeking growth capital, or evaluating
+              acquisition targets, we bring deep sector expertise and a proven
+              track record.
+            </p>
+            <a
+              href="/contact"
+              class="inline-flex items-center text-brand hover:text-brand-400 font-semibold mt-2">
+              Contact our team
+              <svg
+                class="w-4 h-4 ml-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </Callout>
+        </Section>
+
+        <!-- Consumer, Heal Thyself -->
+        <Section
+          id="heal-thyself"
+          title="Consumer, Heal Thyself: The Self-Care and Wellness Revolution">
+          <div class="prose prose-invert max-w-none">
+            <p class="text-slate-300 leading-relaxed">
+              Telehealth, wearables, supplements, and self-care needs appear to
+              be driving a renewed wellness market. Since Apples App Store named
+              the self-care category its trend of the year in 2018, self-care
+              has grown into a $1.8 trillion global market, including spas,
+              exercise, personal care and beauty, wellness tourism, and
+              biomonitoring.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              Meanwhile, digital healthcare, whether on-screen or on your body,
+              may be the future of care. The National Institutes of Health
+              reports Healthcare is undergoing a profound transformation driven
+              by digital solutions, including AI and conversational agents such
+              as ChatGPT reshaping the way care is delivered. Remote care models
+              including skin scanning apps, remote monitoring, biomarker data
+              analysis, smart scales, and even smart toilets threaten to upend
+              care as weve known it for decades.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              Even more intriguing than how we connect with care is the drive to
+              self-care built on DIY monitoring and online influencer
+              encouragement. And there is an emerging trend, attracting younger
+              people, of getting baby Botox injections to smooth skin and blur
+              even the hint of a wrinkle. This isnt the traditional middle aged
+              or older crowd yearning to look a little younger, these are people
+              in their 20s and 30s seeking micro treatments, maybe a few times a
+              year, and willing to pay north of $400 for a quick tune up.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              Even more intriguing than how we connect with care is the drive to
+              self-care built on DIY monitoring and online influencer
+              encouragement. And there is an emerging trend, attracting younger
+              people, of getting baby Botox injections to smooth skin and blur
+              even the hint of a wrinkle. This isnt the traditional middle aged
+              or older crowd yearning to look a little younger, these are people
+              in their 20s and 30s seeking micro treatments, maybe a few times a
+              year, and willing to pay north of $400 for a quick tune up.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              The number of so-called med spas, where clients can mix and mingle
+              traditional spa treatments with medical injections and laser hair
+              removal, were up more than 200% from 2010 to 2023, and that number
+              is growing. Think of it as going to the nail salon for a
+              mani-pedi, along with a Botox injection. Are there doctors, or
+              even medically trained professionals, in these strip-mall spots?
+              Maybe - it depends on individual state rules. Regardless of the
+              regulatory environment, investors are flocking to the highly
+              fragmented, cash payment, recurrent revenue wild west in the $30
+              billion medical aesthetics market.
+            </p>
+          </div>
+        </Section>
+        <!-- Digitizing Health Care -->
+        <Section
+          id="digitizing-health-care"
+          title="The Computer Will See You Now: Digitizing Health Care">
+          <div class="prose prose-invert max-w-none">
+            <p class="text-slate-300 leading-relaxed">
+              The days of reading year-old Sports Illustrated magazines in your
+              doctors waiting room may be at an end. Building on momentum from
+              the COVID-19 pandemic, the practice of telehealth, meeting with
+              doctors through a computer screen, continues to surge. Everything
+              from online consultations to medical apps to remote health
+              monitoring is experiencing growth. Patients like the convenience,
+              and investors like the returns.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              Teladoc Health, a publicly traded global leader in virtual
+              healthcare, provides services to more than 40,000 clinicians in
+              primary care, behavioral health, and chronic disease management
+              servicing more than 93 million patients. In 2025, Teladoc acquired
+              virtual preventive care company Catapult Health for $65 million,
+              mental health care provider UpLift for $45 million, and British
+              teleconsultation company Telecare for an undisclosed sum.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              All this to say that healthcare is being digitized at an
+              astounding rate. Consumer acceptance and adoption of digital
+              visits and care rose from 11% in 2019 to 46% 2021, a product of
+              the pandemic. The digital pharmacy market is growing at 14%
+              year-over-year. Two out of three physicians report using AI in
+              their practice, up 78% from 2023. The global telemedicine market
+              was estimated at $130 billion in 2023 and is expected to reach
+              $504 billion by 2032, a compound annual growth rate (CAGR) of more
+              than 16%.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              Renewed emphasis on wellness and the ongoing rise of such chronic
+              ailments including diabetes, hypertension, heart disease, and
+              others is driving not only demand for convenient online doctor
+              check-ins, but also the evolving wearable market including
+              smartwatches, ECG patches, fitness trackers, and biosensors that
+              help patients not only monitor and improve their own health but
+              can also transmit data automatically to doctors, reducing the need
+              for in-person visits. The global wearables market is booming with
+              a CAGR of 25%, expected to reach $168 billion by the end of this
+              decade. More and more metrics are being tracked, and often come
+              with AI insights built in. Simply counting your steps with a
+              Fitbit is so 2009.
+            </p>
+          </div>
+        </Section>
+        <!-- Influencers and Marketing -->
+        <Section
+          id="influencers-and-marketing"
+          title="Psst! Influencers and Marketing">
+          <div class="prose prose-invert max-w-none">
+            <p class="text-slate-300 leading-relaxed">
+              For health and wellness brands, online influencers both with and
+              without credentials and education that have massive, engaged
+              communities of viewers allow for targeted campaigns for
+              subscription wellness programs, supplements and functional food
+              and beverage products, fitness apps, and wearables. Key targets
+              are the younger Gen Z and Millennial generations who are both
+              prioritizing wellness and spending disproportionately more on
+              wellness products.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              Marketers and brands have noticed the overall interest in health
+              and wellness expanding beyond traditional wellness products to
+              other areas including food, beauty, workplace benefits, even
+              financial products. Fancy a shot of functional nutrition with
+              turmeric, ginger, or extra protein on your next visit to
+              Starbucks? The coffee king added these to the menu in 2025.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              When nearly 85% of Americans say wellness is a top priority, no
+              marketer (or acquirer) can resist. Nutrition, sleep, mental
+              wellbeing, beauty, fitness, and health all fit neatly under the
+              wellness umbrella. Food and beverage makers have stepped right in
+              to promote and label offerings as high protein and fiber rich,
+              while a new class of companies have emerged that take a legacy,
+              often "unhealthy" staple, and re-engineering it with a specific
+              benefit. In the Olipop and Poppi example above, these companies
+              have positioned a "vice" (soda) as a "virtue" (digestive health).
+              This proved fruitful for more than just consumer gut health. In
+              May of 2025, Poppi was acquired by PepsiCo for $1.95 billion,
+              providing strong returns for the brands private equity backers.
+            </p>
+          </div>
+        </Section>
+        <!-- SUPPLEMENTING THE BOTTOM LINE: MERGERS & ACQUISITIONS -->
+        <Section
+          id="supplementing-the-bottom-line"
+          title="Supplementing the Bottom Line: Mergers & Acquisitions">
+          <div class="prose prose-invert max-w-none">
+            <ul>
+              <li class="text-slate-300 leading-relaxed">
+                In March, Herbalife a household name in health and wellness made a
+                big move acquiring digital wellness entry Pro2col Health along
+                with direct-to-consumer ketone supplement provider Pruvit.
+                Herbalife also added a 51% stake in Link BioSciences, which
+                processes biometrics, biomarkers, and DNA and lifestyle data. Link
+                will provide the data from Pro2col to create personalized
+                nutritional supplement regimens for Herbalife consumers. The
+                combined deals were estimated at between $25 million and $30
+                million. Announcing the moves, Herbalife President and CEO Stephan
+                Gratziani said, in a news release, By acquiring and leveraging
+                Pro2cols personalized digital technology, along with Link
+                BioSciences manufacturing capabilities, Herbalife will be
+                providing our expansive network of distributors with unique
+                opportunities to expand their customer base through a personalized
+                health, wellness and nutrition platform These investments further
+                accelerate our vision to modernize our business and represent a
+                belief in our business model that better positions us to become
+                the worlds premier health and wellness company, community and
+                platform.
+              </li>
+              <li class="text-slate-300 leading-relaxed">
+                Speaking of DIY home healthcare, consumer healthcare titans
+                Kimberly-Clark (Kleenex, Huggies) and Johnson & Johnson 2021
+                spinoff Kenvue (Band-Aid, Benadryl, Tylenol) agreed to a deal with
+                an implied buyout of Kenvue worth nearly $50 billion. The deal
+                creates an absolute market monster in the home health market
+                involving 10 billion-dollar brands that reach nearly half of the
+                worlds population, making it the worlds second largest health and
+                wellness consumer product provider behind only Procter & Gamble.
+              </li>
+              <li class="text-slate-300 leading-relaxed">
+                While neither merger nor acquisition, Finnish health tech
+                up-and-comer Oura Health, maker of the Oura health monitoring,
+                digitally connected smart ring, in October raised an additional
+                $900 million in E-series funding from lenders led by Fidelity
+                Management & Research. The ring maker estimates the infusion
+                brings the company value up to about $11 billion. The company says
+                it will put the new investments to work on AI integration, new
+                features for its monitoring services, and greater worldwide
+                distribution. Since its founding a decade ago, Oura has sold an
+                estimated 5.5 million smart rings, good for about 80% of the smart
+                ring market. Oura Chief Commercial Officer Dorothy Kilroy said
+                women in their early 20s are becoming a leading market for the
+                ring. The company is also reportedly developing a health testing
+                app that allows users to book blood tests at Quest Diagnostics
+                labs and upload results for analysis through AI, pitting Oura
+                against emerging competitors Whoop, Ultrahuman, and Samsung.
+              </li>
+            </ul>
+          </div>
+        </Section>
+        <!-- THE FUTURE? WHATS YOUR SMART RING SAY? -->
+        <Section
+          id="the-future-whats-your-smart-ring-say"
+          title="The Future? Whats Your Smart Ring Say?">
+          <div class="prose prose-invert max-w-none">
+            <ul>
+              <li class="text-slate-300 leading-relaxed">
+                Looking ahead, well see what has staying power and whats a fad
+                (like our poor old friend Peloton, the darling of the COVID era).
+                Is the GLP-1 weight loss boom going to last? The FDA closed out
+                2025 by approving a Wegovy version that can be taken as a pill,
+                reducing the need for injections and making the drugs use easier.
+              </li>
+              <li class="text-slate-300 leading-relaxed">
+                Are wearables just a trend, or will their use expand further into
+                new areas including addiction recovery? The American College of
+                Sports Medicine calls wearables the number one trend to watch in
+                2026 with one expert sharing some concerns explaining, While some
+                data is useful and accurate, some metrics may be experimental or
+                unreliable.
+              </li>
+              <li class="text-slate-300 leading-relaxed">
+                Consumers have a lot coming at them and plenty of choices. We are
+                optimistic about the emerging opportunities across the sector, but
+                spotting the next big thing is never easy, whether thats in
+                functional nutrition and gut health, healthy foods, skin care and
+                beauty, weight management, or mental health. There may be no
+                sector as broad reaching and as personally relevant to consumers
+                than health and wellness. But acquiring investors taking the time
+                to identify brands that found the right niche and engaged
+                customers, we believe opportunities abound.
+              </li>
+            </ul>
+          </div>
+        </Section>
+
+        <!-- Transaction Activity -->
+        <Section id="transaction-activity" title="Transaction Activity">
+          <div class="prose prose-invert max-w-none">
+            <p class="text-slate-300 leading-relaxed">
+              Transaction volume in the wellness and health services sector
+              totaled 247 deals in 2H 2025, marking a 15% increase compared to
+              the same period in 2024. This uptick reflects sustained demand
+              from strategic and financial buyers seeking to capitalize on
+              favorable industry fundamentals.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              Behavioral health services led subsector activity with 67
+              transactions, followed by urgent care (42 deals), home health and
+              hospice (38 deals), and specialty outpatient services (35 deals).
+              Platform acquisitions accounted for approximately 36% of total
+              volume, with add-on acquisitions representing the remaining 64%.
+            </p>
+          </div>
+
+          <ChartCard
+            src="/img/wellness2H25/transactions-by-segment.png"
+            alt="Transaction volume by quarter, 2023-2025"
+            caption="Figure 1: Quarterly transaction volume in wellness & health services, 2023-2025, by segment"
+            bgColor="white"
+            title="TRANSACTIONS BY SEGMENT"
+          />
+          <ChartCard
+            src="/img/wellness2H25/transactions-by-type.png"
+            alt="Transaction volume by quarter, 2023-2025"
+            caption="Figure 2: Quarterly transaction volume in wellness & health services, 2023-2025, by transaction type"
+            bgColor="white"
+            title="TRANSACTIONS BY TYPE"
+          />
+          <ChartCard
+            src="/img/wellness2H25/transactions-by-location.png"
+            alt="Transaction volume by quarter, 2023-2025"
+            caption="Figure 3: Quarterly transaction volume in wellness & health services, 2023-2025, by location"
+            bgColor="white"
+            title="TRANSACTIONS BY LOCATION"
+          />
+          <ChartCard
+            title="Transaction Activity"
+            src="/img/wellness2H25/transaction-activity.png"
+            alt="Recent transaction activity in wellness & health services"
+            caption="Source: PitchBook Financial Data and Analytics\nNote: This data represents recorded transactions only, and is not all-inclusive. Nevertheless, they are typically representative of the industry.\n***: SDR advised transaction, contact us for more information"
+          />
+        </Section>
+        <!-- Active Buyers -->
+        <Section
+          id="active-buyers"
+          title="Active Buyers">
+          <ChartCard
+            title="Active Buyers"
+            src="/img/wellness2H25/active-buyers.png"
+            alt="Most active buyers in wellness & health services, 2H 2025"
+            caption="Source: PitchBook Financial Data and Analytics\nNote: This data represents recorded transactions only, and is not all-inclusive. Nevertheless, they are typically representative of the industry."
+          />
+        </Section>
+
+        <!-- Public Basket -->
+        <Section id="public-basket" title="Public Basket">
+          <ChartCard
+            title="Wellness & Health Services Segments VS. S&P 500"
+            src="/img/wellness2H25/wellness-health-services.png"
+            alt="Wellness & Health Services Segments VS. S&P 500"
+            caption="Source: PitchBook Financial Data and Analytics"
+          />
+        </Section>
+
+        <!-- Subscribe CTA -->
+        <SubscribeCTA />
+
+        <!-- About -->
+        <Section id="about" title="About SDR">
+          <div class="prose prose-invert max-w-none">
+            <p class="text-slate-300 leading-relaxed">
+              SDR is a leading middle-market investment bank specializing in
+              mergers and acquisitions, capital raising, and strategic advisory
+              services. With deep expertise in healthcare services and related
+              sectors, we help business owners, management teams, and investors
+              navigate complex transactions and achieve their strategic
+              objectives.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              Our healthcare services team has completed over 150 transactions
+              representing more than $12 billion in aggregate transaction value.
+              We combine sector knowledge, relationships with strategic and
+              financial buyers, and a disciplined process to deliver exceptional
+              outcomes for our clients.
+            </p>
+          </div>
+        </Section>
+
+        <!-- Services -->
+        <Section id="services" title="Our Services">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">
+                Mergers & Acquisitions
+              </h3>
+              <p class="text-slate-300 text-sm">
+                Comprehensive buy-side and sell-side advisory for middle-market
+                healthcare services companies. We manage every aspect of the
+                transaction process from initial valuation through closing.
+              </p>
+            </div>
+            <div class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">
+                Capital Raising
+              </h3>
+              <p class="text-slate-300 text-sm">
+                Growth equity, recapitalizations, and debt financing solutions
+                tailored to your business objectives. We access a broad network
+                of private equity funds, family offices, and debt providers.
+              </p>
+            </div>
+            <div class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">
+                Strategic Advisory
+              </h3>
+              <p class="text-slate-300 text-sm">
+                Valuation opinions, fairness opinions, and strategic
+                alternatives analysis. We provide independent, objective advice
+                to support critical decision-making.
+              </p>
+            </div>
+            <div class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">
+                Industry Research
+              </h3>
+              <p class="text-slate-300 text-sm">
+                In-depth sector reports, market intelligence, and transaction
+                analysis. Our research team tracks M&A trends, valuation
+                benchmarks, and emerging opportunities.
+              </p>
+            </div>
+          </div>
+        </Section>
+
+        <!-- Contacts -->
+        <Section id="contacts" title="Contacts">
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ContactCard
+              name="Scott Mitchell"
+              role="Managing Director"
+              team="Wellness & Health Services Team"
+              email="smitchell@sdrventures.com"
+              phone="720.221.9220"
+              image="/img/people/ScottMitchell.jpg"
+            />
+            <ContactCard
+              name="Koen Browning"
+              role="Vice President"
+              team="Wellness & Health Services Team"
+              email="kbrowning@sdrventures.com"
+              phone="720.221.9220"
+              image="/img/people/KoenBrowning.jpg"
+            />
+            <ContactCard
+              name="Daria Meske"
+              role="Analyst"
+              team="Wellness & Health Services Team"
+              email="dmeske@sdrventures.com"
+              phone="720.221.9220"
+              image="/img/people/DariaMeske.jpg"
+            />
+          </div>
+        </Section>
+
+        <!-- References -->
+        <References references={references} />
+
+        <!-- Back to Top -->
+        <div class="text-center pt-8 border-t border-white/10">
+          <a
+            href="#main-content"
+            class="inline-flex items-center text-brand hover:text-brand-400 font-semibold transition-colors">
+            <svg
+              class="w-5 h-5 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+            </svg>
+            Back to Top
+          </a>
+        </div>
+      </div>
+
+      <!-- Desktop TOC Sidebar -->
+      <div class="lg:col-span-4">
+        <ReportTOC items={tocItems} />
+      </div>
+    </div>
+  </div>
+</ReportLayout>

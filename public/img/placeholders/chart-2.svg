@@ -1,0 +1,25 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#1e293b"/>
+  
+  <!-- Pie chart -->
+  <circle cx="300" cy="200" r="120" fill="#0ea5e9" opacity="0.7"/>
+  <path d="M 300 200 L 420 200 A 120 120 0 0 1 363.4 293.4 Z" fill="#06b6d4" opacity="0.7"/>
+  <path d="M 300 200 L 363.4 293.4 A 120 120 0 0 1 236.6 293.4 Z" fill="#38bdf8" opacity="0.7"/>
+  <path d="M 300 200 L 236.6 293.4 A 120 120 0 0 1 180 200 Z" fill="#7dd3fc" opacity="0.7"/>
+  
+  <!-- Legend -->
+  <rect x="480" y="100" width="20" height="20" fill="#0ea5e9" opacity="0.7"/>
+  <text x="510" y="115" fill="#e2e8f0" font-size="14">Under $25M (30%)</text>
+  
+  <rect x="480" y="140" width="20" height="20" fill="#06b6d4" opacity="0.7"/>
+  <text x="510" y="155" fill="#e2e8f0" font-size="14">$25M - $100M (35%)</text>
+  
+  <rect x="480" y="180" width="20" height="20" fill="#38bdf8" opacity="0.7"/>
+  <text x="510" y="195" fill="#e2e8f0" font-size="14">$100M - $500M (23%)</text>
+  
+  <rect x="480" y="220" width="20" height="20" fill="#7dd3fc" opacity="0.7"/>
+  <text x="510" y="235" fill="#e2e8f0" font-size="14">Over $500M (12%)</text>
+  
+  <!-- Title -->
+  <text x="400" y="30" fill="#e2e8f0" font-size="16" font-weight="bold" text-anchor="middle">Deal Size Distribution</text>
+</svg>

@@ -1,0 +1,23 @@
+---
+interface Reference {
+  id: string;
+  text: string;
+}
+
+interface Props {
+  references: Reference[];
+}
+
+const { references } = Astro.props;
+---
+
+<section id="references" class="scroll-mt-24 mb-16">
+  <h2 class="text-3xl font-bold mb-6 text-white">References</h2>
+  <ol class="space-y-3 text-sm text-slate-300">
+    {references.map((ref) => (
+      <li id={ref.id} class="scroll-mt-24">
+        <span class="text-slate-500">[{ref.id.replace('ref-', '')}]</span> {ref.text}
+      </li>
+    ))}
+  </ol>
+</section>

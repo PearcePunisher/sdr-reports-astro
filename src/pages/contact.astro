@@ -1,0 +1,55 @@
+---
+import ReportLayout from '../layouts/ReportLayout.astro';
+---
+
+<ReportLayout
+  title="Contact Us - SDR"
+  description="Get in touch with our team for healthcare M&A advisory services"
+  publishDate={new Date().toISOString()}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-4xl font-bold text-white mb-6">Contact Us</h1>
+    <p class="text-xl text-slate-300 mb-12">
+      Ready to discuss your transaction or strategic objectives? Our healthcare services team is here to help.
+    </p>
+
+    <div class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-white mb-6">Get in Touch</h2>
+      
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-2">General Inquiries</h3>
+          <p class="text-slate-300">
+            Email: <a href="mailto:info@sdr.com" class="text-brand hover:text-brand-400">info@sdr.com</a>
+          </p>
+          <p class="text-slate-300">
+            Phone: <a href="tel:+12125550000" class="text-brand hover:text-brand-400">+1 (212) 555-0000</a>
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-2">Office Location</h3>
+          <p class="text-slate-300">
+            123 Wall Street, Suite 4500<br>
+            New York, NY 10005
+          </p>
+        </div>
+
+        <div class="pt-6 border-t border-white/10">
+          <p class="text-sm text-slate-400">
+            This is a demo page. In a production site, you would include a contact form, map, and additional office locations.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 text-center">
+      <a 
+        href="/reports/wellness-health-services-2h-2025" 
+        class="text-brand hover:text-brand-400 font-semibold"
+      >
+        ← Back to Report
+      </a>
+    </div>
+  </div>
+</ReportLayout>
