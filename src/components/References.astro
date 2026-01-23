@@ -16,7 +16,7 @@ const { references } = Astro.props;
   <ol class="space-y-3 text-sm text-slate-300">
     {references.map((ref) => (
       <li id={ref.id} class="scroll-mt-24">
-        <span class="text-slate-500">[{ref.id.replace('ref-', '')}]</span> {ref.text}
+        <span class="text-brand">[{ref.id.replace('ref-', '')}]</span> {ref.text}
       </li>
     ))}
   </ol>
