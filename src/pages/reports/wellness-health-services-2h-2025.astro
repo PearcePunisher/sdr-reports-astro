@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import ReportLayout from "../../layouts/ReportLayout.astro";
 import ReportTOC from "../../components/ReportTOC.astro";
 import Section from "../../components/Section.astro";
@@ -7,6 +8,15 @@ import Callout from "../../components/Callout.astro";
 import SubscribeCTA from "../../components/SubscribeCTA.astro";
 import References from "../../components/References.astro";
 import ContactCard from "../../components/ContactCard.astro";
+
+// Import optimized images
+import heroImage from "../../assets/images/wellness2H25/hero-wellness-health-services.webp";
+import transactionsBySegment from "../../assets/images/wellness2H25/transactions-by-segment.png";
+import transactionsByType from "../../assets/images/wellness2H25/transactions-by-type.png";
+import transactionsByLocation from "../../assets/images/wellness2H25/transactions-by-location.png";
+import transactionActivity from "../../assets/images/wellness2H25/transaction-activity.png";
+import activeBuyers from "../../assets/images/wellness2H25/active-buyers.png";
+import wellnessHealthServices from "../../assets/images/wellness2H25/wellness-health-services.png";
 
 const tocItems = [
   { id: "what-to-know", title: "What to Know" },
@@ -194,10 +204,13 @@ const references = [
   <div class="relative border-b border-white/10 overflow-hidden">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0 z-0">
-      <img
-        src="/img/wellness2H25/hero-wellness-health-services.webp"
+      <Image
+        src={heroImage}
         alt=""
         class="w-full h-full object-cover"
+        loading="eager"
+        widths={[640, 1024, 1280, 1536, 1920]}
+        sizes="100vw"
       />
       <div
         class="absolute inset-0 bg-gradient-to-b from-[#0a1628]/90 via-[#0a1628]/85 to-[#0a1628]/95">
@@ -223,7 +236,7 @@ const references = [
           <a
             href="/reports/wellness-and-health-2h25.pdf"
             download
-            class="inline-flex items-center px-6 py-3 bg-brand hover:bg-brand-600 text-white font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]">
+            class="inline-flex items-center px-6 py-3 bg-brand hover:bg-brand-600 text-black font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]">
             <svg
               class="w-5 h-5 mr-2"
               fill="none"
@@ -650,21 +663,21 @@ const references = [
           </div>
 
           <ChartCard
-            src="/img/wellness2H25/transactions-by-segment.png"
+            src={transactionsBySegment}
             alt="Transaction volume by quarter, 2023-2025"
             caption="Figure 1: Quarterly transaction volume in wellness & health services, 2023-2025, by segment"
             bgColor="white"
             title="TRANSACTIONS BY SEGMENT"
           />
           <ChartCard
-            src="/img/wellness2H25/transactions-by-type.png"
+            src={transactionsByType}
             alt="Transaction volume by quarter, 2023-2025"
             caption="Figure 2: Quarterly transaction volume in wellness & health services, 2023-2025, by transaction type"
             bgColor="white"
             title="TRANSACTIONS BY TYPE"
           />
           <ChartCard
-            src="/img/wellness2H25/transactions-by-location.png"
+            src={transactionsByLocation}
             alt="Transaction volume by quarter, 2023-2025"
             caption="Figure 3: Quarterly transaction volume in wellness & health services, 2023-2025, by location"
             bgColor="white"
@@ -672,7 +685,7 @@ const references = [
           />
           <ChartCard
             title="Transaction Activity"
-            src="/img/wellness2H25/transaction-activity.png"
+            src={transactionActivity}
             alt="Recent transaction activity in wellness & health services"
             caption="Source: PitchBook Financial Data and Analytics\nNote: This data represents recorded transactions only, and is not all-inclusive. Nevertheless, they are typically representative of the industry.\n***: SDR advised transaction, contact us for more information"
           />
@@ -683,7 +696,7 @@ const references = [
           title="Active Buyers">
           <ChartCard
             title="Active Buyers"
-            src="/img/wellness2H25/active-buyers.png"
+            src={activeBuyers}
             alt="Most active buyers in wellness & health services, 2H 2025"
             caption="Source: PitchBook Financial Data and Analytics\nNote: This data represents recorded transactions only, and is not all-inclusive. Nevertheless, they are typically representative of the industry."
           />
@@ -693,7 +706,7 @@ const references = [
         <Section id="public-basket" title="Public Basket">
           <ChartCard
             title="Wellness & Health Services Segments VS. S&P 500"
-            src="/img/wellness2H25/wellness-health-services.png"
+            src={wellnessHealthServices}
             alt="Wellness & Health Services Segments VS. S&P 500"
             caption="Source: PitchBook Financial Data and Analytics"
           />
