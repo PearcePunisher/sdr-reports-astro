@@ -25,7 +25,7 @@ import businessowners from "../../assets/images/wellness2H25/businessowners.avif
 import fitnessActiveRecreation from "../../assets/images/wellness2H25/fitnessActiveRecreation.jpg";
 import overalluschanges from "../../assets/images/wellness2H25/overall-us-changes.jpg";
 import lowermiddlemarketmultiples from "../../assets/images/wellness2H25/lower-middle-market.jpg";
-import capitalbreakdownlower from "../../assets/images/wellness2H25/capitol-breakdown-lower.jpg";
+import capitalbreakdownlower from "../../assets/images/wellness2H25/capitol-breakdown-lower.png";
 import wellnesstransactions from "../../assets/images/wellness2H25/wellness-transactions.avif";
 
 const tocItems = [
@@ -51,12 +51,15 @@ const tocItems = [
     title: "The Future? What's Your Smart Ring Say?",
   },
   { id: "transaction-activity", title: "Transaction Activity" },
-  { id: "about", title: "About SDR" },
-  { id: "services", title: "Our Services" },
-  { id: "contacts", title: "Contacts" },
-  { id: "m&t-snapshot", title: "Overall U.S. M&T Snapshot" },
+  { id: "active-buyers", title: "Active Buyers" },
   { id: "public-basket", title: "Public Basket" },
   { id: "subscribe", title: "Subscribe" },
+  { id: "m&t-snapshot", title: "Overall U.S. M&T Snapshot" },
+    { id: "contacts", title: "Contacts" },
+  { id: "about", title: "About SDR" },
+  { id: "services", title: "Our Services" },
+  { id: "references", title: "References" },
+
 ];
 
 const references = [
@@ -785,7 +788,7 @@ const references = [
           <SubscribeCTA />
         </Section>
 
-        <Section id="m&-snapshot" title="Overall U.S. M&A Activity Snapshot">
+        <Section id="m&t-snapshot" title="Overall U.S. M&A Activity Snapshot">
           <ChartCard
             title="Overall U.S. M&T Activity"
             src={overalluschanges}
@@ -871,29 +874,34 @@ const references = [
                       src={wellnesstransactions}
                       alt="Wellness transactions logo"
                       class="w-full h-auto max-h-96 object-contain mx-auto"
+                       id="contacts"
                     />
                   </div>
                 </div>
               </div>
 
               <aside
-                class="w-full lg:w-80 bg-white/3 p-4 rounded-lg border border-white/5">
+               
+                class="w-full bg-white/3 p-4 rounded-lg border border-white/5">
                 <h4 class="text-teal-300 font-semibold mb-4">CONTACT US</h4>
-                <ContactCard
-                  name="Scott Mitchell"
-                  role="Managing Director"
-                  phone="720.221.9220"
-                  email="smitchell@sdrventures.com"
-                  image="/img/people/ScottMitchell.avif"
-                />
-                <div class="my-3"></div>
-                <ContactCard
-                  name="Koen Browning"
-                  role="Vice President"
-                  phone="720.221.9220"
-                  email="kbrowning@sdrventures.com"
-                  image="/img/people/KoenBrowning.avif"
-                />
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <ContactCard
+                    name="Scott Mitchell"
+                    role="Managing Director"
+                    team="Wellness & Health Services Team"
+                    phone="720.221.9220"
+                    email="smitchell@sdrventures.com"
+                    image="/img/people/ScottMitchell.avif"
+                  />
+                  <ContactCard
+                    name="Koen Browning"
+                    role="Vice President"
+                    team="Wellness & Health Services Team"
+                    phone="720.221.9220"
+                    email="kbrowning@sdrventures.com"
+                    image="/img/people/KoenBrowning.avif"
+                  />
+                </div>
               </aside>
             </div>
           </div>
@@ -1035,3 +1043,5 @@ const references = [
         </div>
       </div>
     </div>
+  </div></ReportLayout
+>

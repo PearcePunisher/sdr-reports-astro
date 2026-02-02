@@ -11,29 +11,34 @@ interface Props {
 const { name, role, team, email, phone, image } = Astro.props;
 
 // Format phone number for tel: link (remove spaces, dashes, parentheses)
-const phoneLink = phone.replace(/[\s\-\(\)]/g, '');
+const phoneLink = phone.replace(/[\s\-\(\)]/g, "");
 ---
 
 <div class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6">
-  {image && (
-    <div class="mb-4">
-      <img 
-        src={image} 
-        alt={name}
-        class="w-24 h-24 rounded-full object-cover border-2 border-brand/30"
-      />
-    </div>
-  )}
-  <h3 class="text-lg font-semibold text-white mb-1">{name}</h3>
-  <p class="text-sm text-slate-400 mb-3">{team ? `${role}, ${team}` : role}</p>
-  <div class="space-y-1 text-sm text-slate-300">
-    <p>
+  {
+    image && (
+      <div class="mb-4">
+        <img
+          src={image}
+          alt={name}
+          class="w-24 h-24 rounded-full object-cover border-2 border-brand/30"
+        />
+      </div>
+    )
+  }
+  <div class="space-y-2">
+    <h3 class="text-lg font-semibold text-white">{name}</h3>
+    <p class="text-sm text-slate-400">{role}</p>
+    {team && <p class="text-sm text-slate-400">{team}</p>}
+    <p class="text-sm text-slate-300">
       <a href={`mailto:${email}`} class="text-brand hover:text-brand-400">
         {email}
       </a>
     </p>
-    <p>
-      <a href={`tel:+${phoneLink.startsWith('1') ? phoneLink : '1' + phoneLink}`} class="text-brand hover:text-brand-400">
+    <p class="text-sm text-slate-300">
+      <a
+        href={`tel:+${phoneLink.startsWith("1") ? phoneLink : "1" + phoneLink}`}
+        class="text-brand hover:text-brand-400">
         {phone}
       </a>
     </p>
