@@ -1,0 +1,369 @@
+{
+    "_createdAt": "2026-01-30T18:57:22Z",
+    "_id": "63759010-8d35-4803-8ebd-312ee9cf6c8b",
+    "_rev": "IWGg7SNw7BhzqgYu93436p",
+    "_type": "report",
+    "_updatedAt": "2026-01-30T19:25:32Z",
+    "authors": [
+        {
+            "_key": "3c5081141322",
+            "_ref": "2b63eb17-21bf-4123-8994-e64c56fe9e32",
+            "_type": "reference"
+        },
+        {
+            "_key": "0ef521c3d026",
+            "_ref": "2b63eb17-21bf-4123-8994-e64c56fe9e32",
+            "_type": "reference"
+        }
+    ],
+    "category": "pet-industry",
+    "contactCards": {
+        "_type": "contactCardSection",
+        "heading": "Contact Cards Heading",
+        "layout": "grid",
+        "people": [
+            {
+                "_key": "fed212369159",
+                "_ref": "2b63eb17-21bf-4123-8994-e64c56fe9e32",
+                "_type": "reference"
+            },
+            {
+                "_key": "a68b2cbf96fd",
+                "_ref": "2b63eb17-21bf-4123-8994-e64c56fe9e32",
+                "_type": "reference"
+            },
+            {
+                "_key": "eade25fa7d0e",
+                "_ref": "2b63eb17-21bf-4123-8994-e64c56fe9e32",
+                "_type": "reference"
+            },
+            {
+                "_key": "c0ae141d2677",
+                "_ref": "2b63eb17-21bf-4123-8994-e64c56fe9e32",
+                "_type": "reference"
+            }
+        ]
+    },
+    "content": [
+        {
+            "_key": "8e741005d167",
+            "_type": "textSection",
+            "content": [
+                {
+                    "_key": "90d9ec9eb18d",
+                    "_type": "block",
+                    "children": [
+                        {
+                            "_key": "732366e95d93",
+                            "_type": "span",
+                            "marks": [],
+                            "text": "Text Section Content Text Section Content Text Section Content Text Section Content Text Section Content Text Section Content Text Section Content Text Section Content Text Section Content Text Section Content Text Section Content Text Section Content Text Section Content Text Section Content "
+                        }
+                    ],
+                    "markDefs": [],
+                    "style": "normal"
+                }
+            ],
+            "heading": "Text Section Heading"
+        },
+        {
+            "_key": "14e23b8a914b",
+            "_type": "chartSection",
+            "chartType": "bar",
+            "data": "{\nA: 50,\nB: 60,\nC: 10,\nD: 32,\nE: 40,\nF: 14\n}",
+            "description": "Bar Chart Section Description Bar Chart Section Description Bar Chart Section Description Bar Chart Section Description Bar Chart Section Description Bar Chart Section Description Bar Chart Section Description ",
+            "title": "Bar Chart Section Title"
+        },
+        {
+            "_key": "caa8e1504094",
+            "_type": "chartSection",
+            "chartImage": {
+                "_type": "image",
+                "alt": "Chart Image Alternative Text",
+                "asset": {
+                    "_ref": "image-cd5ad43bb155d890e17794e3184ce2bf80250e83-850x640-webp",
+                    "_type": "reference"
+                }
+            },
+            "chartType": "scatter",
+            "description": "Chart Image Description Chart Image Description Chart Image Description Chart Image Description Chart Image Description Chart Image Description Chart Image Description Chart Image Description Chart Image Description Chart Image Description ",
+            "title": "Chart Image Title"
+        },
+        {
+            "_key": "d1917cdb5ff7",
+            "_type": "calloutSection",
+            "content": [
+                {
+                    "_key": "d3811275a135",
+                    "_type": "block",
+                    "children": [
+                        {
+                            "_key": "70044aa10a27",
+                            "_type": "span",
+                            "marks": [],
+                            "text": "Callout Section Info Content Callout Section Info Content Callout Section Info Content Callout Section Info Content Callout Section Info Content Callout Section Info Content Callout Section Info Content Callout Section Info Content Callout Section Info Content Callout Section Info Content "
+                        }
+                    ],
+                    "markDefs": [],
+                    "style": "normal"
+                }
+            ],
+            "title": "Callout Section Info",
+            "type": "info"
+        },
+        {
+            "_key": "a02adbeb2d08",
+            "_type": "calloutSection",
+            "content": [
+                {
+                    "_key": "6214d5abf8c3",
+                    "_type": "block",
+                    "children": [
+                        {
+                            "_key": "b54bc41233fe",
+                            "_type": "span",
+                            "marks": [],
+                            "text": "Callout Section Title Warning Callout Section Title Warning Callout Section Title Warning Callout Section Title Warning Callout Section Title Warning Callout Section Title Warning Callout Section Title Warning Callout Section Title Warning Callout Section Title Warning "
+                        }
+                    ],
+                    "markDefs": [],
+                    "style": "normal"
+                }
+            ],
+            "title": "Callout Section Title Warning",
+            "type": "warning"
+        },
+        {
+            "_key": "eb70b1bb7332",
+            "_type": "calloutSection",
+            "content": [
+                {
+                    "_key": "ec50f424a868",
+                    "_type": "block",
+                    "children": [
+                        {
+                            "_key": "2e38f752b320",
+                            "_type": "span",
+                            "marks": [],
+                            "text": "Callout Section Title Success Content Callout Section Title Success Content Callout Section Title Success Content Callout Section Title Success Content Callout Section Title Success Content Callout Section Title Success Content Callout Section Title Success Content Callout Section Title Success Content "
+                        }
+                    ],
+                    "markDefs": [],
+                    "style": "normal"
+                }
+            ],
+            "title": "Callout Section Title Success",
+            "type": "success"
+        },
+        {
+            "_key": "54992ef26839",
+            "_type": "calloutSection",
+            "content": [
+                {
+                    "_key": "96d2bbb6c74d",
+                    "_type": "block",
+                    "children": [
+                        {
+                            "_key": "5817db0030b7",
+                            "_type": "span",
+                            "marks": [],
+                            "text": "Callout Error Title Content Callout Error Title Content Callout Error Title Content Callout Error Title Content Callout Error Title Content Callout Error Title Content Callout Error Title Content Callout Error Title Content Callout Error Title Content Callout Error Title Content "
+                        }
+                    ],
+                    "markDefs": [],
+                    "style": "normal"
+                }
+            ],
+            "title": "Callout Error Title",
+            "type": "error"
+        },
+        {
+            "_key": "faa6a2e00963",
+            "_type": "calloutSection",
+            "content": [
+                {
+                    "_key": "60d66629c836",
+                    "_type": "block",
+                    "children": [
+                        {
+                            "_key": "bbe8f46acab5",
+                            "_type": "span",
+                            "marks": [],
+                            "text": "Callout Note Title Content Callout Note Title Content Callout Note Title Content Callout Note Title Content Callout Note Title Content Callout Note Title Content Callout Note Title Content Callout Note Title Content Callout Note Title Content Callout Note Title Content Callout Note Title Content "
+                        }
+                    ],
+                    "markDefs": [],
+                    "style": "normal"
+                }
+            ],
+            "title": "Callout Note Title",
+            "type": "note"
+        },
+        {
+            "_key": "e161828642bc",
+            "_type": "ctaSection",
+            "buttonText": "CTA Button Text Primary Style",
+            "buttonUrl": "https://buttonurl.com",
+            "description": "CTA Section Heading Description CTA Section Heading Description CTA Section Heading Description CTA Section Heading Description CTA Section Heading Description ",
+            "heading": "CTA Section Heading Primary Style",
+            "variant": "primary"
+        },
+        {
+            "_key": "7c335a60b0114359de113610d097d6cb",
+            "_type": "ctaSection",
+            "buttonText": "CTA Button Text Secondary Style",
+            "buttonUrl": "https://buttonurl.com",
+            "description": "CTA Section Heading Secondary Style Description",
+            "heading": "CTA Section Heading Secondary Style",
+            "variant": "secondary"
+        },
+        {
+            "_key": "663a4bc3f0ddd1c94a44f1d5ad7fcabd",
+            "_type": "ctaSection",
+            "buttonText": "CTA Button Text Outline Style",
+            "buttonUrl": "https://buttonurl.com",
+            "description": "CTA Section Heading Outline Style Description",
+            "heading": "CTA Section Heading Outline Style",
+            "variant": "outline"
+        },
+        {
+            "_key": "ce84a01cd682",
+            "_type": "imageSection",
+            "caption": "Image Selection Caption Full Width",
+            "image": {
+                "_type": "image",
+                "alt": "Image Selection Full Width Alt Text",
+                "asset": {
+                    "_ref": "image-700b9405482e201d44a2efbecb3e317bb5fdac6b-1280x1024-jpg",
+                    "_type": "reference"
+                }
+            },
+            "layout": "full"
+        },
+        {
+            "_key": "d474d164cd8e",
+            "_type": "imageSection",
+            "caption": "Image Selection Wide",
+            "image": {
+                "_type": "image",
+                "alt": "Image Selection Wide Alt Text",
+                "asset": {
+                    "_ref": "image-17223d3555917b4cf73ade5544236ce1062eed35-1280x1024-heif",
+                    "_type": "reference"
+                }
+            },
+            "layout": "wide"
+        },
+        {
+            "_key": "bec86f6d0446",
+            "_type": "imageSection",
+            "caption": "Image Selection Normal Caption",
+            "image": {
+                "_type": "image",
+                "alt": "Image Selection Normal Alt Text",
+                "asset": {
+                    "_ref": "image-17223d3555917b4cf73ade5544236ce1062eed35-1280x1024-heif",
+                    "_type": "reference"
+                }
+            },
+            "layout": "normal"
+        },
+        {
+            "_key": "9bc952a07ed0",
+            "_type": "imageSection",
+            "caption": "Image Selection Small Caption",
+            "image": {
+                "_type": "image",
+                "alt": "Image Selection Small Alt Text",
+                "asset": {
+                    "_ref": "image-17223d3555917b4cf73ade5544236ce1062eed35-1280x1024-heif",
+                    "_type": "reference"
+                }
+            },
+            "layout": "small"
+        },
+        {
+            "_key": "ccd3a6dae6d2",
+            "_type": "tocSection",
+            "autoGenerate": true,
+            "heading": "Auto-Generated Table of Contents"
+        },
+        {
+            "_key": "a4a6bb46037c",
+            "_type": "tocSection",
+            "autoGenerate": false,
+            "heading": "Manual Table of Contents",
+            "items": [
+                {
+                    "_key": "7cc5234f7e7f",
+                    "title": "TOC Title 1"
+                },
+                {
+                    "_key": "d45e63623dd7",
+                    "title": "TOC Title 2"
+                }
+            ]
+        }
+    ],
+    "excerpt": " This is the excerpt section This is the excerpt section This is the excerpt section This is the excerpt section This is the excerpt section This is the excerpt section This is the excerpt section This is the excerpt section This is the excerpt section This is the excerpt section ",
+    "featuredImage": {
+        "_type": "image",
+        "alt": "This is image alt text for the featured image",
+        "asset": {
+            "_ref": "image-7b9139d53fdb891967da71370bc30ab4ff9fd695-1610x1604-webp",
+            "_type": "reference"
+        }
+    },
+    "keyTakeaways": {
+        "_type": "keyTakeawaysSection",
+        "heading": "Key Takeaways",
+        "takeaways": [
+            {
+                "_key": "50dcd21ca61e",
+                "content": "Takeaway Content 1",
+                "title": "Takeaway Title 1"
+            },
+            {
+                "_key": "6d52342f6a4f",
+                "content": "Takeaway Content 2",
+                "title": "Takeaway Title 2"
+            },
+            {
+                "_key": "f7d1c6b6dbf0",
+                "content": "Takeaway Content 3",
+                "title": "Takeaway Title 3"
+            }
+        ]
+    },
+    "publishedAt": "2029-02-12T22:21:00.000Z",
+    "references": {
+        "_type": "referencesSection",
+        "heading": "References Heading",
+        "references": [
+            {
+                "_key": "caa590084d2a",
+                "citation": "Citation 1",
+                "url": "HTTPS://URL1.COM"
+            },
+            {
+                "_key": "1a7cac30cf44",
+                "citation": "CITATION2",
+                "url": "HTTPS://URL2.COM"
+            },
+            {
+                "_key": "8016038b4cff",
+                "citation": "CITATION3",
+                "url": "HTTPS://URL3.COM"
+            }
+        ]
+    },
+    "slug": {
+        "_type": "slug",
+        "current": "dummy-report"
+    },
+    "subtitle": "Shows Styling",
+    "tags": [
+        "Tags"
+    ],
+    "title": "Dummy Report"
+}

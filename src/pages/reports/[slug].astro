@@ -1,0 +1,58 @@
+---
+// ./src/pages/post/[slug].astro
+import type { SanityDocument } from "@sanity/client";
+import { loadQuery } from "../../sanity/lib/load-query.ts";
+import PortableText from "../../components/PortableText.astro";
+import References from "../../components/References.astro";
+import ReportTOC from "../../components/ReportTOC.astro";
+import ContactCard from "../../components/ContactCard.astro";
+
+export async function getStaticPaths() {
+  const { data: reports } = await loadQuery<SanityDocument[]>({
+    query: `*[_type == "report"]`,
+  });
+
+  return reports.map(({ slug }) => {
+    return {
+      params: {
+        slug: slug.current,
+      },
+    };
+  });
+}
+
+const { params } = Astro;
+
+
+
+//*[_type == "report" && slug.current == $slug][0]{title,authors[]->{ name, slug, image, role, bio, email}}
+//https://www.sanity.io/docs/content-lake/how-queries-work
+const { data: report } = await loadQuery<{ title: string; subtitle:string; featuredImage:any[]; contactcard: any[] }>({
+  query: `*[_type == "report" && slug.current == $slug][0]`,
+  params,
+});
+// this is the real name contactCards in the the report definiton
+//add this back <ReportTOC items={report.reportTOC} />
+---
+
+<h1>A post about {report.title}</h1>
+<hr>
+<p>subtitle</p>
+<p>{report.subtitle}</p>
+<hr>
+
+<p>contactcard</p>
+<p>{report.contactcard}</p>
+<hr>
+subtitle
+<hr>
+<p>contactcard</p>
+<p>{JSON.stringify(report.contactcard)}</p>
+<hr>
+
+
+<p>{JSON.stringify(report)}</p>
+
+
+
+
