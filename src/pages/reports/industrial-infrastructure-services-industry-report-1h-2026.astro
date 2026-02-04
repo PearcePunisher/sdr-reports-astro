@@ -10,7 +10,7 @@ import References from "../../components/References.astro";
 import ContactCard from "../../components/ContactCard.astro";
 
 // Import optimized images
-import heroImage from "../../assets/images/wellness2H25/hero-wellness-health-services.jpg";
+import industiralreporthero from "../../assets/images/industrial1H2026/industiral_report_hero.avif";
 import transactionsBySegment from "../../assets/images/wellness2H25/transactions-by-segment.avif";
 import transactionsByType from "../../assets/images/wellness2H25/transactions-by-type.avif";
 import transactionsByLocation from "../../assets/images/wellness2H25/transactions-by-location.png";
@@ -28,199 +28,277 @@ import lowermiddlemarketmultiples from "../../assets/images/wellness2H25/lower-m
 import capitalbreakdownlower from "../../assets/images/wellness2H25/capitol-breakdown-lower.png";
 import wellnesstransactions from "../../assets/images/wellness2H25/wellness-transactions.avif";
 
+// Titles
 const tocItems = [
   {
     id: "what-to-know",
-    title: "What to WELLNESS & HEALTH SERVICES 2H25: WHAT TO KNOW",
+    title: "INDUSTRIAL	&	INFRASTRUCTURE	SERVICES 1H26: WHAT TO KNOW",
   },
+
   {
-    id: "heal-thyself",
-    title: "Consumer, Heal Thyself: The Self-Care and Wellness Revolution",
+    id: "time-of-renewal",
+    title: "A Time of Renewal for America’s Power Grid",
   },
+
+  { id: "problemhomegrown", title: "Homegrown Problem, Homemade Solutions" },
+
   {
-    id: "digitizing-health-care",
-    title: "The Computer Will See You Now: Digitizing Health Care",
+    id: "power-bill",
+    title: "The Power Bill, Investment Up and Down the Market",
   },
-  { id: "influencers-and-marketing", title: "Psst! Influencers and Marketing" },
-  {
-    id: "supplementing-the-bottom-line",
-    title: "Supplementing the Bottom Line: Mergers & Acquisitions",
-  },
-  {
-    id: "the-future-whats-your-smart-ring-say",
-    title: "The Future? What's Your Smart Ring Say?",
-  },
+
+  { id: "rubber", title: "Rubber, Meet Road: Mergers & Acquisitions" },
+
+  { id: "shedding", title: "Shedding Some Light, What’s Ahead?" },
+
   { id: "transaction-activity", title: "Transaction Activity" },
+
   { id: "active-buyers", title: "Active Buyers" },
+
   { id: "public-basket", title: "Public Basket" },
+
   { id: "subscribe", title: "Subscribe" },
-  { id: "m&t-snapshot", title: "Overall U.S. M&T Snapshot" },
+
+  { id: "m&a-snapshot", title: "Overall U.S. M&A Snapshot" },
+
   { id: "contacts", title: "Contacts" },
-  { id: "about", title: "About SDR" },
+
+  {
+    id: "comprehensive",
+    title: "COMPREHENSIVE INDUSTRIAL & INFRASTRUCTURE SERVICES EXPERTISE",
+  },
+
+  { id: "transaction", title: "SELECT TRANSACTION EXPERIENCE" },
+
   { id: "services", title: "Our Services" },
+
   { id: "references", title: "References" },
 ];
 
 const references = [
   {
     id: "ref-1",
-    text: `"The $65 Billion Pulse: How Wearable AI and Telemedicine are Redefining the Future of Healthcare," WRAL News via Market minute, Dec. 24, 2025.`,
+    text: "“Is the U.S. Headed for a Power Grid Crisis?” Forbes, Rober Rapier, Sep. 7, 2025 	https://www.forbes.com/sites/rrapier/2025/09/07/is-the-us-headed-for-a-power-grid-crisis/",
   },
   {
     id: "ref-2",
-    text: `"Healthy Sodas Like Poppi, Olipop Are Drawing PepsiCo's and Coca-Cola's Attention," Bloomberg, Deena Shanker, Apr. 25, 2025.`,
+    text: "“Power Outages by State,” World Population Review, accessed Jan. 2026 https://worldpopulationreview.com/state-	rankings/power-outages-by-state",
   },
   {
     id: "ref-3",
-    text: `"M&A Sector Spotlight: Healthcare," Dykema, accessed Dec. 31, 2025.`,
+    text: "“Power Outages Getting Longer as Extreme Weather Takes Larger Toll, Report Says,” Utility Dive, Meris Lutz, Nov. 17, 2025  https://www.utilitydive.com/news/power-outages-extreme-weather-jd-power/805658/",
   },
   {
     id: "ref-4",
-    text: `"Health Care Industry Tends to Watch in 2025," Cornell University Brooks Public Policy, staff, Oct. 22, 2025.`,
+    text: "“Software, Hardware, Innovation All Needed to Upgrade the Power Grid,” Power Magazine, Darrell Proctor, Feb. 10, 	2025  https://www.powermag.com/software-hardware-innovation-all-needed-to-upgrade-the-power-grid/",
   },
   {
     id: "ref-5",
-    text: `"2025 Is Shaping Up To Be a Year of Self-Care. Call It the White Lotus Effect," Inc., Ali Donaldson, Mar. 21, 2025.`,
+    text: "“Investor-Owned Utilities Could Spend $1.1T Between 2025 and 2029: EEI,” Utility Dive, Robert Walton, Oct. 9, 	2025  https://www.utilitydive.com/news/investor-owned-utilities-spending-more-than-ever-eei/802315/",
   },
   {
     id: "ref-6",
-    text: `"The Future of Healthcare Is Digital: Unlocking the Potential of Mobile Health and E-Health Solutions," National Institutes of Health, Center for Biotechnology Information, Daniele Giansanti, Apr. 3, 2025.`,
+    text: "“Grid Hardening Grants,” U.S. Department of Energy, accessed Jan. 2026 https://www.energy.gov/oe/grid-	hardening-grants",
   },
   {
     id: "ref-7",
-    text: `"How the Rise in Digital and Home Healthy Will Transform Healthcare," Gensler, Bony Slater and Randy Guillot, Mar. 25, 2025.`,
+    text: "“How the Lights Went Out in Spain,” Wall Street Journal, Gabriel Calzada and Manuel Fernandez Ordonez, Apr. 30, 	2025 https://tinyurl.com/39vrzvk7",
   },
   {
     id: "ref-8",
-    text: `"Top 60 Botox Influencers in 2025," FeedSpot, staff, Dec. 7, 2025.`,
+    text: "“Blackout in Spain and Portugal ‘First of its Kind,’ Report Finds,” BBC, Ruth Comerford and Guy Hedgecoe, Oct. 3, 	2025 https://www.bbc.com/news/articles/cg7d4vjdlrmo",
   },
   {
     id: "ref-9",
-    text: `"The Rise of TikTok Facial Filler Influencers, Implications for Demand and Practice," Skin, The Journal of Cutaneous Medicine, Sheila Sharifi et. al., Jan. 2025.`,
+    text: "“After Spain’s Blackout, Critics Blamed Renewable Energy. It’s Part of a Bigger Attack,” NPR, Julia Simon, Oct. 8, 	2025  https://www.npr.org/2025/10/08/nx-s1-5534949/spain-blackout-misinformation-renewable-energy",
   },
   {
     id: "ref-10",
-    text: `"With 'Baby Botox,' Young Adults Strive to Keep Wrinkles From Ever Forming," NPR, Sarah Boden, Nov. 17, 2025.`,
+    text: "“The Rivers Run Dry and the Lights Go Out: A Warming Nation’s Doom Loop,” New York Times, Julie Turkewitz and 	Jose Maria Leon Cabrera, Dec. 30, 2024 https://www.nytimes.com/2024/12/30/world/americas/ecuador-	hydropower-drought.html",
   },
   {
     id: "ref-11",
-    text: `"The Country Is in the Middle of a Med Spa Boom," Marketplace, Kai Ryssdal and Sean McHenry, Feb. 27, 2025.`,
+    text: "“The Nation’s Largest Utility Agrees to Pay More Than $55 Million for Two Wildfires,” NPR from the Associated 	Press, Apr. 12, 2022 https://www.npr.org/2022/04/12/1092259419/california-wildfires-pacific-gas-electric-55-million",
   },
   {
     id: "ref-12",
-    text: `"Betting on the Face Card: Building Out Aesthetic Healthcare Brands," Middle Market Growth, Anastasia Donde, Oct. 22, 2024.`,
+    text: "““PG&E Reaches $100 Million Shareholder Settlement Over 2017, 2018 California Wildfires,” CNBC, Jan. 12, 2026 	https://www.cnbc.com/2026/01/12/pge-reaches-100-million-shareholder-settlement-over-2017-2018-california-	wildfires-.html#:~:text=The%20parent%20of%20Pacific%20Gas,California%20in%202017%20and%202018.",
   },
   {
     id: "ref-13",
-    text: `"An Analysis of Telehealth in a Post-Pandemic Rural, Midwestern Community: Increased Comfort and a Preference for Primary Care, National Institutes of Health Center for Biotechnology Information, Chase Salmon et. al., Feb. 2025.`,
+    text: "“Utility Giant PG&E Agrees to $45 Million Settlement Related to California’s Second-Largest Wildfire,” CNN, Taylor 	Romine and Aya Elamroussi, Jan. 26, 2024 https://www.cnn.com/2024/01/26/us/pacific-gas-electric-settlement-dixie-	fire-california",
   },
   {
     id: "ref-14",
-    text: `"The Future of Telemedicine and How It Impacts Healthcare Careers," Hawaii Medical College, accessed Dec. 27, 2025.`,
+    text: "“Why Xcel Energy is Increasingly Turning to Power Shutoffs During Strong Wind Events,” Rocky Mountain PBS, Dec. 	16, 2025 https://www.rmpbs.org/blogs/science-environment/xcel-energy-wind-power-shutoff",
   },
   {
     id: "ref-15",
-    text: `"When Did Telehealth Become Popular," Brain Health Center USA, staff, Oct. 30, 2025.`,
+    text: "“Electricity Grids Creak as AI Demands Soar,” BBC, Chris Baraniuk, May 20, 2024 	https://www.bbc.com/news/articles/cj5ll89dy2mo",
   },
   {
     id: "ref-16",
-    text: `"Investing in Telemedicine and Telehealth Stocks," The Motley Fool, Keith Speights, Nov. 28, 2025.`,
+    text: "“Data Centers Burned More Power in 2022 Than 185 of the World’s 195 Countries,” Navatis, Nov. 28, 2024 	https://navitassemi.com/data-centers-burned-more-power-in-2022-than-185-of-the-worlds-195-countries/",
   },
   {
     id: "ref-17",
-    text: `"Teladoc Health Acquires Catapult Health for $65M to Boost Chronic Condition Management, At-Home Testing," Fierce Healthcare, Emma Beavins, Feb. 5, 2025.`,
+    text: "“America’s Biggest Power Grid Operator Has an AI Problem – Too Many Data Centers,” MSN, Katherine Blunt and 	Jennifer Hiller, Jan. 12, 2026 https://www.msn.com/en-us/technology/artificial-intelligence/america-s-biggest-	power-grid-operator-has-an-ai-problem-too-many-data-centers/ar-AA1U5ux8?ocid=BingNewsVerp",
   },
   {
     id: "ref-18",
-    text: `"Telecare  Company Profile," Aug. 19, 2025.`,
+    text: "“Funding the Growth in the US Power Sector,” Deloitte, Marlene Motyka et. al., Feb. 29, 2025 	https://www.deloitte.com/us/en/insights/industry/power-and-utilities/funding-growth-in-us-power-sector.html",
   },
   {
     id: "ref-19",
-    text: `"Online Pharmacies: A Double-Edged Sword," National Institutes of Health Center for Biotechnology Information, staff, Feb. 24, 2025.`,
+    text: "“Electricity Prices Are Climbing More Than Twice as Fast as Inflation,” NPR, Scott Horsley, Aug. 18, 2025 	https://www.npr.org/2025/08/16/nx-s1-5502671/electricity-bill-high-inflation-ai",
   },
   {
     id: "ref-20",
-    text: `"2 in 3 Physicians Are Using Health AI  Up 78% From 2023," American Medical Association, Tanya Albert Henry, Feb. 26, 2025.`,
+    text: "“Department of Energy Release Report on Evaluating U.S. Grid Reliability and Security,” U.S. Department of Energy, 	Jul. 7, 2025 https://www.energy.gov/articles/department-energy-releases-report-evaluating-us-grid-reliability-and-	security",
   },
   {
     id: "ref-21",
-    text: `"Telemedicine Market  By Component, By Specialty, By End Use  Global Forecast 2025-2032," Global Market Insights, staff, Feb. 2025.`,
+    text: "“2025-2030: $1.4 Trillion in Energy Infrastructure Opportunities,” LandGate, Aug. 26, 2025 	https://www.landgate.com/news/2025-2030-1-4-trillion-in-energy-infrastructure-opportunities",
   },
   {
     id: "ref-22",
-    text: `"Wearable Technology and Its Potential Role in Cardiovascular Health Monitoring and Disease Management," National Institutes of Health Center for Biotechnology Information, Abubakar Nazir et. al., Nov. 19, 2025.`,
+    text: "“US Utilities on Dealmaking Spree to Blockbuster 2025,” Reuters, Dec. 8, 2025 	https://www.reuters.com/business/energy/us-utilities-dealmaking-spree-blockbuster-2025-2025-05-19/",
   },
   {
     id: "ref-23",
-    text: `"Wearable Medical Devices Market (2025-2030)," Grand View Research, accessed Dec. 27, 2025.`,
+    text: "“How COVID-19 Impacted Supply Chains and What Comes Next,” EY, Sean Harapko, May 27, 2025 	https://www.ey.com/en_us/insights/supply-chain/how-covid-19-impacted-supply-chains-and-what-comes-next",
   },
   {
     id: "ref-24",
-    text: `"Best Red Light Therapy Devices on the Market Today," Jacuzzi, accessed Dec. 17, 2025.`,
+    text: "“Navigating Trade in 2026: 5 Strategic Shifts in Business Decisions,” World Economic Forum, Jan. 15, 2026 	https://www.weforum.org/stories/2026/01/navigating-trade-in-2026/",
   },
   {
     id: "ref-25",
-    text: `"The Evolution of Fitness Tracking," The Medical Futurist, Pranavsingh Dhunnoo, Sep. 23, 2025.`,
+    text: "“These 169 Industries Are Being Hit by the Global Chip Shortage,” Yahoo Finance, Daniel Howley, Apr. 25, 2021 	https://finance.yahoo.com/news/these-industries-are-hit-hardest-by-the-global-chip-shortage-122854251.html",
   },
   {
     id: "ref-26",
-    text: `"How Influencers Are Reshaping the Wellness Industry," Digital Voices, Neve Fear-Smith, Jan. 7, 2025.`,
+    text: "“18,000 Reasons It’s So Har to Build a Chip Factor in America,” New York Times, Peter S. Goodman, Dec. 4, 2025 	https://www.nytimes.com/2025/12/04/business/tsmc-phoenix-fab.html",
   },
   {
     id: "ref-27",
-    text: `"The $2 Trillion Global Wellness Market Gets a Millennial and Gen Z Glow-Up," McKinsey & Company, May 29, 2025.`,
+    text: "“Edison Neglected Maintenance of its Aging Transmission Lines Before the Jan. 7 Fires. Now It’s Trying to Catch 	Up,” Los Angeles Times, Melody Petersen, Dec. 17, 2025 https://www.latimes.com/environment/story/2025-12-	17/edison-neglected-maintenance-of-its-aging-transmission-lines-before-jan-7-fires-now-its-trying-to-catch-up",
   },
   {
     id: "ref-28",
-    text: `"TikTok Shows Dominance Among Young Americans Amid Looming US Ban, New Northeastern Research Shows," Northeastern University Global News, Cyrus Moullton, Jan. 16, 2025.`,
+    text: "“Three Mile Island Nuclear Plan Reboot Fast-Tracked to 2027,” Reuters, Laila Kearney, Jun. 26, 2025 	https://www.reuters.com/sustainability/climate-energy/shut-three-mile-island-nuclear-plant-may-restart-2027-owner-	says-2025-06-25/",
   },
   {
     id: "ref-29",
-    text: `"Why Food Makers Aren't Afraid of GLP-1 Drugs," Food Dive, Christopher Doering, Feb. 27, 2025.`,
+    text: "“The Real AI Talent War Is for Plumbers and Electricians,” Wired, Caroline Haskins, Jan. 15, 2026 	https://www.wired.com/story/why-there-arent-enough-electricians-and-plumbers-to-build-ai-data-centers/",
   },
   {
     id: "ref-30",
-    text: `"Chipotle Unveils New 'GLP-1 Friendly' Menu  Here's How Ozempic Is Changing Fast Food Restaurants Forever," New York Post, Brooke Steinberg, Dec. 22, 2025.`,
+    text: "“Mergers and Acquisitions Are a Key Element of Sonepar’s Growth Strategy,” Sonepar, accessed Jan. 2026 	https://www.sonepar.com/en/about/strategy/acquisitions",
   },
   {
     id: "ref-31",
-    text: `"Chipotle Launches 4-Ounce Bowl of Meat for the Ozempic Age," Fast Company, Grace Snelling, Dec. 18, 2025.`,
+    text: "“Amazon Is Buying America’s First New Copper Output in More Than a Decade,” Wall Street Journal, Ryan 	Dezember, Jan. 15, 2026 https://www.wsj.com/finance/commodities-futures/amazon-is-buying-americas-first-new-	copper-output-in-more-than-a-decade-516a0a1f?mod=hp_lead_pos7",
   },
   {
     id: "ref-32",
-    text: `"Starbucks Adding (Wellness) Shots to the Menu," Fast Casual, May 29, 2025.`,
+    text: "“AI Data Centers, Desperate for Electricity, Are Building Their Own Power Plants,” Wall Street Journal, Jennifer Hiller, Oct. 15, 2025 https://tinyurl.com/44xb3z9b",
   },
   {
     id: "ref-33",
-    text: `"PepsiCo Acquires Poppi in $1.95bn Deal as Functional Beverage Market Gains Private Equity Interest," Private Equity Insights, Mar. 17, 2025.`,
+    text: "“The Factory Workers Who Build the Power Grid by Hand,” Wall Street Journal, Jennifer Hiller, Dec. 16, 2025 	https://tinyurl.com/d67frxjb",
   },
   {
     id: "ref-34",
-    text: `"Herbalife to Acquire Assets of Pro2col Health and Pruvit Ventures, and Controlling Ownership Interest in Link BioSciences," Herbalife news release, Mar. 12, 2025.`,
+    text: "“Reshoring, Technology Diversification Are Reshaping the Future of Energy Storage,” Utility Dive, Jeremy Furr, Nov. 	13, 2025 https://www.utilitydive.com/news/reshoring-technology-diversification-energy-storage/805195/",
   },
   {
     id: "ref-35",
-    text: `"The Merger Between Kimberly-Clark and Kenvue Clearly Favors One Party," Seeking Alpha, Daniel Jones, Nov. 9, 2025.`,
+    text: "“Siemens Opens $190M Fort Worth Manufacturing Hub to Build Equipment Powering America’s AI/Data Center 	Infrastructure,” Dallas Innovates, Lance Murray, Mar. 6, 2025 https://dallasinnovates.com/siemens-opens-new-190m-	manufacturing-hub-in-fort-worth/",
   },
   {
     id: "ref-36",
-    text: `"Oura Reaches $11 Billion Valuation With New $900 Million Fundraise," CNBC, Jaures Yip, Oct. 14, 2025.`,
+    text: "“The Infrastructure Moment,” McKinsey & Company, Sep. 9, 2025 	https://www.mckinsey.com/industries/infrastructure/our-insights/the-infrastructure-moment",
   },
   {
     id: "ref-37",
-    text: `"The Peloton Story: Everything You Need to Know," The Verge, staff, Oct. 1, 2025.`,
+    text: "“Substation Maintenance Market: A Comprehensive Analysis of the Industry,” OpenPR news release, Jan. 15, 2026 	https://www.openpr.com/news/4349112/substation-maintenance-market-a-comprehensive-analysis-of",
   },
   {
     id: "ref-38",
-    text: `"FDA Approves Wegovy Pill for Weight Loss: What to Know," ABC News, Yi-Jin Yu, Dec. 23, 2025.`,
+    text: "“Cable Maintenance Services Market,” Future Market Insights, Jan. 12, 2026 	https://www.futuremarketinsights.com/reports/cable-maintenance-services-market",
   },
   {
     id: "ref-39",
-    text: `"From Fitness to Recovery: Wearables Show Unexpected Benefits in Addiction Care," American Council on Science and Health, Chuck Dinerstein, Oct. 6, 2025.`,
+    text: "“The Eyes and Ears of the Power Grid,” PV Magazine, Jan. 13, 2026 https://www.pv-magazine.com/2026/01/15/the-	eyes-and-ears-of-the-power-grid/",
   },
   {
     id: "ref-40",
-    text: `"The Future of Fitness: ACSM Announces Top Trends for 2026," American College of Sports Medicine, Oct. 22, 2025.`,
+    text: "“From Ground to Treetop – No Challenge,” PowerGrid Services, website, accessed Jan. 2026 	https://powergridservices.com/services/vegetation-management/",
+  },
+  {
+    id: "ref-41",
+    text: "“Transmission Line Vegetation Management,” Federal Energy Regulatory Commission, accessed Jan. 2026 	https://www.ferc.gov/transmission-line-vegetation-management",
+  },
+  {
+    id: "ref-42",
+    text: "“Inside the HVAC Equipment M&A Surge: Data Centers, Efficiency, and Private Equity,” Air Conditioning Heating 	Refrigeration News, Justin Wolfort, Oct. 27, 2025 https://www.achrnews.com/articles/165427-inside-the-hvac-	equipment-m-and-a-surge-data-centers-efficiency-and-private-equity",
+  },
+  {
+    id: "ref-43",
+    text: "“Cooling the Cloud: Data Center Trends Heat Up Opportunities for HVAC Contractors,” Contracting Business, 	Nicole Krawcke, Jul. 7, 2025 https://www.contractingbusiness.com/commercial-hvac/article/55296614/cooling-the-	cloud-data-center-trends-heat-up-opportunities-for-hvac-contractors",
+  },
+  {
+    id: "ref-44",
+    text: "“MacLean Power Systems and Power Grid Components Join Forces to Form Leading Supplier of Engineered 	Components and Solutions for Utility Infrastructure,” Yahoo Finance via BusinessWire, Dec. 10, 2025 	https://finance.yahoo.com/news/maclean-power-systems-power-grid-130000619.html",
+  },
+  {
+    id: "ref-45",
+    text: "“Blackstone Approaches $4B Acquisition of MacLean Power Systems – Report,” MSN, Nov. 26, 2025 	https://www.msn.com/en-us/money/companies/blackstone-approaches-4b-acquisition-of-maclean-power-systems-	report/ar-AA1Rd9Mz",
+  },
+  {
+    id: "ref-46",
+    text: "“National Grid Sells Its US Onshore Renewables Business to Brookfield,” Enerdata, Feb. 27, 2025 	https://www.enerdata.net/publications/daily-energy-news/national-grid-sells-its-us-onshore-renewables-business-	brookfield.html",
+  },
+  {
+    id: "ref-47",
+    text: "“Apollo Global Management (APO) to Acquire PowerGrid Services From the Sterling Group,” StreetInsider.com, 	May 13, 2025 https://www.streetinsider.com/Corporate+News/Apollo+Global+Management+%28APO%29+to+Acquire+PowerGr  id+Services+from+The+Sterling+Group/24784299.html",
+  },
+  {
+    id: "ref-48",
+    text: "“Apollo to Fund $2B PowerGrid Acquisition With $1B Private Debt,” Yahoo Finance, Maham Fatima, May 20, 2025 	https://finance.yahoo.com/news/apollo-fund-2b-powergrid-acquisition-212334745.html",
+  },
+  {
+    id: "ref-49",
+    text: "“6 for 2026 Outlook: Global Infrastructure,” BNY, Dec. 2025 	https://www.bny.com/investments/us/en/institutional/articles/equities/6-for-2026-outlook-global-infrastructure.html",
+  },
+  {
+    id: "ref-50",
+    text: "“Infrastructure 2026 Outlook,” Morgan Stanley, Dec. 18, 2025 https://www.morganstanley.com/im/en-	lu/institutional-investor/insights/outlooks/infrastructure-2026-outlook.html",
+  },
+  {
+    id: "ref-51",
+    text: "“The Challenges Boomers Face When Selling Their Business,” MSN, Greg Wilson, Jan. 16, 2025 	https://www.msn.com/en-us/money/smallbusiness/the-challenges-boomers-face-when-selling-their-businesses/ss-	AA1UlFZd?ocid=finance-verthp-feeds",
+  },
+  {
+    id: "ref-52",
+    text: "“200+ Ultimate Small Business Statistics & Numbers (2025),” Businessdasher, Jan. 7, 2026 	https://www.businessdasher.com/research/small-business-	statistics/#:~:text=Baby%20Boomer%20Business%20Owner%20Statistics&text=Baby%20boomers%20own%2041%2   	5%20of,sell%20their%20businesses%20per%20year.",
+  },
+  {
+    id: "ref-53",
+    text: "“Unsexy but Thriving Businesses: The Hidden Opportunity Gifted to Us by Baby Boomers,” Forbes, Mark Hall, Feb. 	3, 2024 https://www.forbes.com/sites/markhall/2022/01/25/unsexy-but-thriving-businesses-the-hidden-opportunity-	gifted-to-us-by-baby-boomers/",
+  },
+  {
+    id: "ref-54",
+    text: "“Private Equity Buyouts Record Longer Holding Periods in 2025,” S&P Global, Karl Angelo Vidal, Dec. 22, 2025	https://www.spglobal.com/market-intelligence/en/news-insights/articles/2025/12/private-equity-buyouts-record-longer-holding-periods-in-2025-96348743",
+  },
+  {
+    id: "ref-55",
+    text: "“The Great Unlocking: Private Equity and Venture Capital Exits Surge as 2026 Begins,” MarketMinute on WRAL 	News, Jan. 15, 2026 https://markets.financialcontent.com/wral/article/marketminute-2026-1-15-the-great-unlocking-private-equity-and-venture-capital-exits-surge-as-2026-begins",
+  },
+  {
+    id: "ref-56",
+    text: "“Many Boomer Business Owners Are Getting Ready to Sell. They May Be Setting Themselves Up for Failure,” CNBC, 	Cheryl Winokur Munk, Nov. 19, 2025 https://www.cnbc.com/2025/11/19/what-boomer-business-owners-need-to-know-before-they-cash-out-in-sale.html",
   },
 ];
 ---
@@ -235,7 +313,7 @@ const references = [
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0 z-0">
       <Image
-        src={heroImage}
+        src={industiralreporthero}
         alt=""
         class="w-full h-full object-cover"
         loading="eager"
@@ -253,18 +331,19 @@ const references = [
       <div class="max-w-4xl">
         <h1
           class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-          Wellness & Health Services Industry Report
+          Industrial & Infrastructure Services Report
         </h1>
         <p class="text-xl text-slate-300 mb-4">
-          A comprehensive analysis of M&A activity, transaction trends, and
-          market dynamics in the wellness and health services sector.
+          Explore M&A Activity, Capital Market Conditions and Current Trends for
+          the Industrial & Infrastructure Services Industry.
         </p>
         <p class="text-sm text-slate-400 mb-8">
+          <!-- GET THE CORRECT DATE -->
           Published: January 15, 2026 | Second Half 2025 Review
         </p>
         <div class="flex flex-wrap gap-4">
           <a
-            href="/reports/wellness-and-health-2h25.pdf"
+            href="/reports/industrial-infrastructure-services-1h-2026.pdf"
             download
             class="inline-flex items-center px-6 py-3 bg-brand hover:bg-brand-600 text-black font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]">
             <svg
@@ -289,7 +368,7 @@ const references = [
   <!-- Main Content -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Key Takeaways -->
-    <div
+    <!-- <div
       class="bg-gradient-to-br from-sky-950/30 to-slate-900/30 border border-sky-500/20 rounded-2xl p-8 mb-12">
       <h2 class="text-2xl font-bold text-white mb-6">Key Takeaways</h2>
       <div class="grid md:grid-cols-2 gap-6">
@@ -314,7 +393,7 @@ const references = [
               ><a href="#ref-2" class="text-sky-400 hover:text-sky-300">[2]</a
               ></sup
             >. -->
-          </p>
+    <!-- </p>
         </div>
         <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
           <h3 class="text-lg font-semibold text-white mb-2">
@@ -357,63 +436,40 @@ const references = [
           </p>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="grid lg:grid-cols-12 gap-8">
       <!-- Main Content Column -->
       <div class="lg:col-span-8 space-y-12">
-        <!-- All your existing sections go here -->
         <Section
           id="what-to-know"
-          title="WELLNESS & HEALTH SERVICES 2H25: WHAT TO KNOW">
+          title="INDUSTRIAL	&	INFRASTRUCTURE	SERVICES 1H26: WHAT TO KNOW">
           <div class="prose prose-invert max-w-none">
             <ul>
               <li class="text-slate-300 leading-relaxed">
-                The 2020s are marked by the digitization of health care and
-                wellness, from telehealth online doctor visits to
-                subscription-based fitness trackers like Whoop and Oura that
-                provide consumers with access to health and lifestyle data that
-                is collected 24/7. Following this digitization and
-                consumerization of health and wellness, acquirers are
-                increasingly looking for technologies that bridge the gap
-                between medical diagnostic tools and consumer devices. <sup
-                  ><a href="#ref-1" class="text-sky-400 hover:text-sky-300"
-                    >[1]</a
-                  ></sup
-                >
+                The U.S. electrical grid is straining under multiple pressures
+                including an aging system, higher consumer demand, and an
+                unforeseen increase in power consumption amid a data center and
+                AI boom that shows no signs of letup.
               </li>
               <li class="text-slate-300 leading-relaxed">
-                Online, health and wellness influencers are finding engaged
-                audiences, and marketers have noticed as influencers reach
-                younger, more free-spending generations while promoting healthy
-                lifestyles, mental health self-care, even diet and nutrition.
-                Fueled by marketing, functional food and beverage products that
-                allow consumers to integrate wellness into everyday habits have
-                exploded in popularity. Perhaps the most notable example of this
-                is probiotic sodas such as Olipop and Poppi, brands that have
-                successfully disrupted the soda market by positioning their
-                sodas as digestive health products. <sup
-                  ><a href="#ref-2" class="text-sky-400 hover:text-sky-300"
-                    >[2]</a
-                  ></sup
-                >
+                American power companies are expected to spend as much as $208
+                billion on grid enhancement and growth in the coming year, and
+                as much as $1 trillion by 2030. This spending stands to benefit
+                businesses up and down the sector, not just the biggest players
+                but also middle and smaller market operations that provide vital
+                services to maintain and harden the grid.
               </li>
               <li class="text-slate-300 leading-relaxed">
-                Med spas and aesthetic clinics, which offer services such as
-                Botox and Red Light Therapy, have become resilient sub-sectors
-                in M&A because they operate high-margin businesses on a cash-pay
-                basis, bypassing the headaches of insurance reimbursement.
-                Coupled with growing demand, including from younger consumers
-                looking for preventative aging solutions, private equity is
-                increasingly active in consolidating the space. <sup
-                  ><a href="#ref-3" class="text-sky-400 hover:text-sky-300"
-                    >[3]</a
-                  ></sup
-                >
+                In a confluence worth watching, we’re seeing indications the
+                previously sluggish private equity market in the sector may be
+                thawing at a time when Baby Boomer business owners – many of
+                them in the skilled trades infrastructure development depends on
+                – may be looking for an exit, creating potentially favorable
+                outcomes for both sides.
               </li>
             </ul>
           </div>
-          <!-- This section is not on the current PDF -->
 
           <Callout title="How SDR Can Help" variant="info">
             <p class="text-slate-300">
@@ -442,218 +498,265 @@ const references = [
           </Callout>
         </Section>
 
-        <!-- Consumer, Heal Thyself -->
+        <!-- A Time of Renewal for America’s Power Grid -->
         <Section
-          id="heal-thyself"
-          title="Consumer, Heal Thyself: The Self-Care and Wellness Revolution">
+          id="time-of-renewal"
+          title="A Time of Renewal for America’s Power Grid">
           <div class="prose prose-invert max-w-none">
             <p class="text-slate-300 leading-relaxed">
-              Telehealth, wearables, supplements, and self-care needs appear to
-              be driving a renewed wellness market. <sup
-                ><a href="#ref-4" class="text-sky-400 hover:text-sky-300">[4]</a
+              The U.S. power grid infrastructure is increasingly straining to
+              meet a surge in demand, both from everyday life – cooling our
+              homes on summer days or running manufacturing facilities – and the
+              rapid buildup and use of the data centers fueling an AI
+              revolution. The grid’s in trouble. One tracking service reported
+              336 major power outages last year – counting only those affecting
+              at least 50,000 people each time – totaling 7,700 hours in the
+              U.S. Power outages are on the rise compared to prior years.<sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300">[1],[2],[3]</a
                 ></sup
               >
             </p>
             <div class="text-slate-300 leading-relaxed">
-              Since Apple’s App Store named the self-care category its “trend of
-              the year” in 2018, self-care has grown into a $1.8 trillion global
-              market, including spas, exercise, personal care and beauty,
-              wellness tourism, and biomonitoring. <sup
-                ><a href="#ref-5" class="text-sky-400 hover:text-sky-300">[5]</a
+              Experts agree, the grid needs an upgrade. It’s estimated American
+              power companies alone spent $208 billion in 2025 on the nation’s
+              power grid with predictions that number will total more than $1
+              trillion over the next five year. Companies in the middle market,
+              those that the power companies are paying to provide the mission
+              critical services required to upgrade and maintain the grid, are
+              benefitting. With this increased demand, profits are rising and,
+              in the context of mergers and acquisitions, so are valuations. <sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300">[4],[5]</a
                 ></sup
               >
             </div>
 
             <p class="text-slate-300 leading-relaxed">
-              Meanwhile, digital healthcare, whether on-screen or on your body,
-              may bethe future of care. The National Institutes of Health
-              reports “Healthcare is undergoing a profound transformation driven
-              by digital solutions,” including AI and conversational agents such
-              as ChatGPT reshaping the way care is delivered. Remote care models
-              – including skin scanning apps, remote monitoring, biomarker data
-              analysis, smart scales, and even smart toilets – threaten to upend
-              care as we’ve known it for decades. <sup
-                ><a href="#ref-5" class="text-sky-400 hover:text-sky-300">[5]</a
-                >,{" "}<a href="#ref-6" class="text-sky-400 hover:text-sky-300"
-                  >[6]</a
+              Think a national power grid can’t just “go down” without
+              attention? The risk is real – and it’s why US companies – and the
+              government – are willing to open their checkbooks. It was an
+              ordinary day in April of 2025 when both Spain and Portugal went
+              dark in an outage blamed on grid “cascading overvoltage,” the
+              system wasn’t robust enough. Electric trains stopped, people were
+              stuck in elevators, and everything ceased for tens of millions of
+              people for up to 10 hours. In the fall of 2024, millions in the
+              South American country of Ecuador – with a grid that depends
+              disproportionally on hydroelectric power – endured months of daily
+              blackouts lasting eight to 12 hours as hydro plant reservoirs went
+              dry and old, inefficient equipment couldn’t keep up. Across
+              Ecuador’s cities, traffic lights stopped working, nighttime
+              streetlights went out, cell phones quit as signal towers ran out
+              of juice, and the air filled with smoke and the sound of rattling
+              motors as merchants turned to personal generators.<sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300"
+                  >[6],[7],[8],[9],[10]</a
                 ></sup
               >
             </p>
+
             <p class="text-slate-300 leading-relaxed">
-              Even more intriguing than how we connect with care is the drive to
-              self-care built on DIY monitoring and online influencer
-              encouragement. And there is an emerging trend, attracting younger
-              people, of getting “baby Botox” injections to smooth skin and blur
-              even the hint of a wrinkle. This isn’t the traditional middle aged
-              or older crowd yearning to look a little younger, these are people
-              in their 20s and 30s seeking micro treatments, maybe a few times a
-              year, and willing to pay north of $400 for a quick tune up. <sup
-                ><a href="#ref-8" class="text-sky-400 hover:text-sky-300">[8]</a
-                >,{" "}<a href="#ref-9" class="text-sky-400 hover:text-sky-300"
-                  >[9]</a
+              In short, aging electrical infrastructure is a real problem. PG&E,
+              the California grid giant, has been repeatedly blamed for its
+              aging infrastructure sparking deadly and catastrophic wildfires.
+              The company recently agreed to a $100 million settlement with
+              shareholders who alleged the company misled them about its
+              wildfire prevention and safety protocols. That award was on top of
+              tens of millions in penalties it’s paid for its role in earlier
+              massively destructive wildfires. In Colorado, the state’s biggest
+              electric service provider Xcel Energy has repeatedly turned off
+              parts of its grid causing blackouts during high wind warnings to
+              prevent aging power lines from igniting wildfires. Grids get old.<sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300">[11],[12],[13],[14]</a
                 ></sup
               >
             </p>
+
             <p class="text-slate-300 leading-relaxed">
-              The number of so-called “med spas,” where clients can mix and
-              mingle traditional spa treatments with medical injections and
-              laser hair removal, were up more than 200% from 2010 to 2023, and
-              that number is growing. Think of it as going to the nail salon for
-              a mani-pedi, along with a Botox injection. Are there doctors, or
-              even medically trained professionals, in these strip-mall spots?
-              Maybe - it depends on individual state rules. Regardless of the
-              regulatory environment, investors are flocking to the highly
-              fragmented, cash payment, recurrent revenue wild west in the $30
-              billion “medical aesthetics” market. <sup
-                ><a href="#ref-11" class="text-sky-400 hover:text-sky-300"
-                  >[11]</a
-                >,{" "}<a href="#ref-12" class="text-sky-400 hover:text-sky-300"
-                  >[12]</a
+              Then there’s demand. For the past 20 years, U.S. electrical demand
+              remained relatively consistent. When new AI technologies ignited
+              massive demands in 2022, planners were caught unprepared. The grid
+              wasn’t ready for the wave of AI data centers and the speed at
+              which corporations and everyday Americans would incorporate
+              gigawatt guzzling AI applications. By the end of 2026, it’s been
+              estimated power demands for the world’s AI data centers may exceed
+              1,000 terawatt-hours, making data centers alone the world’s fifth
+              largest consumer of power – a demand estimated to be between that
+              of all of Japan and all of Russia. Northern Virginia, dubbed “Data
+              Center Alley,” in 2025 handled 70% of global internet traffic, and
+              the power company that supplies the area is struggling to meet
+              demand as old plants go offline faster than new ones are built
+              while consumer rates rise. And that AI power demand isn’t
+              replacing other uses, it’s on top of other increases spurred by
+              electric vehicle use, heat pumps, electrified manufacturing, and
+              robotics that have their collective hungry mouths open, too.<sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300">[1],[15],[16],[17]</a
                 ></sup
               >
             </p>
-          </div>
-        </Section>
-        <!-- Digitizing Health Care -->
-        <Section
-          id="digitizing-health-care"
-          title="The Computer Will See You Now: Digitizing Health Care">
-          <div class="prose prose-invert max-w-none">
+
             <p class="text-slate-300 leading-relaxed">
-              The days of reading year-old Sports Illustrated magazines in your
-              doctor’s waiting room may be at an end. Building on momentum from
-              the COVID-19 pandemic, the practice of telehealth, meeting with
-              doctors through a computer screen, continues to surge. Everything
-              from online consultations to medical apps to remote health
-              monitoring is experiencing growth. Patients like the convenience,
-              and investors like the returns. Teladoc Health, a publicly traded
-              global leader in virtual healthcare, provides services to more
-              than 40,000 clinicians in primary care, behavioral health, and
-              chronic disease management servicing more than 93 million
-              patients. In 2025, Teladoc acquired virtual preventive care
-              company Catapult Health for $65 million, mental health care
-              provider UpLift for $45 million, and British teleconsultation
-              company Telecare for an undisclosed sum. <sup
+              The power sector’s goals of safety, reliability, and resiliency
+              are encountering a fourth dimension: availability. And that is
+              driving another factor: consumer affordability.<sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300">[18],[19]</a
+                ></sup
+              >
+            </p>
+
+            <p class="text-slate-300 leading-relaxed">
+              As a nation, we’re starting to notice. This isn’t an issue for a
+              future generation. In a July 2025 report, the U.S. Department of
+              Energy projects “a growing mismatch between electrical demand and
+              supply” and reports a massive surge in power outages without
+              action may come due in perhaps just four years.<sup
                 ><a href="#ref-13" class="text-sky-400 hover:text-sky-300"
-                  >[13]</a
-                >,{" "}<a href="#ref-14" class="text-sky-400 hover:text-sky-300"
-                  >[14]</a
-                >,{" "}<a href="#ref-15" class="text-sky-400 hover:text-sky-300"
-                  >[15]</a
-                >,{" "}<a href="#ref-16" class="text-sky-400 hover:text-sky-300"
-                  >[16]</a
-                >,{" "}<a href="#ref-17" class="text-sky-400 hover:text-sky-300"
-                  >[17]</a
-                >,{" "}<a href="#ref-18" class="text-sky-400 hover:text-sky-300"
-                  >[18]</a
-                ></sup
-              >
-            </p>
-            <p class="text-slate-300 leading-relaxed">
-              All this to say that healthcare is being digitized at an
-              astounding rate. Consumer acceptance and adoption of digital
-              visits and care rose from 11% in 2019 to 46% 2021, a product of
-              the pandemic. The digital pharmacy market is growing at 14%
-              year-over-year. Two out of three physicians report using AI in
-              their practice, up 78% from 2023. The global telemedicine market
-              was estimated at $130 billion in 2023 and is expected to reach
-              $504 billion by 2032, a compound annual growth rate (CAGR) of more
-              than 16%. <sup
-                ><a href="#ref-19" class="text-sky-400 hover:text-sky-300"
-                  >[19]</a
-                >,{" "}<a href="#ref-20" class="text-sky-400 hover:text-sky-300"
                   >[20]</a
-                >,{" "}<a href="#ref-21" class="text-sky-400 hover:text-sky-300"
-                  >[21]</a
                 ></sup
               >
             </p>
+
             <p class="text-slate-300 leading-relaxed">
-              All this to say that healthcare is being digitized at an
-              astounding rate. Consumer acceptance and adoption of digital
-              visits and care rose from 11% in 2019 to 46% 2021, a product of
-              the pandemic. The digital pharmacy market is growing at 14%
-              year-over-year. Two out of three physicians report using AI in
-              their practice, up 78% from 2023. The global telemedicine market
-              was estimated at $130 billion in 2023 and is expected to reach
-              $504 billion by 2032, a compound annual growth rate (CAGR) of more
-              than 16%.19,20,21 Renewed emphasis on wellness and the ongoing
-              rise of such chronic ailments including diabetes, hypertension,
-              heart disease, and others is driving not only demand for
-              convenient online doctor check-ins, but also the evolving wearable
-              market including smartwatches, ECG patches, fitness trackers, and
-              biosensors that help patients not only monitor and improve their
-              own health but can also transmit data automatically to doctors,
-              reducing the need for in-person visits. The global wearables
-              market is booming with a CAGR of 25%, expected to reach $168
-              billion by the end of this decade. More and more metrics are being
-              tracked, and often come with AI insights built in. <sup
-                ><a href="#ref-22" class="text-sky-400 hover:text-sky-300"
-                  >[22]</a
-                >,{" "}<a href="#ref-23" class="text-sky-400 hover:text-sky-300"
-                  >[23]</a
-                >,{" "}<a href="#ref-24" class="text-sky-400 hover:text-sky-300"
-                  >[24]</a
+              Energy development consulting firm LandGate is calling the
+              long-ignored need for improvements a $1.4 trillion opportunity for
+              investors and business. Morningstar reported utilities are
+              “entering a five-year capital expenditure ‘super-cycle.’”
+              Headlines cite a U.S. utilities “dealmaking spree.”<sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300">[21],[22]</a
                 ></sup
               >
             </p>
           </div>
         </Section>
-        <!-- Influencers and Marketing -->
+        <!-- Homegrown Problem, Homemade Solutions -->
         <Section
-          id="influencers-and-marketing"
-          title="Psst! Influencers and Marketing">
+          id="problemhomegrown"
+          title="Homegrown Problem, Homemade Solutions">
           <div class="prose prose-invert max-w-none">
             <p class="text-slate-300 leading-relaxed">
-              For health and wellness brands, online influencers – both with and
-              without credentials and education – that have massive, engaged
-              communities of viewers allow for targeted campaigns for
-              subscription wellness programs, supplements and functional food
-              and beverage products, fitness apps, and wearables. Key targets
-              are the younger Gen Z and Millennial generations who are both
-              prioritizing wellness and spending disproportionately more on
-              wellness products. <sup
-                ><a href="#ref-26" class="text-sky-400 hover:text-sky-300"
-                  >[26]</a
-                >,{" "}<a href="#ref-27" class="text-sky-400 hover:text-sky-300"
-                  >[27]</a
-                >,{" "}<a href="#ref-28" class="text-sky-400 hover:text-sky-300"
-                  >[28]</a
+              Anyone who’s been around since 2019 has seen how global trade can
+              be disrupted by global events outside of U.S. borders. Supply
+              chain disruptions, trade differences, and geopolitical tensions
+              are a part of life. But American businesses have shown they can
+              react and adapt. When a 2020-21 global computer chip disruption
+              upended the production of everything from consumer tech to autos,
+              a focus on bringing chip production onshore sparked a
+              manufacturing renaissance, turning Phoenix into a semiconductor
+              hub. It hasn’t been easy, while once manufacturers were fine with
+              chips made in other countries where the permitting process is
+              quick and the rules scarce, the burgeoning homegrown industry has
+              spent tens of millions meeting U.S. regulations and navigating
+              18,000 new rules. Rebuilding an aging power grid – from new energy
+              production to reinvestment in power transmission repair and
+              maintenance – won’t be easy either, but necessity has a way of
+              finding invention and investment. In one case, Microsoft’s
+              inventive solution to provide for data center power demands has
+              been to pay to reactivate a dormant nuclear reactor at Three Mile
+              Island. It’s off to a rocket start as the project was fast-tracked
+              and is set to restart in 2027. Homemade solution.
+              <sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300"
+                  >[23],[24],[25],[26],[27],[28]</a
                 ></sup
               >
             </p>
             <p class="text-slate-300 leading-relaxed">
-              Marketers and brands have noticed the overall interest in health
-              and wellness expanding beyond traditional wellness products to
-              other areas including food, beauty, workplace benefits, even
-              financial products. Fancy a shot of “functional nutrition” with
-              turmeric, ginger, or extra protein on your next visit to
-              Starbucks? The coffee king added these to the menu in 2025. When
-              nearly 85% of Americans say wellness is a “top” priority, no
-              marketer (or acquirer) can resist. Nutrition, sleep, mental
-              wellbeing, beauty, fitness, and health all fit neatly under the
-              wellness umbrella. Food and beverage makers have stepped right in
-              to promote and label offerings as high protein and fiber rich,
-              while a new class of companies have emerged that take a legacy,
-              often "unhealthy" staple, and re-engineering it with a specific
-              benefit. In the Olipop and Poppi example above, these companies
-              have positioned a "vice" (soda) as a "virtue" (digestive health).
-              This proved fruitful for more than just consumer gut health. In
-              May of 2025, Poppi was acquired by PepsiCo for $1.95 billion,
-              providing strong returns for the brand’s private equity backers. <sup
-                ><a href="#ref-29" class="text-sky-400 hover:text-sky-300"
-                  >[29]</a
-                >,{" "}<a href="#ref-30" class="text-sky-400 hover:text-sky-300"
-                  >[30]</a
-                >,{" "}<a href="#ref-31" class="text-sky-400 hover:text-sky-300"
-                  >[31]</a
-                >,{" "}<a href="#ref-32" class="text-sky-400 hover:text-sky-300"
-                  >[32]</a
-                >,{" "}<a href="#ref-33" class="text-sky-400 hover:text-sky-300"
-                  >[33]</a
+              Hardening and expanding the grid will require a concerted effort
+              and a raft of components and materials. But it’s happening.
+              Confronted with a shortage of electricians and skilled trades
+              workers, companies are putting up money for training programs
+              while others turn to acquisition as a way to increase human
+              capital. Driven by demand for industrial metals to build out the
+              data centers and enhance the power grid, Amazon partnered with
+              mining giant Rio Tinto to open the first new domestic copper mine
+              in more than a decade. Faced with insatiable demand and a lag in
+              developing electrical capacity, data center operators are building
+              their own generation facilities in what the Wall Street Journal
+              called “an energy Wild West, ‘grab yourself a couple of turbines’”
+              environment.<sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300">[29],[30],[31],[32]</a
                 ></sup
               >
             </p>
+            <p class="text-slate-300 leading-relaxed">
+              And as producers race to develop new energy capacity, every
+              component has to be designed and built. A Georgia transformer
+              factory is hiring new workers and expanding. Academic and
+              commercial researchers are driving advances in domestic battery
+              production. And Siemens opened a $190 million manufacturing center
+              in Fort Worth, Texas, adding 800 jobs.
+              <sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300">[33],[34],[35]</a
+                ></sup
+              >
+            </p>
+          </div>
+        </Section>
+        <!-- The Power Bill, Investment Up and Down the Market -->
+        <Section
+          id="power-bill"
+          title="The Power Bill, Investment Up and Down the Market">
+          <div class="prose prose-invert max-w-none">
+            <p class="text-slate-300 leading-relaxed">
+              While building a full-scale, consumer-focused power plant is the
+              province of giants considering the amount of capital pouring into
+              projects to address grid needs, there is room for middle and small
+              market providers, too. And a push for more, and more dependable,
+              electrical power doesn’t feel like it’s simply a four- or
+              five-year “catchup.” Global consultant and researcher McKinsey &
+              Co. sets the bar pretty high, predicting a $23 trillion global
+              spend on energy and power infrastructure, including maintenance,
+              by 2040.36
+              <sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300">[34]</a
+                ></sup
+              >
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              Substation maintenance is a growing sector that enjoys repeatable,
+              reliable revenue investors and buyers like to see in a business.
+              The U.S. electrical cable maintenance market is, by one estimate,
+              seen growing from $13.5 billion today to $24.6 billion by 2036, a
+              6.2% compound annual growth rate (CAGR). Installation and
+              maintenance of smart grid sensors (“the eyes and ears of the power
+              grid”) are seen as indispensable services. Utility vegetation
+              managers are those crews that prune tree limbs away from power
+              lines and provide right-of-way mowing and upkeep. Clearing trees
+              from power lines is considered so vital the practice is embedded
+              in federal regulations. Sprawling data centers require a
+              tremendous amount of cooling, sparking a boom in private equity
+              acquisition interest in the contracted, and highly fragmented,
+              HVAC sector. Data centers are also sparking interest in
+              contractors who specialize in electrical efficiency and
+              maximization services.
+              <sup
+                ><a
+                  href="#ref-references"
+                  class="text-sky-400 hover:text-sky-300">[37],[38],[39],[40],[41],[42],[43]</a
+                ></sup
+              >
+            </p>
+            <!-- I STOPPED HERE -->
           </div>
         </Section>
         <!-- SUPPLEMENTING THE BOTTOM LINE: MERGERS & ACQUISITIONS -->
@@ -1144,5 +1247,5 @@ const references = [
         </div>
       </div>
     </div>
-  </div></ReportLayout
->
+  </div>
+</ReportLayout>
