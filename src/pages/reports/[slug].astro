@@ -67,9 +67,11 @@ interface Report {
   tags?: string[];
   publishedAt?: string;
   featuredImage?: any;
+  pdfUrl?: string;
   authors?: {
     name: string;
     role?: string;
+    division?: string;
     email?: string;
     phone?: string;
     image?: any;
@@ -161,10 +163,12 @@ const { data: report } = await loadQuery<Report>({
     "authors": authors[]->{
       name,
       role,
+      division,
       email,
       phone,
       image
-    }
+    },
+    "pdfUrl": pdf.asset->url
   }`,
   params: { slug: slugParam },
 });
@@ -268,6 +272,20 @@ const contentBlocks = contentWithIds.filter((block) => block._type !== "tocSecti
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">{report.title}</h1>
         {report.subtitle && <p class="text-xl text-slate-200">{report.subtitle}</p>}
         {report.excerpt && <p class="text-lg text-slate-300 max-w-4xl">{report.excerpt}</p>}
+        {report.pdfUrl && (
+          <div class="pt-2">
+            <a
+              href={report.pdfUrl}
+              download
+              class="inline-flex items-center gap-2 px-6 py-3 bg-brand hover:bg-brand-600 text-black font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
+            >
+              Download PDF Report
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 10l5 5 5-5m-5 5V3" />
+              </svg>
+            </a>
+          </div>
+        )}
       </div>
 
       {report.authors?.length ? (
@@ -288,6 +306,7 @@ const contentBlocks = contentWithIds.filter((block) => block._type !== "tocSecti
                 <div>
                   <p class="text-sm font-semibold text-white leading-tight">{author.name}</p>
                   {author.role && <p class="text-xs text-slate-400">{author.role}</p>}
+                  {author.division && <p class="text-xs text-slate-500">{author.division}</p>}
                 </div>
               </div>
             );
@@ -298,13 +317,14 @@ const contentBlocks = contentWithIds.filter((block) => block._type !== "tocSecti
   </div>
 
   <!-- Body -->
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid lg:grid-cols-12 gap-10">
-    <div class="lg:col-span-8 space-y-10">
-      {report.keyTakeaways?.takeaways?.length ? (
-        <KeyTakeaways heading={report.keyTakeaways.heading} takeaways={report.keyTakeaways.takeaways} />
-      ) : null}
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
+    {report.keyTakeaways?.takeaways?.length ? (
+      <KeyTakeaways heading={report.keyTakeaways.heading} takeaways={report.keyTakeaways.takeaways} />
+    ) : null}
 
-      {contentBlocks.map((section) => {
+    <div class="grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-8 space-y-10">
+        {contentBlocks.map((section) => {
         if (section._type === "textSection") {
           const text = section as any;
           return (
@@ -322,8 +342,6 @@ const contentBlocks = contentWithIds.filter((block) => block._type !== "tocSecti
           return (
             <Section id={chart.id} title={chart.title || "Chart"}>
               <div class="space-y-4">
-                {chart.description && <p class="text-slate-300">{chart.description}</p>}
-                <div class="text-xs uppercase tracking-wide text-slate-400">Type: {chart.chartType ?? "Chart"}</div>
                 {chartImage ? (
                   <ChartCard src={chartImage} alt={chartAlt} caption={chart.description || chart.title || ""} />
                 ) : chart.data ? (
@@ -393,45 +411,47 @@ const contentBlocks = contentWithIds.filter((block) => block._type !== "tocSecti
         return null;
       })}
 
-      {report.references?.references?.length ? (
-        <References
-          references={report.references.references.map((ref, idx) => ({
-            id: `ref-${idx + 1}`,
-            text: ref.citation,
-            url: ref.url,
-          }))}
-        />
-      ) : null}
-
-      <SubscribeCTA />
-    </div>
-
-    <div class="lg:col-span-4 space-y-6">
-      {tocItems?.length ? <ReportTOC items={tocItems} /> : null}
-
-      {report.contactCards?.people?.length ? (
-        <div class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6 space-y-4">
-          <h2 class="text-xl font-semibold text-white">
-            {report.contactCards?.heading || "Contact the Team"}
-          </h2>
-          <div class={(report.contactCards?.layout === "list" ? "space-y-4" : "grid sm:grid-cols-2 gap-4")}>
-            {report.contactCards.people.map((person: any) => {
-              const imageUrl = person.image
-                ? urlForImage(person.image).width(200).height(200).fit("crop").url()
-                : undefined;
-              return (
-                <ContactCard
-                  name={person.name}
-                  role={person.role}
-                  email={person.email}
-                  phone={person.phone}
-                  image={imageUrl}
-                />
-              );
-            })}
+        {report.contactCards?.people?.length ? (
+          <div class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6 space-y-4">
+            <h2 class="text-xl font-semibold text-white">
+              {report.contactCards?.heading || "Contact the Team"}
+            </h2>
+            <div class={report.contactCards?.layout === "list" ? "space-y-4" : "grid sm:grid-cols-2 gap-4"}>
+              {report.contactCards.people.map((person: any) => {
+                const imageUrl = person.image
+                  ? urlForImage(person.image).width(200).height(200).fit("crop").url()
+                  : undefined;
+                return (
+                  <ContactCard
+                    name={person.name}
+                    role={person.role}
+                    division={person.division}
+                    email={person.email}
+                    phone={person.phone}
+                    image={imageUrl}
+                  />
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
+
+        <!-- <SubscribeCTA /> -->
+
+        {report.references?.references?.length ? (
+          <References
+            references={report.references.references.map((ref, idx) => ({
+              id: `ref-${idx + 1}`,
+              text: ref.citation,
+              url: ref.url,
+            }))}
+          />
+        ) : null}
+      </div>
+
+      <div class="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
+        {tocItems?.length ? <ReportTOC items={tocItems} /> : null}
+      </div>
     </div>
   </div>
 </ReportLayout>

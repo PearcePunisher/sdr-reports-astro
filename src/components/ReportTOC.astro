@@ -13,7 +13,7 @@ const { items } = Astro.props;
 
 <!-- Sidebar Sticky TOC -->
 <aside class="sticky top-24 self-start">
-  <nav class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6">
+  <nav id="toc-nav" class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6">
     <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">
       Table of Contents
     </h2>
@@ -22,7 +22,8 @@ const { items } = Astro.props;
         <li>
           <a 
             href={`#${item.id}`}
-            class="text-sm text-slate-300 hover:text-brand transition-colors block py-1"
+            data-target={item.id}
+            class="text-sm text-slate-300 hover:text-brand transition-colors block py-1 data-[active=true]:text-brand data-[active=true]:underline data-[active=true]:underline-offset-4"
           >
             {item.title}
           </a>
@@ -31,3 +32,49 @@ const { items } = Astro.props;
     </ul>
   </nav>
 </aside>
+
+<script is:inline>
+  const toc = document.getElementById('toc-nav');
+  if (toc) {
+    const links = Array.from(toc.querySelectorAll('a[data-target]'));
+    const targets = links
+      .map((link) => {
+        const id = link.getAttribute('data-target');
+        const el = id ? document.getElementById(id) : null;
+        return el ? { link, el } : null;
+      })
+      .filter(Boolean);
+
+    const setActive = (id) => {
+      links.forEach((link) => {
+        const isActive = link.getAttribute('data-target') === id;
+        link.dataset.active = isActive ? 'true' : 'false';
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: '-40% 0px -45% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      }
+    );
+
+    targets.forEach(({ el }) => observer.observe(el));
+
+    // Fallback: set active on initial load
+    if (targets[0]) setActive(targets[0].el.id);
+
+    // Clean up on navigation / HMR
+    if (import.meta.hot) {
+      import.meta.hot.dispose(() => observer.disconnect());
+    }
+  }
+</script>
