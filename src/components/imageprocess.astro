@@ -1,0 +1,31 @@
+---
+export const sanity_base = "https://cdn.sanity.io/images/";
+export const project_id = process.env.PUBLIC_SANITY_PROJECT_ID;
+//const image_strip_str = "image-";
+export const san_data_set = process.env.PUBLIC_SANITY_DATASET;
+
+export function get_real_img_url(asset: any){
+   // https://cdn.sanity.io/images/vs74rvxu/production/eb19f7ed1eeb655c39556a7d9877778b49b91670-150x150.png
+    //add in the https://cdn.sanity.io/images/{prokject_id}/{production}/eb19f7ed1eeb655c39556a7d9877778b49b91670-150x150.png
+    // need to get rid of the image- start of it
+     console.log(asset);
+    if(typeof asset === 'object' && asset != null){
+        //basically we need to check if it's a string. 
+    }
+    let url_b = asset._ref;
+   
+    console.log(url_b);
+    //replace this with something that checks the object to robust this code, because we aren't idiots. 
+    //need to split off the last - 
+   // var cleanedimgcode = url_b.replace(image_strip_str,"");
+     var split_string = url_b.split("-");
+    console.log(split_string);
+    //find last instance of - and replace with. 
+
+    var final_url=sanity_base+project_id+"/"+san_data_set+"/"+split_string[1]+"."+split_string[2];
+    return final_url; 
+}
+
+
+
+---

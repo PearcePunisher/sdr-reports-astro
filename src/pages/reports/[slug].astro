@@ -6,6 +6,11 @@ import PortableText from "../../components/PortableText.astro";
 import References from "../../components/References.astro";
 import ReportTOC from "../../components/ReportTOC.astro";
 import ContactCard from "../../components/ContactCard.astro";
+import { urlForImage } from "../../sanity/lib/url-for-image";
+import PortableTextImage from "../../components/PortableTextImage.astro";
+import {get_real_img_url} from "../../components/imageprocess.astro";
+import DynamicTag from '../../components/DynamicTag.astro';
+
 
 export async function getStaticPaths() {
   const { data: reports } = await loadQuery<SanityDocument[]>({
@@ -23,7 +28,9 @@ export async function getStaticPaths() {
 
 const { params } = Astro;
 
-
+export function testFunction(){
+  return '<h1> afkjdsklfjsdk</h1>';
+}
 
 //*[_type == "report" && slug.current == $slug][0]{title,authors[]->{ name, slug, image, role, bio, email}}
 //https://www.sanity.io/docs/content-lake/how-queries-work
@@ -31,18 +38,53 @@ const { data: report } = await loadQuery<{ title: string; subtitle:string; featu
   query: `*[_type == "report" && slug.current == $slug][0]`,
   params,
 });
+//. image-7b9139d53fdb891967da71370bc30ab4ff9fd695-1610x1604-webp
+
+const { data: featuredimage } = await loadQuery<{ title: string; subtitle:string; featuredImage:any[]; contactcard: any[] }>({
+  query: `*[_type == "report" && slug.current == $slug][0]{featuredImage{_type,image,alt,asset}}`,
+  params,
+});
+
+const { data: contactCards } = await loadQuery<{ contactCards: any[] }>({
+  query: `*[_type == "report" && slug.current == $slug][0]{contactCards{people[]->{name,slug,image,role,bio,email,phone},layout,heading,_type}}`,
+  params,
+});
 // this is the real name contactCards in the the report definiton
 //add this back <ReportTOC items={report.reportTOC} />
+//<img src={urlForImage(featuredimage).url()} ></img>
+
+console.log("fklsad;kfls00");
+console.log(report);
+console.log("contactCards");
+console.log(contactCards);
+console.log(contactCards.contactCards.people);
 ---
 
 <h1>A post about {report.title}</h1>
 <hr>
+{testFunction()}
 <p>subtitle</p>
 <p>{report.subtitle}</p>
 <hr>
+<p>Slug (requires handler)</p>
+<h2>{report.slug}</h2>
+<hr>
+<p>featured image</p>
+<p>{get_real_img_url(featuredimage.featuredImage.asset)}</p>
+<div>
+{contactCards.contactCards.people.map((p: Object)=>(<ContactCard name={p.name} role={p.role} team={p.team} email={p.email} image={p.image} phone={p.phone} bio={p.bio} />))}
+</div>
+<div>
+<p>testing</p>
+<DynamicTag as="PortableTextImage" asset={featuredimage.featuredImage.asset} alt={featuredimage.featuredImage.alt}></DynamicTag>
+</div>
+<p>goop</p>
+
+
+<PortableTextImage asset={featuredimage.featuredImage.asset} alt={featuredimage.featuredImage.alt}> 
 
 <p>contactcard</p>
-<p>{report.contactcard}</p>
+<p>{JSON.stringify(contactCards.contactCards)}</p>
 <hr>
 subtitle
 <hr>
@@ -52,7 +94,11 @@ subtitle
 
 
 <p>{JSON.stringify(report)}</p>
+<hr>
+<p>------- 1 -------</p>
+<PortableText value={contactCards.contactCards}></PortableText>
 
 
+<p>------- 2 -------</p>
 
-
+<p>------- 3 -------</p>

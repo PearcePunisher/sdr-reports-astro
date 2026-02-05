@@ -1,0 +1,15 @@
+---
+// Define the props, ensuring the 'as' prop is typed as a valid HTML tag
+import type { HTMLTag } from 'astro/types';
+
+export interface Props {
+  as?: HTMLTag;
+}
+
+// Destructure the prop and rename it to a capitalized variable
+const { as: Element = 'div', ...props } = Astro.props;
+---
+
+<Element {...props}>
+  <slot />
+</Element>

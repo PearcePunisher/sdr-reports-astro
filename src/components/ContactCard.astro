@@ -1,4 +1,7 @@
 ---
+import { urlForImage } from "../sanity/lib/url-for-image";
+//import PortableTextImage from "../../components/PortableTextImage.astro";
+
 interface Props {
   name: string;
   role: string;
@@ -6,9 +9,14 @@ interface Props {
   email: string;
   phone: string;
   image?: string;
+  bio?: object;
 }
 
-const { name, role, team, email, phone, image } = Astro.props;
+const { name, role, team, email, phone, image, bio } = Astro.props;
+//this above is actually a "person displayer."
+
+
+//we're just going to deconstruct in here. 
 
 // Format phone number for tel: link (remove spaces, dashes, parentheses)
 const phoneLink = phone.replace(/[\s\-\(\)]/g, '');
@@ -18,7 +26,7 @@ const phoneLink = phone.replace(/[\s\-\(\)]/g, '');
   {image && (
     <div class="mb-4">
       <img 
-        src={image} 
+        src={urlForImage(image.asset._ref)} 
         alt={name}
         class="w-24 h-24 rounded-full object-cover border-2 border-brand/30"
       />
@@ -37,5 +45,8 @@ const phoneLink = phone.replace(/[\s\-\(\)]/g, '');
         {phone}
       </a>
     </p>
+  </div>
+  <div>
+    
   </div>
 </div>
