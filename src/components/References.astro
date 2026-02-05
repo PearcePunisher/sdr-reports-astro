@@ -2,6 +2,7 @@
 interface Reference {
   id: string;
   text: string;
+  url?: string;
 }
 
 interface Props {
@@ -16,7 +17,14 @@ const { references } = Astro.props;
   <ol class="space-y-3 text-sm text-slate-300">
     {references.map((ref) => (
       <li id={ref.id} class="scroll-mt-24">
-        <span class="text-brand">[{ref.id.replace('ref-', '')}]</span> {ref.text}
+        <span class="text-brand">[{ref.id.replace('ref-', '')}]</span>{' '}
+        {ref.url ? (
+          <a href={ref.url} class="underline decoration-dotted underline-offset-4 hover:text-brand">
+            {ref.text}
+          </a>
+        ) : (
+          ref.text
+        )}
       </li>
     ))}
   </ol>

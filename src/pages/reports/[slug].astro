@@ -1,58 +1,437 @@
 ---
-// ./src/pages/post/[slug].astro
-import type { SanityDocument } from "@sanity/client";
-import { loadQuery } from "../../sanity/lib/load-query.ts";
+import ReportLayout from "../../layouts/ReportLayout.astro";
+import Section from "../../components/Section.astro";
 import PortableText from "../../components/PortableText.astro";
 import References from "../../components/References.astro";
 import ReportTOC from "../../components/ReportTOC.astro";
 import ContactCard from "../../components/ContactCard.astro";
+import Callout from "../../components/Callout.astro";
+import ChartCard from "../../components/ChartCard.astro";
+import KeyTakeaways from "../../components/KeyTakeaways.astro";
+import CTASection from "../../components/CTASection.astro";
+import SubscribeCTA from "../../components/SubscribeCTA.astro";
+import { loadQuery } from "../../sanity/lib/load-query.ts";
+import { urlForImage } from "../../sanity/lib/url-for-image";
+
+type PortableBlock = Record<string, any>;
+
+type SectionBlock =
+  | {
+      _type: "textSection";
+      heading?: string;
+      content: PortableBlock[];
+    }
+  | {
+      _type: "chartSection";
+      _key: string;
+      id?: string;
+      title?: string;
+      description?: string;
+      chartType?: string;
+      data?: string;
+      chartImage?: any;
+    }
+  | {
+      _type: "calloutSection";
+      title?: string;
+      type?: string;
+      content: PortableBlock[];
+    }
+  | {
+      _type: "ctaSection";
+      heading: string;
+      description?: string;
+      buttonText: string;
+      buttonUrl?: string;
+      variant?: "primary" | "secondary" | "outline";
+    }
+  | {
+      _type: "imageSection";
+      image: any;
+      caption?: string;
+      layout?: "full" | "wide" | "normal" | "small";
+    }
+  | {
+      _type: "tocSection";
+      heading?: string;
+      autoGenerate?: boolean;
+      items?: { title?: string; anchor?: string }[];
+    };
+
+interface Report {
+  title: string;
+  subtitle?: string;
+  slug?: { current: string };
+  excerpt?: string;
+  category?: string;
+  tags?: string[];
+  publishedAt?: string;
+  featuredImage?: any;
+  authors?: {
+    name: string;
+    role?: string;
+    email?: string;
+    phone?: string;
+    image?: any;
+  }[];
+  keyTakeaways?: {
+    heading?: string;
+    takeaways?: { title: string; content: string }[];
+  };
+  content?: SectionBlock[];
+  contactCards?: {
+    heading?: string;
+    layout?: "grid" | "list";
+    people?: {
+      name: string;
+      role?: string;
+      email?: string;
+      phone?: string;
+      image?: any;
+    }[];
+  };
+  references?: {
+    heading?: string;
+    references?: { citation: string; url?: string }[];
+  };
+}
+
+const categoryLabels: Record<string, string> = {
+  "agribusiness-food": "Agribusiness & Food Value Chain",
+  "distribution-logistics": "Distribution & Logistics",
+  "industrial-infrastructure": "Industrial & Infrastructure Services",
+  manufacturing: "Manufacturing",
+  "pet-industry": "Pet Industry",
+  "professional-services": "Professional Services",
+  "software-it": "Software & IT Services",
+  "wellness-health": "Wellness & Health Services",
+};
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 
 export async function getStaticPaths() {
-  const { data: reports } = await loadQuery<SanityDocument[]>({
-    query: `*[_type == "report"]`,
+  const { data: reports = [] } = await loadQuery<{ slug?: { current: string } }[]>({
+    query: `*[_type == "report" && defined(slug.current)]{ "slug": slug.current }`,
   });
 
-  return reports.map(({ slug }) => {
-    return {
-      params: {
-        slug: slug.current,
-      },
-    };
-  });
+  return reports.map(({ slug }) => ({
+    params: { slug },
+  }));
 }
 
 const { params } = Astro;
+const slugParam =
+  typeof params.slug === "string"
+    ? params.slug
+    : typeof params.slug === "object" && params.slug
+    ? (params.slug as any).current || ""
+    : "";
 
-
-
-//*[_type == "report" && slug.current == $slug][0]{title,authors[]->{ name, slug, image, role, bio, email}}
-//https://www.sanity.io/docs/content-lake/how-queries-work
-const { data: report } = await loadQuery<{ title: string; subtitle:string; featuredImage:any[]; contactcard: any[] }>({
-  query: `*[_type == "report" && slug.current == $slug][0]`,
-  params,
+const { data: report } = await loadQuery<Report>({
+  query: `*[_type == "report" && slug.current == $slug][0]{
+    title,
+    subtitle,
+    "slug": slug.current,
+    excerpt,
+    category,
+    tags,
+    publishedAt,
+    featuredImage,
+    keyTakeaways,
+    content[],
+    contactCards{
+      heading,
+      layout,
+      people[]->{
+        name,
+        role,
+        email,
+        phone,
+        image
+      }
+    },
+    references{
+      heading,
+      references[]{citation, url}
+    },
+    "authors": authors[]->{
+      name,
+      role,
+      email,
+      phone,
+      image
+    }
+  }`,
+  params: { slug: slugParam },
 });
-// this is the real name contactCards in the the report definiton
-//add this back <ReportTOC items={report.reportTOC} />
+
+if (!report) {
+  throw new Error("Report not found");
+}
+
+const heroImage = report.featuredImage
+  ? {
+      url: urlForImage(report.featuredImage).width(1800).height(1000).fit("crop").url(),
+      webp: urlForImage(report.featuredImage).width(1800).height(1000).fit("crop").format("webp").url(),
+      alt: report.featuredImage?.alt || report.title,
+    }
+  : null;
+
+const publishedDate =
+  report.publishedAt &&
+  new Date(report.publishedAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+
+const contentWithIds =
+  report.content?.map((block, index) => {
+    const heading = (block as any).heading || (block as any).title || (block as any).caption || block._type;
+    return {
+      ...block,
+      id: heading ? slugify(heading) : `section-${index + 1}`,
+    };
+  }) ?? [];
+
+const manualToc = contentWithIds.find(
+  (block) => block._type === "tocSection" && (block as any).autoGenerate === false
+) as any;
+
+const tocItems =
+  manualToc?.items?.length > 0
+    ? manualToc.items.map((item: any, idx: number) => ({
+        id: item.anchor || slugify(item.title || `section-${idx + 1}`),
+        title: item.title || `Section ${idx + 1}`,
+      }))
+    : contentWithIds
+        .filter((block) => block._type !== "tocSection")
+        .map((block) => ({
+          id: (block as any).id,
+          title:
+            (block as any).heading ||
+            (block as any).title ||
+            (block as any).caption ||
+            (block as any).heading ||
+            block._type,
+        }))
+        .filter((item) => item.title);
+
+const contentBlocks = contentWithIds.filter((block) => block._type !== "tocSection");
 ---
 
-<h1>A post about {report.title}</h1>
-<hr>
-<p>subtitle</p>
-<p>{report.subtitle}</p>
-<hr>
+<ReportLayout
+  title={`${report.title} | SDR Reports`}
+  description={report.excerpt || "SDR Ventures industry report"}
+  publishDate={report.publishedAt || new Date().toISOString()}
+  canonical={`/reports/${report.slug}`}
+>
+  <!-- Hero -->
+  <div class="relative border-b border-white/10 overflow-hidden">
+    {heroImage && (
+      <div class="absolute inset-0 z-0">
+        <picture>
+          <source srcset={heroImage.webp} type="image/webp" />
+          <img src={heroImage.url} alt={heroImage.alt} class="w-full h-full object-cover" loading="eager" />
+        </picture>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0a1628]/90 via-[#0a1628]/80 to-[#0a1628]/95"></div>
+      </div>
+    )}
 
-<p>contactcard</p>
-<p>{report.contactcard}</p>
-<hr>
-subtitle
-<hr>
-<p>contactcard</p>
-<p>{JSON.stringify(report.contactcard)}</p>
-<hr>
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 space-y-6">
+      <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-slate-300">
+        {report.category && (
+          <span class="bg-brand/20 text-brand px-3 py-1 rounded-full border border-brand/30">
+            {categoryLabels[report.category] ?? report.category}
+          </span>
+        )}
+        {publishedDate && (
+          <>
+            <span class="text-slate-500" aria-hidden="true">•</span>
+            <span>Published {publishedDate}</span>
+          </>
+        )}
+        {report.tags?.length && (
+          <>
+            <span class="text-slate-500" aria-hidden="true">•</span>
+            <span class="flex items-center gap-2 flex-wrap">
+              {report.tags.map((tag) => (
+                <span class="bg-white/5 text-slate-200 px-2 py-1 rounded-md border border-white/10">{tag}</span>
+              ))}
+            </span>
+          </>
+        )}
+      </div>
 
+      <div class="space-y-3">
+        <p class="text-sm text-slate-400">Industry Report</p>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">{report.title}</h1>
+        {report.subtitle && <p class="text-xl text-slate-200">{report.subtitle}</p>}
+        {report.excerpt && <p class="text-lg text-slate-300 max-w-4xl">{report.excerpt}</p>}
+      </div>
 
-<p>{JSON.stringify(report)}</p>
+      {report.authors?.length ? (
+        <div class="flex flex-wrap gap-4 items-center">
+          {report.authors.map((author) => {
+            const avatar = author.image
+              ? urlForImage(author.image).width(96).height(96).fit("crop").url()
+              : null;
+            return (
+              <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-3 py-2">
+                {avatar ? (
+                  <img src={avatar} alt={author.name} class="w-10 h-10 rounded-full object-cover" loading="lazy" />
+                ) : (
+                  <div class="w-10 h-10 rounded-full bg-brand/30 border border-brand/40 flex items-center justify-center text-white font-semibold">
+                    {author.name?.[0] ?? "A"}
+                  </div>
+                )}
+                <div>
+                  <p class="text-sm font-semibold text-white leading-tight">{author.name}</p>
+                  {author.role && <p class="text-xs text-slate-400">{author.role}</p>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  </div>
 
+  <!-- Body -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid lg:grid-cols-12 gap-10">
+    <div class="lg:col-span-8 space-y-10">
+      {report.keyTakeaways?.takeaways?.length ? (
+        <KeyTakeaways heading={report.keyTakeaways.heading} takeaways={report.keyTakeaways.takeaways} />
+      ) : null}
 
+      {contentBlocks.map((section) => {
+        if (section._type === "textSection") {
+          const text = section as any;
+          return (
+            <Section id={text.id} title={text.heading || "Section"}>
+              <PortableText portableText={text.content} />
+            </Section>
+          );
+        }
 
+        if (section._type === "chartSection") {
+          const chart = section as any;
+          const chartImage = chart.chartImage ? urlForImage(chart.chartImage).width(1400).fit("max").url() : null;
+          const chartAlt = chart.chartImage?.alt || chart.title || "Chart";
 
+          return (
+            <Section id={chart.id} title={chart.title || "Chart"}>
+              <div class="space-y-4">
+                {chart.description && <p class="text-slate-300">{chart.description}</p>}
+                <div class="text-xs uppercase tracking-wide text-slate-400">Type: {chart.chartType ?? "Chart"}</div>
+                {chartImage ? (
+                  <ChartCard src={chartImage} alt={chartAlt} caption={chart.description || chart.title || ""} />
+                ) : chart.data ? (
+                  <pre class="bg-[#0f1f3a]/60 border border-white/10 rounded-xl p-4 text-sm text-slate-200 overflow-auto">
+{chart.data}
+                  </pre>
+                ) : null}
+              </div>
+            </Section>
+          );
+        }
+
+        if (section._type === "calloutSection") {
+          const callout = section as any;
+          const variantMap = {
+            info: "info",
+            warning: "warning",
+            success: "success",
+            error: "error",
+            note: "note",
+          } as const;
+          const key = (callout.type as keyof typeof variantMap) ?? "info";
+          const variant = variantMap[key] ?? "info";
+
+          return (
+            <Callout variant={variant} title={callout.title}>
+              <PortableText portableText={callout.content} />
+            </Callout>
+          );
+        }
+
+        if (section._type === "ctaSection") {
+          const cta = section as any;
+          return (
+            <CTASection
+              heading={cta.heading}
+              description={cta.description}
+              buttonText={cta.buttonText}
+              buttonUrl={cta.buttonUrl}
+              variant={cta.variant}
+            />
+          );
+        }
+
+        if (section._type === "imageSection") {
+          const imageSection = section as any;
+          const url = imageSection.image ? urlForImage(imageSection.image).width(1600).fit("max").url() : null;
+          const alt = imageSection.image?.alt || imageSection.caption || "Report image";
+          const layout = imageSection.layout || "normal";
+          const widthClass =
+            layout === "full"
+              ? "-mx-4 sm:-mx-6 lg:-mx-8"
+              : layout === "wide"
+              ? "lg:-mx-6"
+              : layout === "small"
+              ? "max-w-3xl mx-auto"
+              : "w-full";
+
+          return (
+            <div id={imageSection.id} class={`space-y-3 ${widthClass}`}>
+              {url && <img src={url} alt={alt} class="w-full rounded-2xl border border-white/10 shadow-lg" loading="lazy" />}
+              {imageSection.caption && <p class="text-sm text-slate-400 text-center">{imageSection.caption}</p>}
+            </div>
+          );
+        }
+
+        return null;
+      })}
+
+      {report.references?.references?.length ? (
+        <References
+          references={report.references.references.map((ref, idx) => ({
+            id: `ref-${idx + 1}`,
+            text: ref.citation,
+            url: ref.url,
+          }))}
+        />
+      ) : null}
+
+      <SubscribeCTA />
+    </div>
+
+    <div class="lg:col-span-4 space-y-6">
+      {tocItems?.length ? <ReportTOC items={tocItems} /> : null}
+
+      {report.contactCards?.people?.length ? (
+        <div class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6 space-y-4">
+          <h2 class="text-xl font-semibold text-white">
+            {report.contactCards?.heading || "Contact the Team"}
+          </h2>
+          <div class={(report.contactCards?.layout === "list" ? "space-y-4" : "grid sm:grid-cols-2 gap-4")}>
+            {report.contactCards.people.map((person: any) => {
+              const imageUrl = person.image
+                ? urlForImage(person.image).width(200).height(200).fit("crop").url()
+                : undefined;
+              return (
+                <ContactCard
+                  name={person.name}
+                  role={person.role}
+                  email={person.email}
+                  phone={person.phone}
+                  image={imageUrl}
+                />
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  </div>
+</ReportLayout>

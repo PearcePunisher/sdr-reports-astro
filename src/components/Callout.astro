@@ -1,7 +1,7 @@
 ---
 interface Props {
   title?: string;
-  variant?: 'info' | 'success' | 'warning';
+  variant?: 'info' | 'success' | 'warning' | 'error' | 'note';
 }
 
 const { title, variant = 'info' } = Astro.props;
@@ -10,6 +10,8 @@ const variants = {
   info: 'bg-brand-900/30 border-brand/30',
   success: 'bg-emerald-950/50 border-emerald-500/30',
   warning: 'bg-amber-950/50 border-amber-500/30',
+  error: 'bg-red-950/50 border-red-500/30',
+  note: 'bg-slate-800/60 border-white/10',
 };
 ---
 
