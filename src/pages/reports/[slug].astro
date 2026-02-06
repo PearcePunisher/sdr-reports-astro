@@ -248,6 +248,73 @@ const tocItems =
 const contentBlocks = contentWithIds.filter(
   (block) => block._type !== "tocSection",
 );
+
+/* Chart Examples
+<Chart
+  id="afdsfasd"
+  chartType="bar"
+  height="420px"
+  width="420px"
+  class="myChart"
+  data={{
+    labels: ["A","B","C","D"],
+    series: [
+      { name: "Sales", data: [50, 60, 10, 32] }
+    ],
+    xLabel: "Category",
+    yLabel: "Value"
+  }}
+  overrides={{
+    tooltip: { trigger: "axis" },
+    yAxis: { axisLabel: { formatter: "{value}" } }
+  }}
+/>
+
+
+
+<Chart
+id="afdsfasdsfsdfd"
+  chartType="mixed"
+  data={{
+    labels: ["Jan","Feb","Mar"],
+    series: [
+      { name: "Revenue", type: "bar", data: [12, 18, 15] },
+      { name: "Avg", type: "line", data: [13, 16, 14], smooth: true }
+    ]
+  }}
+/>
+
+
+<Chart
+id="afdvgjtfjgsfasd"
+  chartType="pie"
+  data={{
+    donut: true,
+    data: [
+      { name: "Cats", value: 40 },
+      { name: "Dogs", value: 60 }
+    ]
+  }}
+/>
+
+<Chart
+id="afdfdsfsmksdfosfasd"
+  chartType="bubble"
+  data={{
+    series: [
+      { name: "Points", data: [[10, 20, 6], [15, 7, 14], [8, 12, 9]] }
+    ],
+    xLabel: "X",
+    yLabel: "Y"
+  }}
+/>
+
+<Chart
+  id="afdsfadsfklsd;flsdsd"
+  chartType="histogram"
+  data={{ values: [1,1,2,2,2,3,4,5,5,6,8,8,9], bins: 6, name: "Count" }}
+/>
+*/
 ---
 
 <ReportLayout
