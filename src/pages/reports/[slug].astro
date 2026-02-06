@@ -26,7 +26,9 @@ type SectionBlock =
       _key: string;
       id?: string;
       title?: string;
+      subtitle?: string;
       description?: string;
+      source?: string;
       chartType?: string;
       data?: string;
       chartImage?: any;
@@ -116,7 +118,9 @@ const slugify = (value: string) =>
     .replace(/^-+|-+$/g, "");
 
 export async function getStaticPaths() {
-  const { data: reports = [] } = await loadQuery<{ slug?: { current: string } }[]>({
+  const { data: reports = [] } = await loadQuery<
+    { slug?: { current: string } }[]
+  >({
     query: `*[_type == "report" && defined(slug.current)]{ "slug": slug.current }`,
   });
 
@@ -130,8 +134,8 @@ const slugParam =
   typeof params.slug === "string"
     ? params.slug
     : typeof params.slug === "object" && params.slug
-    ? (params.slug as any).current || ""
-    : "";
+      ? (params.slug as any).current || ""
+      : "";
 
 const { data: report } = await loadQuery<Report>({
   query: `*[_type == "report" && slug.current == $slug][0]{
@@ -179,19 +183,36 @@ if (!report) {
 
 const heroImage = report.featuredImage
   ? {
-      url: urlForImage(report.featuredImage).width(1800).height(1000).fit("crop").url(),
-      webp: urlForImage(report.featuredImage).width(1800).height(1000).fit("crop").format("webp").url(),
+      url: urlForImage(report.featuredImage)
+        .width(1800)
+        .height(1000)
+        .fit("crop")
+        .url(),
+      webp: urlForImage(report.featuredImage)
+        .width(1800)
+        .height(1000)
+        .fit("crop")
+        .format("webp")
+        .url(),
       alt: report.featuredImage?.alt || report.title,
     }
   : null;
 
 const publishedDate =
   report.publishedAt &&
-  new Date(report.publishedAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  new Date(report.publishedAt).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 
 const contentWithIds =
   report.content?.map((block, index) => {
-    const heading = (block as any).heading || (block as any).title || (block as any).caption || block._type;
+    const heading =
+      (block as any).heading ||
+      (block as any).title ||
+      (block as any).caption ||
+      block._type;
     return {
       ...block,
       id: heading ? slugify(heading) : `section-${index + 1}`,
@@ -199,7 +220,8 @@ const contentWithIds =
   }) ?? [];
 
 const manualToc = contentWithIds.find(
-  (block) => block._type === "tocSection" && (block as any).autoGenerate === false
+  (block) =>
+    block._type === "tocSection" && (block as any).autoGenerate === false,
 ) as any;
 
 const tocItems =
@@ -221,232 +243,342 @@ const tocItems =
         }))
         .filter((item) => item.title);
 
-const contentBlocks = contentWithIds.filter((block) => block._type !== "tocSection");
+const contentBlocks = contentWithIds.filter(
+  (block) => block._type !== "tocSection",
+);
 ---
 
 <ReportLayout
   title={`${report.title} | SDR Reports`}
   description={report.excerpt || "SDR Ventures industry report"}
   publishDate={report.publishedAt || new Date().toISOString()}
-  canonical={`/reports/${report.slug}`}
->
+  canonical={`/reports/${report.slug}`}>
   <!-- Hero -->
   <div class="relative border-b border-white/10 overflow-hidden">
-    {heroImage && (
-      <div class="absolute inset-0 z-0">
-        <picture>
-          <source srcset={heroImage.webp} type="image/webp" />
-          <img src={heroImage.url} alt={heroImage.alt} class="w-full h-full object-cover" loading="eager" />
-        </picture>
-        <div class="absolute inset-0 bg-gradient-to-b from-[#0a1628]/90 via-[#0a1628]/80 to-[#0a1628]/95"></div>
-      </div>
-    )}
+    {
+      heroImage && (
+        <div class="absolute inset-0 z-0">
+          <picture>
+            <source srcset={heroImage.webp} type="image/webp" />
+            <img
+              src={heroImage.url}
+              alt={heroImage.alt}
+              class="w-full h-full object-cover"
+              loading="eager"
+            />
+          </picture>
+          <div class="absolute inset-0 bg-gradient-to-b from-[#0a1628]/90 via-[#0a1628]/80 to-[#0a1628]/95" />
+        </div>
+      )
+    }
 
-    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 space-y-6">
-      <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-slate-300">
-        {report.category && (
-          <span class="bg-brand/20 text-brand px-3 py-1 rounded-full border border-brand/30">
-            {categoryLabels[report.category] ?? report.category}
-          </span>
-        )}
-        {publishedDate && (
-          <>
-            <span class="text-slate-500" aria-hidden="true">•</span>
-            <span>Published {publishedDate}</span>
-          </>
-        )}
-        {report.tags?.length && (
-          <>
-            <span class="text-slate-500" aria-hidden="true">•</span>
-            <span class="flex items-center gap-2 flex-wrap">
-              {report.tags.map((tag) => (
-                <span class="bg-white/5 text-slate-200 px-2 py-1 rounded-md border border-white/10">{tag}</span>
-              ))}
+    <div
+      class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 space-y-6">
+      <div
+        class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-slate-300">
+        {
+          report.category && (
+            <span class="bg-brand/20 text-brand px-3 py-1 rounded-full border border-brand/30">
+              {categoryLabels[report.category] ?? report.category}
             </span>
-          </>
-        )}
+          )
+        }
+        {
+          publishedDate && (
+            <>
+              <span class="text-slate-500" aria-hidden="true">
+                •
+              </span>
+              <span>Published {publishedDate}</span>
+            </>
+          )
+        }
+        {
+          report.tags?.length && (
+            <>
+              <span class="text-slate-500" aria-hidden="true">
+                •
+              </span>
+              <span class="flex items-center gap-2 flex-wrap">
+                {report.tags.map((tag) => (
+                  <span class="bg-white/5 text-slate-200 px-2 py-1 rounded-md border border-white/10">
+                    {tag}
+                  </span>
+                ))}
+              </span>
+            </>
+          )
+        }
       </div>
 
       <div class="space-y-3">
         <p class="text-sm text-slate-400">Industry Report</p>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">{report.title}</h1>
-        {report.subtitle && <p class="text-xl text-slate-200">{report.subtitle}</p>}
-        {report.excerpt && <p class="text-lg text-slate-300 max-w-4xl">{report.excerpt}</p>}
-        {report.pdfUrl && (
-          <div class="pt-2">
-            <a
-              href={report.pdfUrl}
-              download
-              class="inline-flex items-center gap-2 px-6 py-3 bg-brand hover:bg-brand-600 text-black font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
-            >
-              Download PDF Report
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 10l5 5 5-5m-5 5V3" />
-              </svg>
-            </a>
-          </div>
-        )}
+        <h1
+          class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+          {report.title}
+        </h1>
+        {
+          report.subtitle && (
+            <p class="text-xl text-slate-200">{report.subtitle}</p>
+          )
+        }
+        {
+          report.excerpt && (
+            <p class="text-lg text-slate-300 max-w-4xl">{report.excerpt}</p>
+          )
+        }
+        {
+          report.pdfUrl && (
+            <div class="pt-2">
+              <a
+                href={report.pdfUrl}
+                download
+                class="inline-flex items-center gap-2 px-6 py-3 bg-brand hover:bg-brand-600 text-black font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]">
+                <svg
+                  class="w-5 h-5 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+                Download PDF Report
+              </a>
+            </div>
+          )
+        }
       </div>
 
-      {report.authors?.length ? (
-        <div class="flex flex-wrap gap-4 items-center">
-          {report.authors.map((author) => {
-            const avatar = author.image
-              ? urlForImage(author.image).width(96).height(96).fit("crop").url()
-              : null;
-            return (
-              <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-3 py-2">
-                {avatar ? (
-                  <img src={avatar} alt={author.name} class="w-10 h-10 rounded-full object-cover" loading="lazy" />
-                ) : (
-                  <div class="w-10 h-10 rounded-full bg-brand/30 border border-brand/40 flex items-center justify-center text-white font-semibold">
-                    {author.name?.[0] ?? "A"}
+      {
+        report.authors?.length ? (
+          <div class="flex flex-wrap gap-4 items-center">
+            {report.authors.map((author) => {
+              const avatar = author.image
+                ? urlForImage(author.image)
+                    .width(96)
+                    .height(96)
+                    .fit("crop")
+                    .url()
+                : null;
+              return (
+                <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-3 py-2 pr-6">
+                  {avatar ? (
+                    <img
+                      src={avatar}
+                      alt={author.name}
+                      class="w-10 h-10 rounded-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="w-10 h-10 rounded-full bg-brand/30 border border-brand/40 flex items-center justify-center text-white font-semibold">
+                      {author.name?.[0] ?? "A"}
+                    </div>
+                  )}
+                  <div>
+                    <p class="text-sm font-semibold text-white leading-tight">
+                      {author.name}
+                    </p>
+                    {author.role && (
+                      <p class="text-xs text-slate-400">{author.role}</p>
+                    )}
+                    {author.division && (
+                      <p class="text-xs text-slate-500">{author.division}</p>
+                    )}
                   </div>
-                )}
-                <div>
-                  <p class="text-sm font-semibold text-white leading-tight">{author.name}</p>
-                  {author.role && <p class="text-xs text-slate-400">{author.role}</p>}
-                  {author.division && <p class="text-xs text-slate-500">{author.division}</p>}
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      ) : null}
+              );
+            })}
+          </div>
+        ) : null
+      }
     </div>
   </div>
 
   <!-- Body -->
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
-    {report.keyTakeaways?.takeaways?.length ? (
-      <KeyTakeaways heading={report.keyTakeaways.heading} takeaways={report.keyTakeaways.takeaways} />
-    ) : null}
+    {
+      report.keyTakeaways?.takeaways?.length ? (
+        <KeyTakeaways
+          heading={report.keyTakeaways.heading}
+          takeaways={report.keyTakeaways.takeaways}
+        />
+      ) : null
+    }
 
     <div class="grid lg:grid-cols-12 gap-10">
       <div class="lg:col-span-8 space-y-10">
-        {contentBlocks.map((section) => {
-        if (section._type === "textSection") {
-          const text = section as any;
-          return (
-            <Section id={text.id} title={text.heading || "Section"}>
-              <PortableText portableText={text.content} />
-            </Section>
-          );
+        {
+          contentBlocks.map((section) => {
+            if (section._type === "textSection") {
+              const text = section as any;
+              return (
+                <Section id={text.id} title={text.heading || "Section"}>
+                  <PortableText portableText={text.content} />
+                </Section>
+              );
+            }
+
+            if (section._type === "chartSection") {
+              const chart = section as any;
+              const chartImage = chart.chartImage
+                ? urlForImage(chart.chartImage).width(1400).fit("max").url()
+                : null;
+              const chartAlt = chart.chartImage?.alt || chart.title || "Chart";
+
+              return (
+                <Section id={chart.id} title={chart.title || "Chart"}>
+                  <div class="space-y-4">
+                    {chart.subtitle && (
+                      <p class="text-slate-400 text-sm">{chart.subtitle}</p>
+                    )}
+                    {chartImage ? (
+                      <ChartCard
+                        src={chartImage}
+                        alt={chartAlt}
+                        caption={chart.subtitle || chart.title || ""}
+                      />
+                    ) : chart.data ? (
+                      <pre class="bg-[#0f1f3a]/60 border border-white/10 rounded-xl p-4 text-sm text-slate-200 overflow-auto">
+                        {chart.data}
+                      </pre>
+                    ) : null}
+                    {chart.source && (
+                      <p class="text-slate-400 text-sm">
+                        Source: {chart.source}
+                      </p>
+                    )}
+                  </div>
+                </Section>
+              );
+            }
+
+            if (section._type === "calloutSection") {
+              const callout = section as any;
+              const variantMap = {
+                info: "info",
+                warning: "warning",
+                success: "success",
+                error: "error",
+                note: "note",
+              } as const;
+              const key = (callout.type as keyof typeof variantMap) ?? "info";
+              const variant = variantMap[key] ?? "info";
+
+              return (
+                <Callout variant={variant} title={callout.title}>
+                  <PortableText portableText={callout.content} />
+                </Callout>
+              );
+            }
+
+            if (section._type === "ctaSection") {
+              const cta = section as any;
+              return (
+                <CTASection
+                  heading={cta.heading}
+                  description={cta.description}
+                  buttonText={cta.buttonText}
+                  buttonUrl={cta.buttonUrl}
+                  variant={cta.variant}
+                />
+              );
+            }
+
+            if (section._type === "imageSection") {
+              const imageSection = section as any;
+              const url = imageSection.image
+                ? urlForImage(imageSection.image).width(1600).fit("max").url()
+                : null;
+              const alt =
+                imageSection.image?.alt ||
+                imageSection.caption ||
+                "Report image";
+              const layout = imageSection.layout || "normal";
+              const widthClass =
+                layout === "full"
+                  ? "-mx-4 sm:-mx-6 lg:-mx-8"
+                  : layout === "wide"
+                    ? "lg:-mx-6"
+                    : layout === "small"
+                      ? "max-w-3xl mx-auto"
+                      : "w-full";
+
+              return (
+                <div id={imageSection.id} class={`space-y-3 ${widthClass}`}>
+                  {url && (
+                    <img
+                      src={url}
+                      alt={alt}
+                      class="w-full rounded-2xl border border-white/10 shadow-lg"
+                      loading="lazy"
+                    />
+                  )}
+                  {imageSection.caption && (
+                    <p class="text-sm text-slate-400 text-center">
+                      {imageSection.caption}
+                    </p>
+                  )}
+                </div>
+              );
+            }
+
+            return null;
+          })
         }
 
-        if (section._type === "chartSection") {
-          const chart = section as any;
-          const chartImage = chart.chartImage ? urlForImage(chart.chartImage).width(1400).fit("max").url() : null;
-          const chartAlt = chart.chartImage?.alt || chart.title || "Chart";
-
-          return (
-            <Section id={chart.id} title={chart.title || "Chart"}>
-              <div class="space-y-4">
-                {chartImage ? (
-                  <ChartCard src={chartImage} alt={chartAlt} caption={chart.description || chart.title || ""} />
-                ) : chart.data ? (
-                  <pre class="bg-[#0f1f3a]/60 border border-white/10 rounded-xl p-4 text-sm text-slate-200 overflow-auto">
-{chart.data}
-                  </pre>
-                ) : null}
+        {
+          report.contactCards?.people?.length ? (
+            <div class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6 space-y-4">
+              <h2 class="text-xl font-semibold text-white">
+                {report.contactCards?.heading || "Contact the Team"}
+              </h2>
+              <div
+                class={
+                  report.contactCards?.layout === "list"
+                    ? "space-y-4"
+                    : "grid sm:grid-cols-2 gap-4"
+                }>
+                {report.contactCards.people.map((person: any) => {
+                  const imageUrl = person.image
+                    ? urlForImage(person.image)
+                        .width(200)
+                        .height(200)
+                        .fit("crop")
+                        .url()
+                    : undefined;
+                  return (
+                    <ContactCard
+                      name={person.name}
+                      role={person.role}
+                      division={person.division}
+                      email={person.email}
+                      phone={person.phone}
+                      image={imageUrl}
+                    />
+                  );
+                })}
               </div>
-            </Section>
-          );
-        }
-
-        if (section._type === "calloutSection") {
-          const callout = section as any;
-          const variantMap = {
-            info: "info",
-            warning: "warning",
-            success: "success",
-            error: "error",
-            note: "note",
-          } as const;
-          const key = (callout.type as keyof typeof variantMap) ?? "info";
-          const variant = variantMap[key] ?? "info";
-
-          return (
-            <Callout variant={variant} title={callout.title}>
-              <PortableText portableText={callout.content} />
-            </Callout>
-          );
-        }
-
-        if (section._type === "ctaSection") {
-          const cta = section as any;
-          return (
-            <CTASection
-              heading={cta.heading}
-              description={cta.description}
-              buttonText={cta.buttonText}
-              buttonUrl={cta.buttonUrl}
-              variant={cta.variant}
-            />
-          );
-        }
-
-        if (section._type === "imageSection") {
-          const imageSection = section as any;
-          const url = imageSection.image ? urlForImage(imageSection.image).width(1600).fit("max").url() : null;
-          const alt = imageSection.image?.alt || imageSection.caption || "Report image";
-          const layout = imageSection.layout || "normal";
-          const widthClass =
-            layout === "full"
-              ? "-mx-4 sm:-mx-6 lg:-mx-8"
-              : layout === "wide"
-              ? "lg:-mx-6"
-              : layout === "small"
-              ? "max-w-3xl mx-auto"
-              : "w-full";
-
-          return (
-            <div id={imageSection.id} class={`space-y-3 ${widthClass}`}>
-              {url && <img src={url} alt={alt} class="w-full rounded-2xl border border-white/10 shadow-lg" loading="lazy" />}
-              {imageSection.caption && <p class="text-sm text-slate-400 text-center">{imageSection.caption}</p>}
             </div>
-          );
+          ) : null
         }
-
-        return null;
-      })}
-
-        {report.contactCards?.people?.length ? (
-          <div class="bg-[#0f1f3a]/50 border border-white/10 rounded-2xl p-6 space-y-4">
-            <h2 class="text-xl font-semibold text-white">
-              {report.contactCards?.heading || "Contact the Team"}
-            </h2>
-            <div class={report.contactCards?.layout === "list" ? "space-y-4" : "grid sm:grid-cols-2 gap-4"}>
-              {report.contactCards.people.map((person: any) => {
-                const imageUrl = person.image
-                  ? urlForImage(person.image).width(200).height(200).fit("crop").url()
-                  : undefined;
-                return (
-                  <ContactCard
-                    name={person.name}
-                    role={person.role}
-                    division={person.division}
-                    email={person.email}
-                    phone={person.phone}
-                    image={imageUrl}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        ) : null}
 
         <!-- <SubscribeCTA /> -->
 
-        {report.references?.references?.length ? (
-          <References
-            references={report.references.references.map((ref, idx) => ({
-              id: `ref-${idx + 1}`,
-              text: ref.citation,
-              url: ref.url,
-            }))}
-          />
-        ) : null}
+        {
+          report.references?.references?.length ? (
+            <References
+              references={report.references.references.map((ref, idx) => ({
+                id: `ref-${idx + 1}`,
+                text: ref.citation,
+                url: ref.url,
+              }))}
+            />
+          ) : null
+        }
       </div>
 
       <div class="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
