@@ -1,0 +1,381 @@
+---
+type ChartType =
+  | "bar"
+  | "line"
+  | "area"
+  | "mixed"
+  | "scatter"
+  | "bubble"
+  | "histogram"
+  | "radar"
+  | "pie"
+  | "geo"
+  | "custom";
+
+type CartesianSeries = {
+  name?: string;
+  // category charts: [number, number, ...]
+  // scatter/bubble: [[x,y], [x,y], ...] or [[x,y,size], ...]
+  data: any[];
+  type?: "bar" | "line" | "scatter";
+  yAxisIndex?: number;
+  stack?: string;
+  smooth?: boolean;
+  area?: boolean;
+};
+
+type CartesianData = {
+  labels?: string[]; // if provided -> category xAxis
+  series: CartesianSeries[];
+  xLabel?: string;
+  yLabel?: string;
+  stacked?: boolean;
+  smooth?: boolean;
+};
+
+type PieData = {
+  name?: string;
+  data: { name: string; value: number }[];
+  donut?: boolean;
+};
+
+type RadarData = {
+  name?: string;
+  indicators: { name: string; max?: number }[];
+  series: { name?: string; data: number[] }[];
+};
+
+type HistogramData = {
+  values: number[];
+  bins?: number;
+  name?: string;
+};
+
+type GeoData = {
+  mapName: string; // e.g. "world" or "my-custom-map"
+  geoJson?: any;   // if provided, we call echarts.registerMap(mapName, geoJson)
+  name?: string;
+  data: { name: string; value: number }[]; // region name -> value
+};
+
+type Props = {
+  chartType: ChartType;
+
+  /**
+   * Simple data (object) or JSON string.
+   * For "custom", you can pass a full ECharts option object/string via `option`.
+   */
+  data?: CartesianData | PieData | RadarData | HistogramData | GeoData | string;
+
+  /**
+   * Full ECharts option (object or JSON string). If provided, it becomes the base option.
+   */
+  option?: any | string;
+
+  /**
+   * Extra option merged on top of the base option (object or JSON string).
+   * Uses ECharts’ own merge behavior client-side.
+   */
+  overrides?: any | string;
+
+  /**
+   * ECharts theme name ("light" / "dark") or a JSON theme object (as object or JSON string).
+   */
+  theme?: string | Record<string, any>;
+
+  /**
+   * Renderer: "canvas" (default) or "svg".
+   */
+  renderer?: "canvas" | "svg";
+
+  /**
+   * Styling
+   */
+  id?: string;
+  class?: string;
+  style?: string;
+  width?: string;
+  height?: string;
+
+  /**
+   * Optional: if true, dispatch CustomEvents (chart-click, chart-mouseover, etc.)
+   */
+  emitEvents?: boolean;
+};
+
+const {
+  chartType,
+  data,
+  option,
+  overrides,
+  theme,
+  renderer = "canvas",
+  id: givenId,
+  class: className,
+  style = "",
+  width = "100%",
+  height = "360px",
+  emitEvents = false,
+} = Astro.props as Props;
+
+const id = givenId ?? `chart-${Math.random().toString(36).slice(2)}`;
+
+function parseMaybeJson<T = any>(value: any): T | undefined {
+  if (value == null) return undefined;
+  if (typeof value !== "string") return value as T;
+  try {
+    return JSON.parse(value) as T;
+  } catch {
+    // Keep it safe: no eval. If JSON is invalid, we fail gracefully.
+    return undefined;
+  }
+}
+
+function buildHistogram(values: number[], bins: number) {
+  const clean = values.filter((v) => Number.isFinite(v));
+  if (!clean.length) return { labels: [], counts: [] };
+
+  let min = clean[0], max = clean[0];
+  for (const v of clean) {
+    if (v < min) min = v;
+    if (v > max) max = v;
+  }
+
+  const span = max - min || 1;
+  const step = span / bins;
+
+  const counts = new Array(bins).fill(0);
+  for (const v of clean) {
+    const idx = Math.min(bins - 1, Math.floor((v - min) / step));
+    counts[idx] += 1;
+  }
+
+  const labels = counts.map((_, i) => {
+    const a = min + i * step;
+    const b = min + (i + 1) * step;
+    return `${a.toFixed(2)}–${b.toFixed(2)}`;
+  });
+
+  return { labels, counts };
+}
+
+function baseOptionFromSimpleData(type: ChartType, raw: any): any {
+  // default UI behaviors (hover tooltips, legend, etc.)
+  const common = {
+    animation: true,
+    tooltip: {}, // set per-chart below
+  };
+
+  if (type === "pie") {
+    const d = raw as PieData;
+    return {
+      ...common,
+      tooltip: { trigger: "item" },
+      legend: { top: "bottom" },
+      series: [
+        {
+          name: d.name,
+          type: "pie",
+          radius: d.donut ? ["40%", "70%"] : "70%",
+          data: d.data,
+        },
+      ],
+    };
+  }
+
+  if (type === "radar") {
+    const d = raw as RadarData;
+    return {
+      ...common,
+      tooltip: { trigger: "item" },
+      legend: { top: "bottom" },
+      radar: { indicator: d.indicators },
+      series: [
+        {
+          name: d.name,
+          type: "radar",
+          data: d.series.map((s) => ({ name: s.name, value: s.data })),
+        },
+      ],
+    };
+  }
+
+  if (type === "histogram") {
+    const d = raw as HistogramData;
+    const bins = Math.max(1, d.bins ?? Math.ceil(Math.sqrt(d.values?.length ?? 1)));
+    const { labels, counts } = buildHistogram(d.values ?? [], bins);
+
+    return {
+      ...common,
+      tooltip: { trigger: "axis" },
+      xAxis: { type: "category", data: labels },
+      yAxis: { type: "value" },
+      series: [{ name: d.name ?? "Count", type: "bar", data: counts }],
+    };
+  }
+
+  if (type === "geo") {
+    const d = raw as GeoData;
+    return {
+      ...common,
+      tooltip: { trigger: "item" },
+      visualMap: { left: "left", bottom: 20, calculable: true },
+      series: [
+        {
+          name: d.name ?? "Value",
+          type: "map",
+          map: d.mapName,
+          data: d.data,
+        },
+      ],
+    };
+  }
+
+  // Cartesian-style charts: bar/line/area/mixed/scatter/bubble
+  const d = raw as CartesianData;
+
+  const hasLabels = Array.isArray(d.labels) && d.labels.length > 0;
+  const xAxisType = hasLabels ? "category" : "value";
+  const yAxisType = "value";
+
+  const forceType =
+    type === "bar" ? "bar" :
+    type === "line" ? "line" :
+    type === "area" ? "line" :
+    type === "scatter" || type === "bubble" ? "scatter" :
+    undefined;
+
+  return {
+    ...common,
+    tooltip: { trigger: hasLabels ? "axis" : "item" },
+    legend: { top: "bottom" },
+    grid: { left: 40, right: 20, top: 20, bottom: 60, containLabel: true },
+    xAxis: hasLabels
+      ? { type: xAxisType, data: d.labels, name: d.xLabel }
+      : { type: xAxisType, name: d.xLabel },
+    yAxis: { type: yAxisType, name: d.yLabel },
+    series: (d.series ?? []).map((s) => {
+      const seriesType = type === "mixed" ? (s.type ?? "line") : (forceType ?? (s.type ?? "line"));
+
+      const isArea = type === "area" || s.area === true;
+      const isStacked = d.stacked === true;
+
+      const base: any = {
+        name: s.name,
+        type: seriesType,
+        data: s.data,
+        yAxisIndex: s.yAxisIndex,
+        stack: s.stack ?? (isStacked ? "total" : undefined),
+        smooth: s.smooth ?? d.smooth ?? false,
+      };
+
+      if (isArea && seriesType === "line") base.areaStyle = {};
+
+      if (type === "bubble") {
+        // bubble expects [x, y, size]
+        base.symbolSize = (val: any) => {
+          const size = Array.isArray(val) ? Number(val[2]) : 10;
+          return Number.isFinite(size) ? Math.max(4, size) : 10;
+        };
+      }
+
+      return base;
+    }),
+  };
+}
+
+const parsedData = parseMaybeJson<any>(data);
+const parsedOption = parseMaybeJson<any>(option);
+const parsedOverrides = parseMaybeJson<any>(overrides);
+const parsedTheme = parseMaybeJson<any>(theme);
+
+const baseOption =
+  parsedOption ??
+  (chartType === "custom"
+    ? (parsedData ?? {})
+    : baseOptionFromSimpleData(chartType, parsedData ?? {}));
+
+// serialize for dataset attributes
+const baseOptionJson = JSON.stringify(baseOption ?? {});
+const overridesJson = parsedOverrides ? JSON.stringify(parsedOverrides) : "";
+const themeJson = parsedTheme ? JSON.stringify(parsedTheme) : "";
+const geoJson =
+  chartType === "geo" && parsedData?.geoJson ? JSON.stringify(parsedData.geoJson) : "";
+const geoMapName = chartType === "geo" ? String(parsedData?.mapName ?? "") : "";
+---
+
+<div
+  id={id}
+  class={className}
+  style={`width:${width};height:${height};${style}`}
+  data-base-option={baseOptionJson}
+  data-overrides={overridesJson}
+  data-theme={themeJson}
+  data-renderer={renderer}
+  data-emit-events={emitEvents ? "1" : "0"}
+  data-geojson={geoJson}
+  data-geomapname={geoMapName}
+></div>
+
+<script type="module">
+  const el = document.getElementById({JSON.stringify(id)});
+  if (!el) throw new Error("Chart container not found");
+
+  const echartsMod = await import("echarts");
+  const echarts = echartsMod?.default ?? echartsMod;
+
+  // theme: either name string ("dark") or JSON object string
+  let theme = el.dataset.theme || undefined;
+  if (theme) {
+    try { theme = JSON.parse(theme); } catch { /* keep as string */ }
+  }
+
+  const initOpts = { renderer: el.dataset.renderer || "canvas" };
+
+  // optional: register custom geo map
+  const geoJsonStr = el.dataset.geojson;
+  const geoMapName = el.dataset.geomapname;
+  if (geoJsonStr && geoMapName) {
+    try {
+      const geo = JSON.parse(geoJsonStr);
+      echarts.registerMap(geoMapName, geo);
+    } catch (e) {
+      console.warn("Failed to register geo map (invalid geoJson).", e);
+    }
+  }
+
+  const chart = echarts.init(el, theme, initOpts);
+
+  const baseOption = JSON.parse(el.dataset.baseOption || "{}");
+  chart.setOption(baseOption, { notMerge: true });
+
+  const overridesStr = el.dataset.overrides;
+  if (overridesStr) {
+    try {
+      const overrides = JSON.parse(overridesStr);
+      // Let ECharts merge overrides on top of base option
+      chart.setOption(overrides, { notMerge: false });
+    } catch (e) {
+      console.warn("Invalid overrides JSON; ignoring.", e);
+    }
+  }
+
+  // Resize automatically
+  const ro = new ResizeObserver(() => chart.resize());
+  ro.observe(el);
+
+  // Optional event bridging (hover/click/etc.)
+  const shouldEmit = el.dataset.emitEvents === "1";
+  if (shouldEmit) {
+    const emit = (name, detail) => el.dispatchEvent(new CustomEvent(name, { detail }));
+    chart.on("click", (p) => emit("chart-click", p));
+    chart.on("mouseover", (p) => emit("chart-mouseover", p));
+    chart.on("mouseout", (p) => emit("chart-mouseout", p));
+  }
+
+  // Cleanup on page navigation (best effort)
+  window.addEventListener("beforeunload", () => {
+    ro.disconnect();
+    chart.dispose();
+  });
+</script>
