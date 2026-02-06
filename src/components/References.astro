@@ -19,7 +19,7 @@ const { references } = Astro.props;
       <li id={ref.id} class="scroll-mt-24">
         <span class="text-brand">[{ref.id.replace('ref-', '')}]</span>{' '}
         {ref.url ? (
-          <a href={ref.url} class="underline decoration-dotted underline-offset-4 hover:text-brand">
+          <a href={ref.url} class="underline decoration-dotted underline-offset-4 hover:text-brand" target="_blank">
             {ref.text}
           </a>
         ) : (

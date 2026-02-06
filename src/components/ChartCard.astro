@@ -8,9 +8,21 @@ interface Props {
   caption: string;
   title?: string;
   bgColor?: 'white' | 'default';
+  lightboxSrc?: string;
+  lightboxAlt?: string;
+  lightbox?: boolean;
 }
 
-const { src, alt, caption, title, bgColor = 'default' } = Astro.props;
+const {
+  src,
+  alt,
+  caption,
+  title,
+  bgColor = 'default',
+  lightboxSrc,
+  lightboxAlt,
+  lightbox = true,
+} = Astro.props;
 
 const backgrounds = {
   white: 'bg-white border-slate-200',
@@ -24,31 +36,61 @@ const innerBackgrounds = {
 
 // Check if src is an optimized image import (ImageMetadata) or a legacy string path
 const isOptimizedImage = typeof src !== 'string';
+const enableLightbox = lightbox && Boolean(lightboxSrc);
 ---
 
 <figure class={`${backgrounds[bgColor]} rounded-2xl p-6 my-8 border`}>
   {title && (
     <h3 class={`text-base font-semibold mb-4 ${bgColor === 'white' ? 'text-slate-900' : 'text-white'}`}>
       {title}
-    </h3>
+  </h3>
   )}
   <div class={`${innerBackgrounds[bgColor]} rounded-xl p-8 mb-4`}>
-    {isOptimizedImage ? (
-      <Image 
-        src={src as ImageMetadata}
-        alt={alt}
-        class="w-full h-auto"
-        loading="lazy"
-        widths={[400, 600, 800, 1000, 1200]}
-        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"
-      />
+    {enableLightbox ? (
+      <button
+        type="button"
+        class="w-full text-left group"
+        data-lightbox-src={lightboxSrc}
+        data-lightbox-alt={lightboxAlt || alt}
+      >
+        {isOptimizedImage ? (
+          <Image 
+            src={src as ImageMetadata}
+            alt={alt}
+            class="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
+            loading="lazy"
+            widths={[400, 600, 800, 1000, 1200]}
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"
+          />
+        ) : (
+          <img 
+            src={src as string}
+            alt={alt}
+            class="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
+            loading="lazy"
+          />
+        )}
+      </button>
     ) : (
-      <img 
-        src={src as string}
-        alt={alt}
-        class="w-full h-auto"
-        loading="lazy"
-      />
+      <div class="w-full">
+      {isOptimizedImage ? (
+        <Image 
+          src={src as ImageMetadata}
+          alt={alt}
+          class="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
+          loading="lazy"
+          widths={[400, 600, 800, 1000, 1200]}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"
+        />
+      ) : (
+        <img 
+          src={src as string}
+          alt={alt}
+          class="w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
+          loading="lazy"
+        />
+      )}
+      </div>
     )}
   </div>
   <figcaption class={`text-sm text-center ${bgColor === 'white' ? 'text-slate-600' : 'text-slate-400'}`}>

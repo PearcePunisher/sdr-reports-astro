@@ -6,9 +6,22 @@ const { asset, alt } = Astro.props.node;
 
 const url = urlForImage(asset).url();
 const webpUrl = urlForImage(asset).format("webp").url();
+const fullUrl = urlForImage(asset).url(); // original resolution
 ---
 
-<picture>
-  <source srcset={webpUrl} type="image/webp" />
-  <img class="w-full h-auto rounded-2xl border border-white/10 shadow-lg" src={url} alt={alt} loading="lazy" />
-</picture>
+<button
+  type="button"
+  class="text-left w-full group"
+  data-lightbox-src={fullUrl}
+  data-lightbox-alt={alt}
+>
+  <picture>
+    <source srcset={webpUrl} type="image/webp" />
+    <img
+      class="w-full h-auto rounded-2xl border border-white/10 shadow-lg transition-transform duration-300 group-hover:scale-[1.01]"
+      src={url}
+      alt={alt}
+      loading="lazy"
+    />
+  </picture>
+</button>

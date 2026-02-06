@@ -429,6 +429,7 @@ const contentBlocks = contentWithIds.filter(
               const chartImage = chart.chartImage
                 ? urlForImage(chart.chartImage).width(1400).fit("max").url()
                 : null;
+              const chartImageFull = chart.chartImage ? urlForImage(chart.chartImage).url() : null;
               const chartAlt = chart.chartImage?.alt || chart.title || "Chart";
 
               return (
@@ -442,6 +443,8 @@ const contentBlocks = contentWithIds.filter(
                         src={chartImage}
                         alt={chartAlt}
                         caption={chart.subtitle || chart.title || ""}
+                        lightboxSrc={chartImageFull ?? chartImage}
+                        lightboxAlt={chartAlt}
                       />
                     ) : chart.data ? (
                       <pre class="bg-[#0f1f3a]/60 border border-white/10 rounded-xl p-4 text-sm text-slate-200 overflow-auto">
@@ -495,6 +498,7 @@ const contentBlocks = contentWithIds.filter(
               const url = imageSection.image
                 ? urlForImage(imageSection.image).width(1600).fit("max").url()
                 : null;
+              const fullImageUrl = imageSection.image ? urlForImage(imageSection.image).url() : url;
               const alt =
                 imageSection.image?.alt ||
                 imageSection.caption ||
@@ -512,12 +516,19 @@ const contentBlocks = contentWithIds.filter(
               return (
                 <div id={imageSection.id} class={`space-y-3 ${widthClass}`}>
                   {url && (
-                    <img
-                      src={url}
-                      alt={alt}
-                      class="w-full rounded-2xl border border-white/10 shadow-lg"
-                      loading="lazy"
-                    />
+                    <button
+                      type="button"
+                      class="w-full text-left group"
+                      data-lightbox-src={fullImageUrl ?? url}
+                      data-lightbox-alt={alt}
+                    >
+                      <img
+                        src={url}
+                        alt={alt}
+                        class="w-full rounded-2xl border border-white/10 shadow-lg transition-transform duration-300 group-hover:scale-[1.01]"
+                        loading="lazy"
+                      />
+                    </button>
                   )}
                   {imageSection.caption && (
                     <p class="text-sm text-slate-400 text-center">
@@ -588,4 +599,80 @@ const contentBlocks = contentWithIds.filter(
       </div>
     </div>
   </div>
+
+  <!-- Lightbox overlay -->
+  <div
+    id="lightbox-overlay"
+    class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 p-4"
+    role="dialog"
+    aria-modal="true"
+  >
+    <button
+      type="button"
+      id="lightbox-close"
+      class="absolute top-4 right-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-2"
+      aria-label="Close"
+    >
+      ✕
+    </button>
+    <img
+      id="lightbox-image"
+      src=""
+      alt=""
+      class="max-h-[90vh] max-w-[90vw] rounded-xl shadow-2xl border border-white/20"
+    />
+  </div>
+
+  <script is:inline>
+  const overlay = document.getElementById("lightbox-overlay");
+  const imageEl = document.getElementById("lightbox-image");
+  const closeBtn = document.getElementById("lightbox-close");
+
+  const attachTrigger = (el) => {
+    if (!el) return;
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      const src = el.getAttribute("data-lightbox-src");
+      const alt = el.getAttribute("data-lightbox-alt") || "";
+      if (src) openLightbox(src, alt);
+    });
+  };
+
+  const closeLightbox = () => {
+    overlay?.classList.add("hidden");
+    overlay?.classList.remove("flex");
+    imageEl?.setAttribute("src", "");
+    imageEl?.setAttribute("alt", "");
+      document.body.style.removeProperty("overflow");
+    };
+
+    const openLightbox = (src, alt) => {
+      if (!overlay || !imageEl) return;
+      imageEl.src = src;
+      imageEl.alt = alt || "";
+    overlay.classList.remove("hidden");
+    overlay.classList.add("flex");
+    document.body.style.overflow = "hidden";
+  };
+
+  // Attach click handlers to all triggers on load
+  const triggers = Array.from(document.querySelectorAll("[data-lightbox-src]"));
+  triggers.forEach(attachTrigger);
+
+  overlay?.addEventListener("click", (e) => {
+    if (e.target === overlay) closeLightbox();
+  });
+
+    closeBtn?.addEventListener("click", closeLightbox);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
+
+    if (import.meta.hot) {
+      import.meta.hot.dispose(() => {
+        document.body.style.removeProperty("overflow");
+      });
+    }
+  </script>
 </ReportLayout>
