@@ -13,7 +13,27 @@ export default defineConfig({
       dataset,
       useCdn: true, // See note on using the CDN
       apiVersion: "2025-01-28", // insert the current date to access the latest version of the API
-      studioBasePath: '/studio'
+      studioBasePath: '/studio',
+      stega: {
+        studioUrl: '/studio',
+      }
     }), react()],
   output: 'static',
+  build: {
+    inlineStylesheets: 'auto',
+  },
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            // Isolate Sanity Studio to only load on /studio routes
+            if (id.includes('sanity') && (id.includes('studio') || id.includes('@sanity/ui'))) {
+              return 'studio-component';
+            }
+          }
+        }
+      }
+    }
+  }
 });
