@@ -334,6 +334,7 @@ id="afdfdsfsmksdfosfasd"
               alt={heroImage.alt}
               class="w-full h-full object-cover"
               loading="eager"
+              fetchpriority="high"
             />
           </picture>
           <div class="absolute inset-0 bg-gradient-to-b from-[#0a1628]/90 via-[#0a1628]/80 to-[#0a1628]/95" />
@@ -668,12 +669,12 @@ id="afdfdsfsmksdfosfasd"
   </div>
 
   <!-- Lightbox overlay -->
-  <div
-    id="lightbox-overlay"
-    class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 p-4"
-    role="dialog"
-    aria-modal="true"
-  >
+<div
+  id="lightbox-overlay"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4"
+  role="dialog"
+  aria-modal="true"
+>
     <button
       type="button"
       id="lightbox-close"
@@ -722,15 +723,34 @@ id="afdfdsfsmksdfosfasd"
     document.body.style.overflow = "hidden";
   };
 
-  // Attach click handlers to all triggers on load
-  const triggers = Array.from(document.querySelectorAll("[data-lightbox-src]"));
-  triggers.forEach(attachTrigger);
+  const wireTriggers = () => {
+    const triggers = Array.from(document.querySelectorAll("[data-lightbox-src]"));
+    triggers.forEach(attachTrigger);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", wireTriggers);
+  } else {
+    wireTriggers();
+  }
+
+  // Fallback delegation (covers dynamically added content too)
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    const trigger = target && target.closest ? target.closest("[data-lightbox-src]") : null;
+    if (trigger) {
+      event.preventDefault();
+      const src = trigger.getAttribute("data-lightbox-src");
+      const alt = trigger.getAttribute("data-lightbox-alt") || "";
+      if (src) openLightbox(src, alt);
+    }
+  });
 
   overlay?.addEventListener("click", (e) => {
     if (e.target === overlay) closeLightbox();
   });
 
-    closeBtn?.addEventListener("click", closeLightbox);
+  closeBtn?.addEventListener("click", closeLightbox);
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeLightbox();
