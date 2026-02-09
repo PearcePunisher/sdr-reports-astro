@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import node from '@astrojs/node';
 
 import sanity from '@sanity/astro';
 import react from '@astrojs/react';
@@ -18,7 +19,10 @@ export default defineConfig({
         studioUrl: '/studio',
       }
     }), react()],
-  output: 'static',
+  output: 'hybrid',
+  adapter: node({
+    mode: 'standalone',
+  }),
   build: {
     inlineStylesheets: 'auto',
   },

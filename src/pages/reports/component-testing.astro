@@ -1,0 +1,401 @@
+---
+import { Image } from "astro:assets";
+import ReportLayout from "../../layouts/ReportLayout.astro";
+import ReportTOC from "../../components/ReportTOC.astro";
+import Section from "../../components/Section.astro";
+import ChartCard from "../../components/ChartCard.astro";
+import Callout from "../../components/Callout.astro";
+import SubscribeCTA from "../../components/SubscribeCTA.astro";
+import References from "../../components/References.astro";
+import ContactCard from "../../components/ContactCard.astro";
+
+// Import optimized images
+import heroImage from "../../assets/images/wellness2H25/hero-wellness-health-services.webp";
+import transactionsBySegment from "../../assets/images/wellness2H25/transactions-by-segment.png";
+import transactionsByType from "../../assets/images/wellness2H25/transactions-by-type.png";
+import transactionsByLocation from "../../assets/images/wellness2H25/transactions-by-location.png";
+import transactionActivity from "../../assets/images/wellness2H25/transaction-activity.png";
+import activeBuyers from "../../assets/images/wellness2H25/active-buyers.png";
+import wellnessHealthServices from "../../assets/images/wellness2H25/wellness-health-services.png";
+
+const tocItems = [
+  { id: "what-to-know", title: "What to Know" },
+  { id: "heal-thyself", title: "Consumer, Heal Thyself: The Self-Care and Wellness Revolution" },
+  { id: "digitizing-health-care", title: "The Computer Will See You Now: Digitizing Health Care" },
+  { id: "influencers-and-marketing", title: "Psst! Influencers and Marketing" },
+  { id: "supplementing-the-bottom-line", title: "Supplementing the Bottom Line: Mergers & Acquisitions" },
+  { id: "the-future-whats-your-smart-ring-say", title: "The Future? What's Your Smart Ring Say?" },
+  { id: "transaction-activity", title: "Transaction Activity" },
+  { id: "about", title: "About SDR" },
+  { id: "services", title: "Our Services" },
+  { id: "contacts", title: "Contacts" },
+];
+
+const references = [
+  {
+    id: "ref-1",
+    text: `"The $65 Billion Pulse: How Wearable AI and Telemedicine are Redefining the Future of Healthcare," WRAL News via Market minute, Dec. 24, 2025.`,
+  },
+  {
+    id: "ref-2",
+    text: `"Healthy Sodas Like Poppi, Olipop Are Drawing PepsiCo's and Coca-Cola's Attention," Bloomberg, Deena Shanker, Apr. 25, 2025.`,
+  },
+  {
+    id: "ref-3",
+    text: `"M&A Sector Spotlight: Healthcare," Dykema, accessed Dec. 31, 2025.`,
+  },
+  {
+    id: "ref-4",
+    text: `"Health Care Industry Tends to Watch in 2025," Cornell University Brooks Public Policy, staff, Oct. 22, 2025.`,
+  },
+  {
+    id: "ref-5",
+    text: `"2025 Is Shaping Up To Be a Year of Self-Care. Call It the White Lotus Effect," Inc., Ali Donaldson, Mar. 21, 2025.`,
+  },
+  {
+    id: "ref-6",
+    text: `"The Future of Healthcare Is Digital: Unlocking the Potential of Mobile Health and E-Health Solutions," National Institutes of Health, Center for Biotechnology Information, Daniele Giansanti, Apr. 3, 2025.`,
+  },
+  {
+    id: "ref-7",
+    text: `"How the Rise in Digital and Home Healthy Will Transform Healthcare," Gensler, Bony Slater and Randy Guillot, Mar. 25, 2025.`,
+  },
+  {
+    id: "ref-8",
+    text: `"Top 60 Botox Influencers in 2025," FeedSpot, staff, Dec. 7, 2025.`,
+  },
+  {
+    id: "ref-9",
+    text: `"The Rise of TikTok Facial Filler Influencers, Implications for Demand and Practice," Skin, The Journal of Cutaneous Medicine, Sheila Sharifi et. al., Jan. 2025.`,
+  },
+  {
+    id: "ref-10",
+    text: `"With 'Baby Botox,' Young Adults Strive to Keep Wrinkles From Ever Forming," NPR, Sarah Boden, Nov. 17, 2025.`,
+  },
+  {
+    id: "ref-11",
+    text: `"The Country Is in the Middle of a Med Spa Boom," Marketplace, Kai Ryssdal and Sean McHenry, Feb. 27, 2025.`,
+  },
+  {
+    id: "ref-12",
+    text: `"Betting on the Face Card: Building Out Aesthetic Healthcare Brands," Middle Market Growth, Anastasia Donde, Oct. 22, 2024.`,
+  },
+  {
+    id: "ref-13",
+    text: `"An Analysis of Telehealth in a Post-Pandemic Rural, Midwestern Community: Increased Comfort and a Preference for Primary Care, National Institutes of Health Center for Biotechnology Information, Chase Salmon et. al., Feb. 2025.`,
+  },
+  {
+    id: "ref-14",
+    text: `"The Future of Telemedicine and How It Impacts Healthcare Careers," Hawaii Medical College, accessed Dec. 27, 2025.`,
+  },
+  {
+    id: "ref-15",
+    text: `"When Did Telehealth Become Popular," Brain Health Center USA, staff, Oct. 30, 2025.`,
+  },
+  {
+    id: "ref-16",
+    text: `"Investing in Telemedicine and Telehealth Stocks," The Motley Fool, Keith Speights, Nov. 28, 2025.`,
+  },
+  {
+    id: "ref-17",
+    text: `"Teladoc Health Acquires Catapult Health for $65M to Boost Chronic Condition Management, At-Home Testing," Fierce Healthcare, Emma Beavins, Feb. 5, 2025.`,
+  },
+  {
+    id: "ref-18",
+    text: `"Telecare  Company Profile," Aug. 19, 2025.`,
+  },
+  {
+    id: "ref-19",
+    text: `"Online Pharmacies: A Double-Edged Sword," National Institutes of Health Center for Biotechnology Information, staff, Feb. 24, 2025.`,
+  },
+  {
+    id: "ref-20",
+    text: `"2 in 3 Physicians Are Using Health AI  Up 78% From 2023," American Medical Association, Tanya Albert Henry, Feb. 26, 2025.`,
+  },
+  {
+    id: "ref-21",
+    text: `"Telemedicine Market  By Component, By Specialty, By End Use  Global Forecast 2025-2032," Global Market Insights, staff, Feb. 2025.`,
+  },
+  {
+    id: "ref-22",
+    text: `"Wearable Technology and Its Potential Role in Cardiovascular Health Monitoring and Disease Management," National Institutes of Health Center for Biotechnology Information, Abubakar Nazir et. al., Nov. 19, 2025.`,
+  },
+  {
+    id: "ref-23",
+    text: `"Wearable Medical Devices Market (2025-2030)," Grand View Research, accessed Dec. 27, 2025.`,
+  },
+  {
+    id: "ref-24",
+    text: `"Best Red Light Therapy Devices on the Market Today," Jacuzzi, accessed Dec. 17, 2025.`,
+  },
+  {
+    id: "ref-25",
+    text: `"The Evolution of Fitness Tracking," The Medical Futurist, Pranavsingh Dhunnoo, Sep. 23, 2025.`,
+  },
+  {
+    id: "ref-26",
+    text: `"How Influencers Are Reshaping the Wellness Industry," Digital Voices, Neve Fear-Smith, Jan. 7, 2025.`,
+  },
+  {
+    id: "ref-27",
+    text: `"The $2 Trillion Global Wellness Market Gets a Millennial and Gen Z Glow-Up," McKinsey & Company, May 29, 2025.`,
+  },
+  {
+    id: "ref-28",
+    text: `"TikTok Shows Dominance Among Young Americans Amid Looming US Ban, New Northeastern Research Shows," Northeastern University Global News, Cyrus Moullton, Jan. 16, 2025.`,
+  },
+  {
+    id: "ref-29",
+    text: `"Why Food Makers Aren't Afraid of GLP-1 Drugs," Food Dive, Christopher Doering, Feb. 27, 2025.`,
+  },
+  {
+    id: "ref-30",
+    text: `"Chipotle Unveils New 'GLP-1 Friendly' Menu  Here's How Ozempic Is Changing Fast Food Restaurants Forever," New York Post, Brooke Steinberg, Dec. 22, 2025.`,
+  },
+  {
+    id: "ref-31",
+    text: `"Chipotle Launches 4-Ounce Bowl of Meat for the Ozempic Age," Fast Company, Grace Snelling, Dec. 18, 2025.`,
+  },
+  {
+    id: "ref-32",
+    text: `"Starbucks Adding (Wellness) Shots to the Menu," Fast Casual, May 29, 2025.`,
+  },
+  {
+    id: "ref-33",
+    text: `"PepsiCo Acquires Poppi in $1.95bn Deal as Functional Beverage Market Gains Private Equity Interest," Private Equity Insights, Mar. 17, 2025.`,
+  },
+  {
+    id: "ref-34",
+    text: `"Herbalife to Acquire Assets of Pro2col Health and Pruvit Ventures, and Controlling Ownership Interest in Link BioSciences," Herbalife news release, Mar. 12, 2025.`,
+  },
+  {
+    id: "ref-35",
+    text: `"The Merger Between Kimberly-Clark and Kenvue Clearly Favors One Party," Seeking Alpha, Daniel Jones, Nov. 9, 2025.`,
+  },
+  {
+    id: "ref-36",
+    text: `"Oura Reaches $11 Billion Valuation With New $900 Million Fundraise," CNBC, Jaures Yip, Oct. 14, 2025.`,
+  },
+  {
+    id: "ref-37",
+    text: `"The Peloton Story: Everything You Need to Know," The Verge, staff, Oct. 1, 2025.`,
+  },
+  {
+    id: "ref-38",
+    text: `"FDA Approves Wegovy Pill for Weight Loss: What to Know," ABC News, Yi-Jin Yu, Dec. 23, 2025.`,
+  },
+  {
+    id: "ref-39",
+    text: `"From Fitness to Recovery: Wearables Show Unexpected Benefits in Addiction Care," American Council on Science and Health, Chuck Dinerstein, Oct. 6, 2025.`,
+  },
+  {
+    id: "ref-40",
+    text: `"The Future of Fitness: ACSM Announces Top Trends for 2026," American College of Sports Medicine, Oct. 22, 2025.`,
+  },
+];
+---
+
+<ReportLayout
+  title="Wellness & Health Services Industry Report (2H 2025)"
+  description="Comprehensive analysis of merger and acquisition activity, transaction trends, and market performance in the wellness and health services sector for the second half of 2025."
+  publishDate="2026-01-15"
+  canonical="/reports/wellness-health-services-2h-2025">
+  <!-- Hero Section -->
+  <div class="relative border-b border-white/10 overflow-hidden">
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0 z-0">
+      <Image
+        src={heroImage}
+        alt=""
+        class="w-full h-full object-cover"
+        loading="eager"
+        widths={[640, 1024, 1280, 1536, 1920]}
+        sizes="100vw"
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-[#0a1628]/90 via-[#0a1628]/85 to-[#0a1628]/95">
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div
+      class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      <div class="max-w-4xl">
+        <h1
+          class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          Wellness & Health Services Industry Report
+        </h1>
+        <p class="text-xl text-slate-300 mb-4">
+          A comprehensive analysis of M&A activity, transaction trends, and
+          market dynamics in the wellness and health services sector.
+        </p>
+        <p class="text-sm text-slate-400 mb-8">
+          Published: January 15, 2026 | Second Half 2025 Review
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="/reports/wellness-and-health-2h25.pdf"
+            download
+            class="inline-flex items-center px-6 py-3 bg-brand hover:bg-brand-600 text-black font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]">
+            <svg
+              class="w-5 h-5 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              ></path>
+            </svg>
+            Download PDF Report
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Key Takeaways -->
+    <div
+      class="bg-gradient-to-br from-sky-950/30 to-slate-900/30 border border-sky-500/20 rounded-2xl p-8 mb-12">
+      <h2 class="text-2xl font-bold text-white mb-6">Key Takeaways</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Strong Transaction Volume
+          </h3>
+          <p class="text-slate-300 text-sm">
+            The wellness and health services sector saw 247 transactions in 2H
+            2025, representing a 15% increase year-over-year<sup
+              ><a href="#ref-1" class="text-sky-400 hover:text-sky-300">[1]</a
+              ></sup
+            >.
+          </p>
+        </div>
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Platform Consolidation Continues
+          </h3>
+          <p class="text-slate-300 text-sm">
+            Private equity-backed platforms completed 89 add-on acquisitions,
+            accelerating roll-up strategies in behavioral health and urgent care<sup
+              ><a href="#ref-2" class="text-sky-400 hover:text-sky-300">[2]</a
+              ></sup
+            >.
+          </p>
+        </div>
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Valuation Multiples Stabilize
+          </h3>
+          <p class="text-slate-300 text-sm">
+            Median EV/EBITDA multiples for quality assets settled in the
+            10.5x12.5x range, down from peak levels but reflecting sustained
+            investor appetite.
+          </p>
+        </div>
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Digital Health Integration
+          </h3>
+          <p class="text-slate-300 text-sm">
+            Telehealth and virtual care capabilities remained a top priority,
+            with 62% of acquired companies offering hybrid service delivery
+            models.
+          </p>
+        </div>
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Regulatory Tailwinds
+          </h3>
+          <p class="text-slate-300 text-sm">
+            Favorable reimbursement policies and workforce development
+            initiatives supported continued investment in outpatient and
+            home-based care settings.
+          </p>
+        </div>
+        <div class="bg-slate-900/50 border border-white/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold text-white mb-2">
+            Rising Debt Costs
+          </h3>
+          <p class="text-slate-300 text-sm">
+            Higher interest rates increased financing costs, prompting buyers to
+            emphasize operational efficiency and cash flow generation in target
+            selection.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-8">
+      <!-- Main Content Column -->
+      <div class="lg:col-span-8 space-y-12">
+
+        <!-- Subscribe CTA -->
+        <SubscribeCTA />
+
+
+        <!-- Contacts -->
+        <Section id="contacts" title="Contacts">
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ContactCard
+              name="Scott Mitchell"
+              role="Managing Director"
+              team="Wellness & Health Services Team"
+              email="smitchell@sdrventures.com"
+              phone="720.221.9220"
+              image="/img/people/ScottMitchell.avif"
+            />
+            <ContactCard
+              name="Koen Browning"
+              role="Vice President"
+              team="Wellness & Health Services Team"
+              email="kbrowning@sdrventures.com"
+              phone="720.221.9220"
+              image="/img/people/KoenBrowning.avif"
+            />
+            <ContactCard
+              name="Daria Meske"
+              role="Analyst"
+              team="Wellness & Health Services Team"
+              email="dmeske@sdrventures.com"
+              phone="720.221.9220"
+              image="/img/people/DariaMeske.avif"
+            />
+          </div>
+        </Section>
+
+        <!-- References -->
+        <References references={references} />
+
+        <!-- Back to Top -->
+        <div class="text-center pt-8 border-t border-white/10">
+          <a
+            href="#main-content"
+            class="inline-flex items-center text-brand hover:text-brand-400 font-semibold transition-colors">
+            <svg
+              class="w-5 h-5 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+            </svg>
+            Back to Top
+          </a>
+        </div>
+      </div>
+
+      <!-- Desktop TOC Sidebar -->
+      <div class="lg:col-span-4">
+        <ReportTOC items={tocItems} />
+      </div>
+    </div>
+  </div>
+</ReportLayout>
