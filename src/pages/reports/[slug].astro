@@ -499,6 +499,33 @@ id="afdfdsfsmksdfosfasd"
                 : null;
               const chartImageFull = chart.chartImage ? urlForImage(chart.chartImage).url() : null;
               const chartAlt = chart.chartImage?.alt || chart.title || "Chart";
+              if(chart?.chartType!='image'){
+                return (
+                      <Section id={chart.id} title={chart.title || "Chart"}>
+                  <div class="space-y-4">
+                    {chart.subtitle && (
+                      <p class="text-slate-400 text-sm">{chart.subtitle}</p>
+                    )}
+                    {chart.data ? (
+                        <Chart
+                        class="myChart"
+                        chartType={chart.chartType}
+                        data={chart?.data}
+                          overrides={{tooltip: { trigger: "axis" },yAxis: { axisLabel: { formatter: "{value}"}}}}
+                      />
+                      <pre class="bg-[#0f1f3a]/60 border border-white/10 rounded-xl p-4 text-sm text-slate-200 overflow-auto">
+                        {chart.data}
+                      </pre>
+                    ) : null}
+                    {chart.source && (
+                      <p class="text-slate-400 text-sm">
+                        Source: {chart.source}
+                      </p>
+                    )}
+                  </div>
+                </Section>
+                );
+              }
 
               return (
                 <Section id={chart.id} title={chart.title || "Chart"}>
