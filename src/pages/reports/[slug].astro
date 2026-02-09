@@ -671,78 +671,93 @@ id="afdfdsfsmksdfosfasd"
   <!-- Lightbox overlay -->
 <div
   id="lightbox-overlay"
-  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4"
+  class="fixed inset-0 z-50 hidden bg-black/95"
   role="dialog"
   aria-modal="true"
+  aria-label="Expanded chart image"
 >
+    <div class="absolute inset-0 flex items-center justify-center p-3 sm:p-6 lg:p-10 pointer-events-none">
+      <img
+        id="lightbox-image"
+        src=""
+        alt=""
+        class="h-full w-full object-contain pointer-events-auto"
+      />
+    </div>
+
     <button
       type="button"
       id="lightbox-close"
-      class="absolute top-4 right-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-2"
+      class="absolute top-4 right-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-2.5 border border-white/20"
       aria-label="Close"
     >
       ✕
     </button>
-    <img
-      id="lightbox-image"
-      src=""
-      alt=""
-      class="max-h-[90vh] max-w-[90vw] rounded-xl shadow-2xl border border-white/20"
-    />
   </div>
 
   <script is:inline>
   const overlay = document.getElementById("lightbox-overlay");
   const imageEl = document.getElementById("lightbox-image");
   const closeBtn = document.getElementById("lightbox-close");
+  let previousOverflow = "";
+  const lightboxDebug = true;
 
-  const attachTrigger = (el) => {
-    if (!el) return;
-    el.addEventListener("click", (event) => {
-      event.preventDefault();
-      const src = el.getAttribute("data-lightbox-src");
-      const alt = el.getAttribute("data-lightbox-alt") || "";
-      if (src) openLightbox(src, alt);
+  const logLightbox = (...args) => {
+    if (!lightboxDebug) return;
+    console.log("[Lightbox Debug]", ...args);
+  };
+
+  logLightbox("script initialized", {
+    overlayFound: Boolean(overlay),
+    imageFound: Boolean(imageEl),
+    closeButtonFound: Boolean(closeBtn),
+    triggerCount: document.querySelectorAll("[data-lightbox-src]").length,
+  });
+
+  const closeLightbox = () => {
+    logLightbox("close requested");
+    overlay?.classList.add("hidden");
+    imageEl?.setAttribute("src", "");
+    imageEl?.setAttribute("alt", "");
+    document.body.style.overflow = previousOverflow;
+    logLightbox("closed", {
+      overlayHidden: overlay?.classList.contains("hidden"),
+      restoredOverflow: previousOverflow,
     });
   };
 
-  const closeLightbox = () => {
-    overlay?.classList.add("hidden");
-    overlay?.classList.remove("flex");
-    imageEl?.setAttribute("src", "");
-    imageEl?.setAttribute("alt", "");
-      document.body.style.removeProperty("overflow");
-    };
-
-    const openLightbox = (src, alt) => {
-      if (!overlay || !imageEl) return;
-      imageEl.src = src;
-      imageEl.alt = alt || "";
+  const openLightbox = (src, alt) => {
+    if (!overlay || !imageEl) return;
+    logLightbox("open requested", { src, alt });
+    imageEl.src = src;
+    imageEl.alt = alt || "";
     overlay.classList.remove("hidden");
-    overlay.classList.add("flex");
+    previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    logLightbox("opened", {
+      overlayHidden: overlay.classList.contains("hidden"),
+      imageSrc: imageEl.src,
+    });
   };
 
-  const wireTriggers = () => {
-    const triggers = Array.from(document.querySelectorAll("[data-lightbox-src]"));
-    triggers.forEach(attachTrigger);
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", wireTriggers);
-  } else {
-    wireTriggers();
-  }
-
-  // Fallback delegation (covers dynamically added content too)
   document.addEventListener("click", (event) => {
     const target = event.target;
     const trigger = target && target.closest ? target.closest("[data-lightbox-src]") : null;
     if (trigger) {
+      logLightbox("trigger click captured", {
+        tagName: trigger.tagName,
+        classes: trigger.className,
+      });
+    }
+    if (trigger) {
       event.preventDefault();
       const src = trigger.getAttribute("data-lightbox-src");
       const alt = trigger.getAttribute("data-lightbox-alt") || "";
-      if (src) openLightbox(src, alt);
+      if (!src) {
+        logLightbox("missing data-lightbox-src on trigger", trigger);
+        return;
+      }
+      openLightbox(src, alt);
     }
   });
 
@@ -756,10 +771,5 @@ id="afdfdsfsmksdfosfasd"
       if (e.key === "Escape") closeLightbox();
     });
 
-    if (import.meta.hot) {
-      import.meta.hot.dispose(() => {
-        document.body.style.removeProperty("overflow");
-      });
-    }
   </script>
 </ReportLayout>

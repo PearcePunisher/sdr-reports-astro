@@ -49,9 +49,10 @@ const enableLightbox = lightbox && Boolean(lightboxSrc);
     {enableLightbox ? (
       <button
         type="button"
-        class="w-full text-left group"
+        class="w-full text-left group cursor-zoom-in"
         data-lightbox-src={lightboxSrc}
         data-lightbox-alt={lightboxAlt || alt}
+        aria-label={`Open chart in full-screen: ${lightboxAlt || alt}`}
       >
         {isOptimizedImage ? (
           <Image 

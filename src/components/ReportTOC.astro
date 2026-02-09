@@ -72,9 +72,7 @@ const { items } = Astro.props;
     // Fallback: set active on initial load
     if (targets[0]) setActive(targets[0].el.id);
 
-    // Clean up on navigation / HMR
-    if (import.meta.hot) {
-      import.meta.hot.dispose(() => observer.disconnect());
-    }
+    // Clean up when leaving the page
+    window.addEventListener('pagehide', () => observer.disconnect(), { once: true });
   }
 </script>
