@@ -7,9 +7,10 @@ interface Props {
   email?: string;
   phone?: string;
   image?: string;
+  bioLink?: string;
 }
 
-const { name, role, team, division, email, phone, image } = Astro.props;
+const { name, role, team, division, email, phone, image, bioLink } = Astro.props;
 
 // Format phone number for tel: link (remove spaces, dashes, parentheses)
 const phoneLink = phone ? phone.replace(/[\s\-\(\)]/g, '') : null;
@@ -47,6 +48,18 @@ const phoneLink = phone ? phone.replace(/[\s\-\(\)]/g, '') : null;
           class="text-brand hover:text-brand-400"
         >
           {phone}
+        </a>
+      </p>
+    )}
+    {bioLink && (
+      <p class="pt-2">
+        <a
+          href={bioLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-brand hover:text-brand-400 font-medium"
+        >
+          Read Bio
         </a>
       </p>
     )}

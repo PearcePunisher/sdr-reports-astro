@@ -79,6 +79,7 @@ interface Report {
     email?: string;
     phone?: string;
     image?: any;
+    bioLink?: string;
   }[];
   keyTakeaways?: {
     heading?: string;
@@ -94,6 +95,7 @@ interface Report {
       email?: string;
       phone?: string;
       image?: any;
+      bioLink?: string;
     }[];
   };
   references?: {
@@ -159,7 +161,8 @@ const { data: report } = await loadQuery<Report>({
         role,
         email,
         phone,
-        image
+        image,
+        bioLink
       }
     },
     references{
@@ -172,7 +175,8 @@ const { data: report } = await loadQuery<Report>({
       division,
       email,
       phone,
-      image
+      image,
+      bioLink
     },
     "pdfUrl": pdf.asset->url
   }`,
@@ -434,32 +438,66 @@ id="afdfdsfsmksdfosfasd"
                     .fit("crop")
                     .url()
                 : null;
+              const bubbleClasses =
+                "flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-3 py-2 pr-6 transition-colors";
               return (
-                <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-3 py-2 pr-6">
-                  {avatar ? (
-                    <img
-                      src={avatar}
-                      alt={author.name}
-                      class="w-10 h-10 rounded-full object-cover"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div class="w-10 h-10 rounded-full bg-brand/30 border border-brand/40 flex items-center justify-center text-white font-semibold">
-                      {author.name?.[0] ?? "A"}
-                    </div>
-                  )}
-                  <div>
-                    <p class="text-sm font-semibold text-white leading-tight">
-                      {author.name}
-                    </p>
-                    {author.role && (
-                      <p class="text-xs text-slate-400">{author.role}</p>
+                author.bioLink ? (
+                  <a
+                    href={author.bioLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={`${bubbleClasses} hover:border-brand/50 hover:bg-white/10`}>
+                    {avatar ? (
+                      <img
+                        src={avatar}
+                        alt={author.name}
+                        class="w-10 h-10 rounded-full object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div class="w-10 h-10 rounded-full bg-brand/30 border border-brand/40 flex items-center justify-center text-white font-semibold">
+                        {author.name?.[0] ?? "A"}
+                      </div>
                     )}
-                    {/* {author.division && (
-                      <p class="text-xs text-slate-500">{author.division}</p>
-                    )} */}
+                    <div>
+                      <p class="text-sm font-semibold text-white leading-tight">
+                        {author.name}
+                      </p>
+                      {author.role && (
+                        <p class="text-xs text-slate-400">{author.role}</p>
+                      )}
+                      {/* {author.division && (
+                        <p class="text-xs text-slate-500">{author.division}</p>
+                      )} */}
+                    </div>
+                  </a>
+                ) : (
+                  <div class={bubbleClasses}>
+                    {avatar ? (
+                      <img
+                        src={avatar}
+                        alt={author.name}
+                        class="w-10 h-10 rounded-full object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div class="w-10 h-10 rounded-full bg-brand/30 border border-brand/40 flex items-center justify-center text-white font-semibold">
+                        {author.name?.[0] ?? "A"}
+                      </div>
+                    )}
+                    <div>
+                      <p class="text-sm font-semibold text-white leading-tight">
+                        {author.name}
+                      </p>
+                      {author.role && (
+                        <p class="text-xs text-slate-400">{author.role}</p>
+                      )}
+                      {/* {author.division && (
+                        <p class="text-xs text-slate-500">{author.division}</p>
+                      )} */}
+                    </div>
                   </div>
-                </div>
+                )
               );
             })}
           </div>
@@ -666,6 +704,7 @@ id="afdfdsfsmksdfosfasd"
                       email={person.email}
                       phone={person.phone}
                       image={imageUrl}
+                      bioLink={person.bioLink}
                     />
                   );
                 })}
