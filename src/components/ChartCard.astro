@@ -53,6 +53,8 @@ const enableLightbox = lightbox && Boolean(lightboxSrc);
         data-lightbox-src={lightboxSrc}
         data-lightbox-alt={lightboxAlt || alt}
         aria-label={`Open chart in full-screen: ${lightboxAlt || alt}`}
+        data-umami-event="chart-lightbox-open"
+        data-umami-event-chart={title || alt}
       >
         {isOptimizedImage ? (
           <Image 

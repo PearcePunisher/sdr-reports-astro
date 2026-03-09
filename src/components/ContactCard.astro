@@ -36,7 +36,7 @@ const phoneLink = phone ? phone.replace(/[\s\-\(\)]/g, '') : null;
   <div class="space-y-1 text-sm text-slate-300">
     {email && (
       <p>
-        <a href={`mailto:${email}`} class="text-brand hover:text-brand-400">
+        <a href={`mailto:${email}`} class="text-brand hover:text-brand-400" data-umami-event="contact-email">
           {email}
         </a>
       </p>
@@ -46,6 +46,7 @@ const phoneLink = phone ? phone.replace(/[\s\-\(\)]/g, '') : null;
         <a
           href={`tel:+${phoneLink.startsWith('1') ? phoneLink : '1' + phoneLink}`}
           class="text-brand hover:text-brand-400"
+          data-umami-event="contact-phone"
         >
           {phone}
         </a>
@@ -58,6 +59,8 @@ const phoneLink = phone ? phone.replace(/[\s\-\(\)]/g, '') : null;
           target="_blank"
           rel="noopener noreferrer"
           class="text-brand hover:text-brand-400 font-medium"
+          data-umami-event="contact-bio"
+          data-umami-event-name={name}
         >
           Read Bio
         </a>

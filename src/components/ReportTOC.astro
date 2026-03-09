@@ -20,10 +20,12 @@ const { items } = Astro.props;
     <ul class="space-y-2">
       {items.map((item) => (
         <li>
-          <a 
+          <a
             href={`#${item.id}`}
             data-target={item.id}
             class="text-sm text-slate-300 hover:text-brand transition-colors block py-1 data-[active=true]:text-brand data-[active=true]:underline data-[active=true]:underline-offset-4"
+            data-umami-event="toc-click"
+            data-umami-event-section={item.title}
           >
             {item.title}
           </a>

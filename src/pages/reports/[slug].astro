@@ -407,7 +407,9 @@ id="afdfdsfsmksdfosfasd"
               <a
                 href={report.pdfUrl}
                 download
-                class="inline-flex items-center gap-2 px-6 py-3 bg-brand hover:bg-brand-600 text-black font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]">
+                class="inline-flex items-center gap-2 px-6 py-3 bg-brand hover:bg-brand-600 text-black font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
+                data-umami-event="pdf-download"
+                data-umami-event-report={report.slug?.current}>
                 <svg
                   class="w-5 h-5 mr-2"
                   fill="none"
@@ -446,7 +448,9 @@ id="afdfdsfsmksdfosfasd"
                     href={author.bioLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class={`${bubbleClasses} hover:border-brand/50 hover:bg-white/10`}>
+                    class={`${bubbleClasses} hover:border-brand/50 hover:bg-white/10`}
+                    data-umami-event="author-bio-click"
+                    data-umami-event-author={author.name}>
                     {avatar ? (
                       <img
                         src={avatar}

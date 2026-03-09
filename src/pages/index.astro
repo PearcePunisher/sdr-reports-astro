@@ -75,6 +75,8 @@ const { data: reports = [] } = await loadQuery<ReportCard[]>({
             <a
               href={`/reports/${slug}`}
               class="group block bg-[#0f1f3a]/60 border border-white/10 rounded-2xl overflow-hidden hover:border-brand/50 transition"
+              data-umami-event="report-click"
+              data-umami-event-report={slug}
             >
               {imageUrl && (
                 <div class="overflow-hidden">
