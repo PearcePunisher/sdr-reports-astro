@@ -4,6 +4,7 @@ export const prerender = false;
 
 const GF_SUBMISSION_URL = import.meta.env.GF_SUBMISSION_URL;
 const GF_AUTH_TOKEN = import.meta.env.GF_AUTH_TOKEN;
+const TURNSTILE_SECRET_KEY = import.meta.env.TURNSTILE_SECRET_KEY;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -55,6 +56,39 @@ export const POST: APIRoute = async ({ request }) => {
         }
       );
     }
+    // Honeypot: bots fill this field, humans don't
+    if (body?.honeypot) {
+      return new Response(
+        JSON.stringify({ success: false, message: 'Submission rejected' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Cloudflare Turnstile verification
+    const turnstileToken = String(body?.turnstileToken ?? '').trim();
+    if (!turnstileToken) {
+      return new Response(
+        JSON.stringify({ success: false, message: 'CAPTCHA token missing' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const turnstileRes = await fetch(
+      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret: TURNSTILE_SECRET_KEY, response: turnstileToken }),
+      }
+    );
+    const turnstileData = await turnstileRes.json() as { success: boolean };
+    if (!turnstileData.success) {
+      return new Response(
+        JSON.stringify({ success: false, message: 'CAPTCHA verification failed' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     const fName = String(body?.fName ?? '').trim();
     const lName = String(body?.lName ?? '').trim();
     const email = String(body?.email ?? '').trim();
